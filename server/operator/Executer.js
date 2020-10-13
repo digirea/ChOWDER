@@ -77,14 +77,23 @@
             // { socketidA : displayIDa,  socketidB : displayIDb, .. }
             // 1つのdisplayIDに対して複数のsocketidがある場合があるので、逆の辞書は作ってはいけない
             this.blockedDisplayCache = {};
+            this.blockedDisplayCachePrefix = "blockedDisplayCache";
+            this.textClient.set(this.blockedDisplayCachePrefix, JSON.stringify({}), (err, doesExists) => {
+            });
 
             // 拒否を含む全接続済Displayのsocketidのキャッシュ
             // { socketidA : displayIDa,  socketidB : displayIDb, .. }
             // 1つのdisplayIDに対して複数のsocketidがある場合があるので、逆の辞書は作ってはいけない
             this.allDisplayCache = {};
+            this.allDisplayCachePrefix = "allDisplayCache";
+            this.textClient.set(this.allDisplayCachePrefix, JSON.stringify({}), (err, doesExists) => {
+            });
 
             // タイル追加時に連続して完了通知を呼ばないためのIDキャッシュ
             this.tileFinishCache = {};
+            this.tileFinishCachePrefix = "tileFinishCache";
+            this.textClient.set(this.tileFinishCachePrefix, JSON.stringify({}), (err, doesExists) => {
+            });
 
             this.client.on('error', (err) => {
                 console.log('Error ' + err);
@@ -1831,11 +1840,15 @@
                                             if (finishCallback) {
                                                 let kv = { tile_finished: true }
                                                 this.client.hmset(this.contentHistoryDataPrefix + history_id, kv, () => {
-                                                    if (!this.tileFinishCache.hasOwnProperty(content_id + "_" + history_id))
-                                                    {
-                                                        this.tileFinishCache[content_id + "_" + history_id] = true;
-                                                        finishCallback(err, metaData, contentData);
-                                                    }
+                                                    this.textClient.get(this.tileFinishCachePrefix, (err, cache) => {
+                                                        let tileFinishCache = JSON.parse(cache);
+                                                        if(tileFinishCache.hasOwnProperty(content_id + "_" + history_id)){
+                                                            tileFinishCache[content_id + "_" + history_id] = true;
+                                                            this.textClient.set(this.tileFinishCachePrefix, JSON.stringify(tileFinishCache), (err, doesExists) => {});
+                                                            finishCallback(err, metaData, contentData);
+                                                        }
+                                                    });
+                            
                                                 });
                                             }
                                         }
@@ -2284,8 +2297,9 @@
                         metaData.history_id = util.generateUUID8();
 
                         // finishキャッシュを空にする
-                        this.tileFinishCache = {};
-                        
+                        this.textClient.set(this.tileFinishCachePrefix, JSON.stringify({}), (err, doesExists) => {
+                        });
+                                    
                         if (!metaData.hasOwnProperty('reductionWidth')) {
                             let dimensions = image_size(contentData);
                             metaData.reductionWidth = dimensions.width;
@@ -2434,7 +2448,13 @@
                                                 let perm = {};
                                                 perm[windowData.id] = "true";
                                                 let data = { permissionList : [perm] };
-                                                this.allDisplayCache[socketid] = windowData.id;
+
+                                                this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                                                    let allDisplayCache = JSON.parse(cache);
+                                                    allDisplayCache[socketid] = windowData.id;
+                                                    this.textClient.set(this.allDisplayCachePrefix, JSON.stringify(allDisplayCache), (err, doesExists) => {});
+                                                });
+                            
                                                 this.updateDisplayPermissionList(data, (err, changeList) => {
                                                     if (permissionChangeCallback) {
                                                         permissionChangeCallback(err, changeList);
@@ -2828,9 +2848,15 @@
                 endCallback(null, true);
                 return;
             }
-            if (this.allDisplayCache.hasOwnProperty(socketid)) {
+
+            let allDisplayCache = {};
+            this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                allDisplayCache = JSON.parse(cache);
+            });
+
+            if (allDisplayCache.hasOwnProperty(socketid)) {
                 // displayからのアクセスだった
-                const displayID = this.allDisplayCache[socketid];
+                const displayID = allDisplayCache[socketid];
                 this.getWindowMetaData({ id : displayID },  (windowMeta) => {
                     this.getGroupUserSetting((err, data) => {
                         if (!err && data) {
@@ -3045,9 +3071,22 @@
                     this.textClient.hget(this.frontPrefix + this.uuidPrefix + "permission_login_displayid", displayid, (err, reply) => {
                         // console.log("getdisplaypermission : does exist",this.displayPermission, displayid, reply);
                         if (reply === "false") {
-                            this.blockedDisplayCache[socketid] = displayid;
+                            this.textClient.get(this.blockedDisplayCachePrefix, (err, cache) => {
+                                let blockedDisplayCache = JSON.parse(cache);
+                                for (let k in blockedDisplayCache) {
+                                    if (blockedDisplayCache[k] === displayIDList[i]) {
+                                        delete blockedDisplayCache[k];
+                                        break;
+                                    }
+                                }
+                                this.textClient.set(this.blockedDisplayCachePrefix, JSON.stringify(blockedDisplayCache), (err, doesExists) => {});
+                            });
                         }
-                        this.allDisplayCache[socketid] = displayid;
+                        this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                            let allDisplayCache = JSON.parse(cache);
+                            allDisplayCache[socketid] = displayid;
+                            this.textClient.set(this.allDisplayCachePrefix, JSON.stringify(allDisplayCache), (err, doesExists) => {});
+                        });
                         callback(err, reply);
                     });
                 }
@@ -3122,19 +3161,29 @@
                         callback(err, displayIDList);
                     }
                     // blockedDisplayCacheも消す
-                    for (let k in this.blockedDisplayCache) {
-                        if (this.blockedDisplayCache[k] === displayIDList[i]) {
-                            delete this.blockedDisplayCache[k];
-                            break;
+                    this.textClient.get(this.blockedDisplayCachePrefix, (err, cache) => {
+                        let blockedDisplayCache = JSON.parse(cache);
+                        for (let k in blockedDisplayCache) {
+                            if (blockedDisplayCache[k] === displayIDList[i]) {
+                                delete blockedDisplayCache[k];
+                                break;
+                            }
                         }
-                    }
+                        this.textClient.set(this.blockedDisplayCachePrefix, JSON.stringify(blockedDisplayCache), (err, doesExists) => {});
+                    });
+
                     // allDisplayCacheも消す
-                    for (let k in this.allDisplayCache) {
-                        if (this.allDisplayCache[k] === displayIDList[i]) {
-                            delete this.allDisplayCache[k];
-                            break;
+                    this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                        let allDisplayCache = JSON.parse(cache);
+                        for (let k in allDisplayCache) {
+                            if (allDisplayCache[k] === displayIDList[i]) {
+                                delete allDisplayCache[k];
+                                break;
+                            }
                         }
-                    }
+                        this.textClient.set(this.allDisplayCachePrefix, JSON.stringify(allDisplayCache), (err, doesExists) => {});
+                    });
+
                 });
             }
         }
@@ -3149,18 +3198,47 @@
         existsDisplayPermission(socketid, displayid, callback) {
             this.textClient.hexists(this.frontPrefix + this.uuidPrefix + "permission_login_displayid", displayid, (err, doesExists) => {
                 if (err) {
-                    this.blockedDisplayCache[socketid] = displayid;
-                    this.allDisplayCache[socketid] = displayid;
+                    this.textClient.get(this.blockedDisplayCachePrefix, (err, cache) => {
+                        let blockedDisplayCache = JSON.parse(cache);
+                        blockedDisplayCache[socketid] = displayid;
+                        this.textClient.set(this.blockedDisplayCachePrefix, JSON.stringify(blockedDisplayCache), (err, doesExists) => {});
+                    });
+
+                    this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                        let allDisplayCache = JSON.parse(cache);
+                        allDisplayCache[socketid] = displayid;
+                        this.textClient.set(this.allDisplayCachePrefix, JSON.stringify(allDisplayCache), (err, doesExists) => {});
+                    });
+
                     callback(err);
                 } else if (doesExists !== 1) {//存在しない
-                    this.blockedDisplayCache[socketid] = displayid;
-                    this.allDisplayCache[socketid] = displayid;
+                    this.textClient.get(this.blockedDisplayCachePrefix, (err, cache) => {
+                        let blockedDisplayCache = JSON.parse(cache);
+                        blockedDisplayCache[socketid] = displayid;
+                        this.textClient.set(this.blockedDisplayCachePrefix, JSON.stringify(blockedDisplayCache), (err, doesExists) => {});
+                    });
+
+                    this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                        let allDisplayCache = JSON.parse(cache);
+                        allDisplayCache[socketid] = displayid;
+                        this.textClient.set(this.allDisplayCachePrefix, JSON.stringify(allDisplayCache), (err, doesExists) => {});
+                    });
                     callback(err, false);
                 } else {
-                    this.allDisplayCache[socketid] = displayid;
-                    if (this.blockedDisplayCache.hasOwnProperty(socketid)) {
-                        delete this.blockedDisplayCache[socketid]
-                    }
+                    this.textClient.get(this.allDisplayCachePrefix, (err, cache) => {
+                        let allDisplayCache = JSON.parse(cache);
+                        allDisplayCache[socketid] = displayid;
+                        this.textClient.set(this.allDisplayCachePrefix, JSON.stringify(allDisplayCache), (err, doesExists) => {});
+                    });
+
+                    this.textClient.get(this.blockedDisplayCachePrefix, (err, cache) => {
+                        let blockedDisplayCache = JSON.parse(cache);
+                        if (blockedDisplayCache.hasOwnProperty(socketid)) {
+                            delete blockedDisplayCache[socketid]
+                        }
+                        this.textClient.set(this.blockedDisplayCachePrefix, JSON.stringify(blockedDisplayCache), (err, doesExists) => {});
+                    });
+
                     callback(err, true);
                 }
             });

@@ -72,6 +72,9 @@
 	function ws_request(ws2) { // for http or https
 		return (request)=>{
 			"use strict";
+
+			console.log("[ws_request] PID: ",process.pid);
+
 			let connection = null;
 			if (request.resourceURL.pathname.indexOf(currentVersion) < 0) {
 				console.log('invalid version');

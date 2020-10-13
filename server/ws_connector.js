@@ -252,6 +252,27 @@
 		}
 	}
 
+	function broadcast(ws, method, args, resultCallback){
+		process.send({method:"broadcast",argments:{method, args, resultCallback}});
+		process.on("message",(msg)=>{
+			if(msg.method === "broadcast"){
+				broadcastCluster(ws, msg.argments.method, msg.argments.args, msg.argments.resultCallback);
+			}
+		});
+
+		/* 別プロセスは無視 */
+		// broadcastCluster(ws, method, args, resultCallback);
+	}
+
+	function broadcastToTargets(targetSocketIDList, ws, method, args, resultCallback) {
+		process.send({method:"broadcastToTargets",argments:{targetSocketIDList, method, args, resultCallback}});
+		process.on("message",(msg)=>{
+			if(msg.method === "broadcastToTargets"){
+				broadcastToTargetsCluster(ws, msg.argments.method, msg.argments.args, msg.argments.resultCallback);
+			}
+		});
+	}
+
 	/**
 	 * ブロードキャストする.
 	 * @method broadcast
@@ -260,7 +281,7 @@
 	 * @param {JSON} args パラメータ
 	 * @param {Function} resultCallback サーバから返信があった場合に呼ばれる. resultCallback(err, res)の形式.
 	 */
-	function broadcast(ws, method, args, resultCallback) {
+	function broadcastCluster(ws, method, args, resultCallback) {
 		let reqjson = {
 			jsonrpc: '2.0',
 			type : 'utf8',
@@ -296,7 +317,7 @@
 	 * @param {JSON} args パラメータ
 	 * @param {Function} resultCallback サーバから返信があった場合に呼ばれる. resultCallback(err, res)の形式.
 	 */
-	function broadcastToTargets(targetSocketIDList, ws, method, args, resultCallback) {
+	function broadcastToTargetsCluster(targetSocketIDList, ws, method, args, resultCallback) {
 		let reqjson = {
 			jsonrpc: '2.0',
 			type : 'utf8',
