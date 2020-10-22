@@ -31,10 +31,11 @@ function toArrayBuffer(base64) {
 }
 
 function resizeToThumbnail(srcCanvas) {
-	let width = document.body.clientWidth;
-	let height = document.body.clientHeight;
-	let canvas = document.createElement('canvas');
-	let ctx = canvas.getContext('2d');
+	const qgis = document.getElementById("qgis");
+	const width = qgis.clientWidth;
+	const height = qgis.clientHeight;
+	const canvas = document.createElement('canvas');
+	const ctx = canvas.getContext('2d');
 	canvas.width = 256;
 	canvas.height = 256 * (height / width);
 	ctx.drawImage(srcCanvas, 0, 0, srcCanvas.width, srcCanvas.height, 0, 0, canvas.width, canvas.height);
@@ -205,6 +206,62 @@ class GUI extends EventEmitter {
 		{
 			this.guiProperty.initFromProps(this.store.getContentInfo());
 		}
+
+		// dev用仮ボタン
+		let pos = {x:0,y:0,z:0};
+		let cameraMat = null;
+		let viewmat = null;
+		let worldmat = null;
+
+		let button = document.createElement("input");
+		button.type = "button";
+		button.value = "save";
+		button.addEventListener("click",()=>{
+			cameraMat = JSON.stringify(this.iframe.contentWindow.Q3D.application.camera.matrix.elements);
+			viewmat = JSON.stringify(this.iframe.contentWindow.Q3D.application.camera.matrixWorldInverse.elements);
+			worldmat = JSON.stringify(this.iframe.contentWindow.Q3D.application.camera.matrixWorld.elements);
+
+			// camera = JSON.stringify(this.iframe.contentWindow.Q3D.application.camera);
+
+			console.log("sssss",this.iframe.contentWindow.Q3D.application.camera);
+			console.log("mat",this.iframe.contentWindow.Q3D.application.camera.matrix.elements);
+			console.log("world",this.iframe.contentWindow.Q3D.application.camera.matrixWorld.elements);
+			console.log("worldinv",this.iframe.contentWindow.Q3D.application.camera.matrixWorldInverse.elements);
+			console.log("pos",this.iframe.contentWindow.Q3D.application.camera.position);
+			const p = this.iframe.contentWindow.Q3D.application.camera.position;
+			pos.x = p.x;
+			pos.y = p.y;
+			pos.z = p.z;
+
+			// this.iframe.contentWindow.Q3D.application.camera.position.set(0,100,100);
+			// this.iframe.contentWindow.Q3D.application.camera.lookAt(x, y, z);
+			// this.iframe.contentWindow.Q3D.application.render(true);
+			// console.log(this.iframe.contentWindow.Q3D.application.camera);
+			// console.log(this.iframe.contentWindow.Q3D.application);
+		});
+		propInner.appendChild(button);
+
+		let button2 = document.createElement("input");
+		button2.type = "button";
+		button2.value = "load";
+		button2.addEventListener("click",()=>{
+			this.iframe.contentWindow.Q3D.application.camera.matrixAutoUpdate = false;
+			console.log("@@@@@",this.iframe.contentWindow.Q3D.application);
+			// console.log(cameraMat);
+			this.iframe.contentWindow.Q3D.application.camera.matrix.elements = JSON.parse(cameraMat);
+			this.iframe.contentWindow.Q3D.application.camera.matrixWorld.elements = JSON.parse(worldmat);
+			this.iframe.contentWindow.Q3D.application.camera.matrixWorldInverse.elements = JSON.parse(viewmat);
+			// this.iframe.contentWindow.Q3D.application.camera = JSON.parse(camera);
+
+			// console.log("sssss");
+			// this.iframe.contentWindow.Q3D.application.camera.position.set(pos.x,pos.y,pos.z);
+			this.iframe.contentWindow.Q3D.application.camera.matrixAutoUpdate = true;
+
+			// this.iframe.contentWindow.Q3D.application.render();
+			// console.log(this.iframe.contentWindow.Q3D.application.camera);
+			// console.log(this.iframe.contentWindow.Q3D.application);
+		});
+		propInner.appendChild(button2);
 	}
 
 	initWindow() {
