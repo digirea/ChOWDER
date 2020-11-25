@@ -36,7 +36,7 @@ class Store extends EventEmitter {
         this.videoStore = null;
 
         this.initEvents();
-        this.time = null;
+        this.time = {};
 
         this.onGetWindowData = this.onGetWindowData.bind(this);
         this.onGetMetaData = this.onGetMetaData.bind(this);
@@ -463,6 +463,41 @@ class Store extends EventEmitter {
         }
     }
 
+    _updateQgisMetadata(metaData){
+		let dom = document.getElementById(metaData.id);
+		if(!dom){
+			return;
+		}
+		// console.log("[store:_updateQgisMetadata]",dom,metaData.id);
+		let iframe = dom.childNodes[0];
+		if(!iframe || !iframe.contentWindow || !iframe.contentWindow.Q3D){
+			//iframe読み込みがまだ終わっていない
+			return;
+		}
+		
+		/* camera matrix */
+		iframe.contentWindow.Q3D.application.camera.matrixAutoUpdate = false;
+		iframe.contentWindow.Q3D.application.camera.matrixWorld.elements = JSON.parse(metaData.cameraWorldMatrix);
+		let d = new iframe.contentWindow.THREE.Vector3();
+		let q = new iframe.contentWindow.THREE.Quaternion();
+		let s = new iframe.contentWindow.THREE.Vector3();
+		iframe.contentWindow.Q3D.application.camera.matrixWorld.decompose(d,q,s);
+		iframe.contentWindow.Q3D.application.camera.position.copy( d );
+		iframe.contentWindow.Q3D.application.camera.quaternion.copy( q );
+		iframe.contentWindow.Q3D.application.camera.scale.copy( s );
+		iframe.contentWindow.Q3D.application.camera.matrixAutoUpdate = true;
+		iframe.contentWindow.Q3D.application.scene.requestRender();
+
+		/* camera matrix */
+		const displayProperty = JSON.parse(metaData.displayProperty);
+		if(iframe.contentWindow.Q3D.application.labelVisible !== displayProperty.label){
+			iframe.contentWindow.Q3D.application.setLabelVisible(displayProperty.label);
+		}
+		if(iframe.contentWindow.Q3D.application._wireframeMode !== displayProperty.wireframe){
+			iframe.contentWindow.Q3D.application.setWireframeMode(displayProperty.wireframe);
+		}
+	}
+
     onGetWindowData(err, json) {
         if (!err && json) {
             this.metaDataDict[json.id] = json;
@@ -701,8 +736,11 @@ class Store extends EventEmitter {
         return this.virtualDisplay;
     }
 
-    getTime() {
-        return this.time;
+    getTime(id) {
+        if (this.time.hasOwnProperty(id)) {
+            return this.time[id];
+        }
+        return null;
     }
 
     getGlobalSetting() {

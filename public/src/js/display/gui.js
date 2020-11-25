@@ -64,19 +64,23 @@ class GUI extends EventEmitter {
 
         this.store.on(Store.EVENT_UPDATE_TIME, (err, data) => {
             // 全コンテンツデータの時刻をビューポートをもとに更新
-            let metaDataDict = this.store.getMetaDataDict();
-            let funcDict = this.store.getITownFuncDict();
+            const metaDataDict = this.store.getMetaDataDict();
+            const funcDict = this.store.getITownFuncDict();
+			const time = new Date(data.time);
             for (let id in metaDataDict) {
                 if (metaDataDict.hasOwnProperty(id)) {
                     let metaData = metaDataDict[id];
                     if (metaData.type === Constants.TypeWebGL) {
-                        let elem = document.getElementById(id);
-                        this.showTime(elem, metaData);
-                        // timeが変更された場合は、copyrightの位置が変更される
-                        this.showCopyrights(elem, metaData);
-                        
-                        if (funcDict && funcDict.hasOwnProperty(metaData.id)) {
-                            funcDict[metaData.id].chowder_itowns_update_time(metaData);
+                        if (ITownsUtil.isTimelineSync(metaData, data.id, data.senderSync))
+                        {
+                            let elem = document.getElementById(id);
+                            this.showTime(elem, metaData);
+                            // timeが変更された場合は、copyrightの位置が変更される
+                            this.showCopyrights(elem, metaData);
+                            
+                            if (funcDict && funcDict.hasOwnProperty(metaData.id)) {
+                                funcDict[metaData.id].chowder_itowns_update_time(metaData, time);
+                            }
                         }
                     }
                 }
@@ -407,8 +411,8 @@ class GUI extends EventEmitter {
             let timeElem = document.getElementById("time:" + metaData.id);
             let previewRect = previewArea.getBoundingClientRect();
             let time = "Time not received";
-            if (this.store.getTime()) {
-                let date = this.store.getTime();
+            if (this.store.getTime(metaData.id)) {
+                let date = this.store.getTime(metaData.id);
                 const y = date.getFullYear();
                 const m = ("00" + (date.getMonth()+1)).slice(-2);
                 const d = ("00" + date.getDate()).slice(-2);
@@ -584,62 +588,79 @@ class GUI extends EventEmitter {
         iframe.style.pointerEvents = "none";
         iframe.style.border = "none"
         iframe.onload = () => {
-            iframe.contentWindow.chowder_itowns_view_type = "display";
-            // iframe内のitownsからのコールバック
-            /*
-            iframe.contentWindow.chowder_itowns_measure_time = (timeString) => {
-                PerformanceLogger.logByVals("iTowns表示完了までの時間", "chowder_itowns_measure_time", timeString, metaData.id);
-                if (PerformanceLogger.validate()) {
-                    this.showDebugMessage(timeString);
-                }
-            };
-            */
-
-            let connector = new IFrameConnector(iframe);
-
-            try {
+            if(metaData.webglType && metaData.webglType === "qgis2three.js"){
+                // qgis
+                const connector = new IFrameConnector(iframe);
                 connector.connect(() => {
+                    this.action.updateQgisMetadata(metaData);
+                });
+
+            }else{
+                // itowns
+    
+                iframe.contentWindow.chowder_itowns_view_type = "display";
+                // iframe内のitownsからのコールバック
+                /*
+                iframe.contentWindow.chowder_itowns_measure_time = (timeString) => {
+                    PerformanceLogger.logByVals("iTowns表示完了までの時間", "chowder_itowns_measure_time", timeString, metaData.id);
+                    if (PerformanceLogger.validate()) {
+                        this.showDebugMessage(timeString);
+                    }
+                };
+                */
+
+                let connector = new IFrameConnector(iframe);
+
+                try {
+                    connector.connect(() => {
                     // 初回に一度実行
                     if (metaData.hasOwnProperty('cameraWorldMatrix')) {
                         connector.send(ITownsCommand.UpdateCamera, {
-                            mat : JSON.parse(metaData.cameraWorldMatrix),
-                            params : JSON.parse(metaData.cameraParams),
+                            mat: JSON.parse(metaData.cameraWorldMatrix),
+                            params: JSON.parse(metaData.cameraParams),
+                        }, () => {
+                            connector.send(ITownsCommand.InitLayers, JSON.parse(metaData.layerList), () => {
+                                let rect = DisplayUtil.calcWebGLFrameRect(this.store, metaData);
+                                connector.send(ITownsCommand.Resize, rect);
+                            });
+                        });
+                    } else {
+                        connector.send(ITownsCommand.InitLayers, JSON.parse(metaData.layerList), () => {
+                            let rect = DisplayUtil.calcWebGLFrameRect(this.store, metaData);
+                            connector.send(ITownsCommand.Resize, rect);
                         });
                     }
-                    connector.send(ITownsCommand.InitLayers, JSON.parse(metaData.layerList), () => {
-                        let rect = DisplayUtil.calcWebGLFrameRect(this.store, metaData);
-                        connector.send(ITownsCommand.Resize, rect);
-                    });
                 });
-            } catch(err) {
-                console.error(err, metaData);
-            }
-
-            // chowderサーバから受信したカメラ情報などを、displayのiframe内に随時送るためのコールバックイベントを登録
-            this.action.addItownFunc({
-                id : metaData.id,
-                func : {
-                    chowder_itowns_update_camera : (metaData) => {
-                        ITownsUtil.updateCamera(connector, metaData);
-                    },
-                    chowder_itowns_update_time : (metaData) => {
-                        ITownsUtil.updateTime(connector, metaData, this.store.getTime());
-                    },
-                    chowder_itowns_resize : (rect) => {
-                        ITownsUtil.resize(connector, rect)
-                    },
-                    chowder_itowns_update_layer_list : (metaData) => {
-                        let preMetaData = this.store.getMetaData(metaData.id);
-                        ITownsUtil.updateLayerList(connector, metaData, preMetaData);
-                    },
-                    chowder_itowns_measure_time : (callback) => {
-                        connector.send(ITownsCommand.MeasurePerformance, {}, callback);
-                    }
+                } catch (err) {
+                    console.error(err, metaData);
                 }
-               });
+
+                // chowderサーバから受信したカメラ情報などを、displayのiframe内に随時送るためのコールバックイベントを登録
+                this.action.addItownFunc({
+                    id: metaData.id,
+                    func: {
+                        chowder_itowns_update_camera: (metaData) => {
+                            ITownsUtil.updateCamera(connector, metaData);
+                        },
+                        chowder_itowns_update_time: (metaDatam, time) => {
+                            ITownsUtil.updateTime(connector, metaData, time);
+                        },
+                        chowder_itowns_resize: (rect) => {
+                            ITownsUtil.resize(connector, rect)
+                        },
+                        chowder_itowns_update_layer_list: (metaData, callback) => {
+                            let preMetaData = this.store.getMetaData(metaData.id);
+                            ITownsUtil.updateLayerList(connector, metaData, preMetaData, callback);
+                        },
+                        chowder_itowns_measure_time: (callback) => {
+                            connector.send(ITownsCommand.MeasurePerformance, {}, callback);
+                        }
+                    }
+                });
+            }
+            elem.innerHTML = "";
+            elem.appendChild(iframe);
         }
-        elem.innerHTML = "";
-        elem.appendChild(iframe);
     }
 
     /**

@@ -147,6 +147,7 @@
             });
 
             ws_connector.on(Command.SendMessage, (data, resultCallback) => {
+                console.log('SendMessage');
                 ws_connector.broadcast(ws, Command.SendMessage, data);
                 if (resultCallback) {
                     resultCallback();
@@ -272,6 +273,13 @@
                 if (resultCallback) {
                     resultCallback();
                 }
+            });
+
+            ws_connector.on(Command.Upload, (data, resultCallback) => {
+                console.log("[WebsocketInterface]upload")
+                let metaData = data.metaData,
+                    binaryData = data.contentData;
+                this.commandOperator.upload(metaData, binaryData, resultCallback);
             });
 
             ws_connector.registerEvent(ws, ws_connection);
