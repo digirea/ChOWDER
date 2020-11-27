@@ -237,7 +237,6 @@ class WsConnector {
 			let data = message.data,
 				parsed,
 				result;
-
 			if (typeof data === "string") {
 				try {
 					parsed = JSON.parse(data);

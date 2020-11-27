@@ -28,6 +28,7 @@ class Operation {
 		} else {
 			//if (this.store.getManagement().isEditable(metaData.group)) {
 			this.connector.send(Command.UpdateMetaData, [metaData], (err, reply) => {
+				// console.log("UpdateMetaData",metaData)
 				if (endCallback) {
 					endCallback(err, reply);
 				}

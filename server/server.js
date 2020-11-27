@@ -32,6 +32,9 @@
 
 	const WebsocketInterface = require('./operator/WebSocketInterface.js');
 	const wsInterface = new WebsocketInterface(commandOperator);
+	
+	const ClusterBroadcast = require("./cluster/ClusterBroadcast.js");
+	const clusterBroadcast = new ClusterBroadcast();
 
 	// register server id
 	executer.registerUUID("default");
@@ -254,6 +257,8 @@
 			console.log('start server "https://localhost' + portSTR + '/"');
 			console.log('start ws operate server "wss://localhost' + portSTR + '/"');
 		}
+
+		clusterBroadcast.setWS(wsList)
 	});
 
 	// unregister all window

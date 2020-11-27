@@ -4,7 +4,8 @@ class Master{
     }
 
     run(){
-        const THREAD_MAX = require("os").cpus().length;
+        // const THREAD_MAX = require("os").cpus().length;
+        const THREAD_MAX = 4;
 
         console.log("Master running");
         for(let i=0;i<THREAD_MAX;i++){ // CPU数だけworkerをつくる
@@ -18,6 +19,7 @@ class Master{
         for(const id in this.cluster.workers){
             /* いずれかのworkerから受け取ったmessageを全workerに知らせる */
             this.cluster.workers[id].on("message",(msg)=>{
+                // console.log("[master]broadcastWorkers");
                 if(msg.method){
                     this.broadcastWorkers(msg);
                 }

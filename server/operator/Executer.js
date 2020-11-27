@@ -3263,9 +3263,10 @@
             if(param.type === "qgis2three.js"){
                 /* qgis app 用のqgis2three.jsファイル */
                 const timestamp = Zip.createTimestamp();
-                const extractDir = "../public/qgis/"+timestamp+"/";
+                const extractDir = path.join(__dirname,"../../public/qgis/",timestamp,"/");
                 /* タイムスタンプでディレクトリ掘る */
                 if(!fs.existsSync(extractDir)){
+                    console.log(extractDir);
                     fs.mkdirSync(extractDir);
                 }
 
@@ -3283,6 +3284,7 @@
                     /* index.htmlを探す */
                     let htmlDir = null;
                     for(let file of fileList){
+                        console.log(file)
                         if(file.err !== null){
                             /* 解凍時にファイル単位でエラーになってた */
                             callback(file.err.toString(),null);//最初に起きたエラー
@@ -3290,8 +3292,7 @@
                         }
                         if(file.dir.match(/index.html$/)){
                             // console.log("HTML EXIST:",file.dir);
-                            const dir = file.dir.substr(9);
-                            htmlDir = dir;
+                            htmlDir = file.dir;
                         }
                     }
 

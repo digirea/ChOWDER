@@ -586,6 +586,7 @@ class GUI extends EventEmitter {
      * @param {*} contentData 
      */
     showWebGL(elem, metaData, contentData) {
+        console.log("showWebGL",metaData)
         let iframe = document.createElement('iframe');
         iframe.src = metaData.url;
 
@@ -595,7 +596,10 @@ class GUI extends EventEmitter {
         iframe.style.height = "100%";
         iframe.style.pointerEvents = "none";
         iframe.style.border = "none"
+        // console.log("iframe",iframe)
+        elem.appendChild(iframe);
         iframe.onload = () => {
+            // console.log("iframe.onload")
             if(metaData.webglType && metaData.webglType === "qgis2three.js"){
                 // qgis
                 const connector = new IFrameConnector(iframe);
@@ -666,8 +670,8 @@ class GUI extends EventEmitter {
                     }
                 });
             }
-            elem.innerHTML = "";
-            elem.appendChild(iframe);
+            // elem.innerHTML = "";
+            // elem.appendChild(iframe);
         }
     }
 

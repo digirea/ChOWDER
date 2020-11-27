@@ -238,7 +238,6 @@ class Store extends EventEmitter {
             this.metaData.cameraWorldMatrix = data.mat;
             this.metaData.cameraParams = data.params;
 			let updateData = JSON.parse(JSON.stringify(this.metaData));
-
             // 幅高さは更新しない
             delete updateData.width;
             delete updateData.height;

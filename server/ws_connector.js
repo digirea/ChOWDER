@@ -13,8 +13,7 @@
 		Command = require('./command.js'),
 		util = require('./util.js'),
 		resultCallbacks = {},
-		recievers = {},
-		messageID = 1;
+		recievers = {};
 
 	function sendResponse(ws_connection, injson) {
 		return (err, res, binary)=>{
@@ -254,11 +253,6 @@
 
 	function broadcast(ws, method, args, resultCallback){
 		process.send({method:"broadcast",argments:{method, args, resultCallback}});
-		process.on("message",(msg)=>{
-			if(msg.method === "broadcast"){
-				broadcastCluster(ws, msg.argments.method, msg.argments.args, msg.argments.resultCallback);
-			}
-		});
 
 		/* 別プロセスは無視 */
 		// broadcastCluster(ws, method, args, resultCallback);
@@ -266,89 +260,8 @@
 
 	function broadcastToTargets(targetSocketIDList, ws, method, args, resultCallback) {
 		process.send({method:"broadcastToTargets",argments:{targetSocketIDList, method, args, resultCallback}});
-		process.on("message",(msg)=>{
-			if(msg.method === "broadcastToTargets"){
-				broadcastToTargetsCluster(ws, msg.argments.method, msg.argments.args, msg.argments.resultCallback);
-			}
-		});
 	}
 
-	/**
-	 * ブロードキャストする.
-	 * @method broadcast
-	 * @parma {Object} ws websocketオブジェクト
-	 * @param {String} method JSONRPCメソッド
-	 * @param {JSON} args パラメータ
-	 * @param {Function} resultCallback サーバから返信があった場合に呼ばれる. resultCallback(err, res)の形式.
-	 */
-	function broadcastCluster(ws, method, args, resultCallback) {
-		let reqjson = {
-			jsonrpc: '2.0',
-			type : 'utf8',
-			id: messageID,
-			method: method,
-			params: args,
-			to: 'client'
-		}, data;
-
-		messageID = messageID + 1;
-		try {
-			data = JSON.stringify(reqjson);
-
-			if (Command.hasOwnProperty(reqjson.method)) {
-				resultCallbacks[reqjson.id] = resultCallback;
-				//if(method !== 'UpdateMouseCursor'){console.log("chowder_response broadcast ws", method);}
-				for (let i = 0; i < ws.length; ++i) {
-					ws[i].broadcast(data);
-				}
-			} else {
-				console.log('[Error] Not found the method in connector: ', data);
-			}
-		} catch (e) {
-			console.error(e);
-		}
-	}
-
-	/**
-	 * ブロードキャストする.
-	 * @method broadcast
-	 * @parma {Object} ws websocketオブジェクト
-	 * @param {String} method JSONRPCメソッド
-	 * @param {JSON} args パラメータ
-	 * @param {Function} resultCallback サーバから返信があった場合に呼ばれる. resultCallback(err, res)の形式.
-	 */
-	function broadcastToTargetsCluster(targetSocketIDList, ws, method, args, resultCallback) {
-		let reqjson = {
-			jsonrpc: '2.0',
-			type : 'utf8',
-			id: messageID,
-			method: method,
-			params: args,
-			to: 'client'
-		}, data;
-
-		messageID = messageID + 1;
-		try {
-			data = JSON.stringify(reqjson);
-
-			if (Command.hasOwnProperty(reqjson.method)) {
-				resultCallbacks[reqjson.id] = resultCallback;
-				//if(method !== 'UpdateMouseCursor'){console.log("chowder_response broadcast ws", method);}
-				
-                for (let i = 0; i < ws.length; ++i) {
-                    ws[i].connections.forEach((connection) => {
-                        if (targetSocketIDList.indexOf(connection.id) >= 0) {
-                            connection.sendUTF(data);
-                        }
-                    }); 
-				}
-			} else {
-				console.log('[Error] Not found the method in connector: ', data);
-			}
-		} catch (e) {
-			console.error(e);
-		}
-	}
 
 
 	function on(method, callback) {

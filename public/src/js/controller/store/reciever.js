@@ -23,6 +23,8 @@ class Receiver
     init() {
         // メタデータが更新されたときにブロードキャストされてくる.
         this.connector.on(Command.UpdateMetaData, (data) => {
+            // console.log("@@@@@@@@@@@@@@@@",data[0].cameraWorldMatrix);
+            // console.log("xxxxxxxxxxxxxxx",data[0].posx);
             for (let i = 0; i < data.length; ++i) {
                 let metaData = data[i];
                 let id = metaData.id;
