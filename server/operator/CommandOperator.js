@@ -473,7 +473,7 @@
          * @param {Function} endCallback 終了時に呼ばれるコールバック
          */
         updateMetaData(socketid, json, endCallback) {
-            console.log("UpdateMetaData");
+            // console.log("UpdateMetaData");
             let i,
                 metaData,
                 results = [],

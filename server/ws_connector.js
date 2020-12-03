@@ -15,6 +15,7 @@
 		resultCallbacks = {},
 		recievers = {};
 
+
 	function sendResponse(ws_connection, injson) {
 		return (err, res, binary)=>{
 			let metabin = null,
@@ -251,18 +252,6 @@
 		}
 	}
 
-	function broadcast(ws, method, args, resultCallback){
-		process.send({method:"broadcast",argments:{method, args, resultCallback}});
-
-		/* 別プロセスは無視 */
-		// broadcastCluster(ws, method, args, resultCallback);
-	}
-
-	function broadcastToTargets(targetSocketIDList, ws, method, args, resultCallback) {
-		process.send({method:"broadcastToTargets",argments:{targetSocketIDList, method, args, resultCallback}});
-	}
-
-
 
 	function on(method, callback) {
 		recievers[method] = callback;
@@ -270,8 +259,6 @@
 
 	module.exports.registerEvent = registerEvent;
 	module.exports.on = on;
-	module.exports.broadcast = broadcast;
-	module.exports.broadcastToTargets = broadcastToTargets;
 	module.exports.send = send;
 	module.exports.sendBinary = sendBinary;
 })();

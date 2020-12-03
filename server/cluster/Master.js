@@ -21,21 +21,6 @@ class Master{
             this.cluster.fork();
         });
 
-        for(const id in this.cluster.workers){
-            /* いずれかのworkerから受け取ったmessageを全workerに知らせる */
-            this.cluster.workers[id].on("message",(msg)=>{
-                // console.log("[master]11111broadcastWorkers");
-                if(msg.method){
-                    this.broadcastWorkers(msg);
-                }
-            });    
-        }
-    }
-
-    broadcastWorkers(msg){
-        for(const id in this.cluster.workers){
-            this.cluster.workers[id].send(msg);
-        }
     }
 
     getSettings(){

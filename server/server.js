@@ -30,12 +30,12 @@
 	const commandOperator = new CommandOperator;
 	const executer = commandOperator.executer;
 
-	const WebsocketInterface = require('./operator/WebSocketInterface.js');
-	const wsInterface = new WebsocketInterface(commandOperator);
-	
 	const ClusterBroadcast = require("./cluster/ClusterBroadcast.js");
 	const clusterBroadcast = new ClusterBroadcast();
 
+	const WebsocketInterface = require('./operator/WebSocketInterface.js');
+	const wsInterface = new WebsocketInterface(commandOperator,clusterBroadcast);
+	
 	// register server id
 	executer.registerUUID("default");
 
@@ -85,7 +85,7 @@
 					delete ws2_connections[connection.id];
 
 					executer.decrWindowReferenceCount(connection.id, (err, meta)=>{
-						ws_connector.broadcast(ws2, Command.UpdateWindowMetaData, meta);
+						clusterBroadcast.publish_broadcast(Command.UpdateWindowMetaData, meta);
 					});
 
 					console.log('connection closed :' + connection.id);

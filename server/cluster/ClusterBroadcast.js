@@ -1,22 +1,31 @@
 const Command = require('../command.js');
+const redis = require("redis");
 
 class ClusterBroadcast{
     constructor(){
+		this.subscriber = redis.createClient(6379, '127.0.0.1');
+		this.publisher = redis.createClient(6379, '127.0.0.1');
+
 		this.ws = null;
 		this.messageID = 1;
 
-        process.on("message",(msg)=>{
-            if(msg.method === "broadcast"){
-				if(this.ws !== null){
-                	this.broadcastCluster(this.ws, msg.argments.method, msg.argments.args, msg.argments.resultCallback);
+		this.subscriber.subscribe("broadcast");
+		this.subscriber.on("message", (channel, message)=>{
+			const msg = JSON.parse(message);
+			if(channel === "broadcast"){
+				if(msg.method === "broadcast"){
+					if(this.ws !== null){
+						this.broadcastCluster(this.ws, msg.argments.method, msg.argments.args);
+					}
+				}
+				if(msg.method === "broadcastToTargets"){
+					if(this.ws !== null){
+						this.broadcastToTargetsCluster(this.ws, msg.argments.method, msg.argments.args);
+					}
 				}
 			}
-            if(msg.method === "broadcastToTargets"){
-				if(this.ws !== null){
-					this.broadcastToTargetsCluster(this.ws, msg.argments.method, msg.argments.args, msg.argments.resultCallback);
-				}
-			}
-		});    
+		});
+
     }
 
     setWS(ws){
@@ -102,7 +111,13 @@ class ClusterBroadcast{
 		}
 	}
 
+	publish_broadcast(method, args){
+		this.publisher.publish("broadcast", JSON.stringify({method:"broadcast",argments:{method, args}}));
+	}
 
+	publish_broadcastToTargets(targetSocketIDList, method, args){
+		this.publisher.publish("broadcastToTargets", JSON.stringify({method:"broadcastToTargets",argments:{targetSocketIDList, method, args}}));
+	}
 
 }
 

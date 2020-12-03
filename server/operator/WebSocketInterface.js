@@ -10,8 +10,9 @@
     const PerformanceLogger = require('./PerformanceLogger');
 
     class WebsocketInterface { // クライアントとやり取りするAPI部分
-        constructor(commandOperator) {
+        constructor(commandOperator,clusterBroadcast) {
             this.commandOperator = commandOperator;
+            this.clusterBroadcast = clusterBroadcast;
         }
 
         log(method, resultCallback, socketid) {
@@ -132,7 +133,7 @@
             });
 
             ws_connector.on(Command.ShowWindowID, (data, resultCallback) => {
-                ws_connector.broadcast(ws, Command.ShowWindowID, data);
+                this.clusterBroadcast.publish_broadcast(Command.ShowWindowID, data);
                 if (resultCallback) {
                     resultCallback();
                 }
@@ -140,7 +141,7 @@
 
             ws_connector.on(Command.ReloadDisplay, (data, resultCallback) => {
                 console.log("ReloadDisplay")
-                ws_connector.broadcast(ws, Command.ReloadDisplay, data);
+                this.clusterBroadcast.publish_broadcast(Command.ReloadDisplay, data);
                 if (resultCallback) {
                     resultCallback();
                 }
@@ -148,7 +149,7 @@
 
             ws_connector.on(Command.SendMessage, (data, resultCallback) => {
                 console.log('SendMessage');
-                ws_connector.broadcast(ws, Command.SendMessage, data);
+                this.clusterBroadcast.publish_broadcast(Command.SendMessage, data);
                 if (resultCallback) {
                     resultCallback();
                 }
@@ -245,31 +246,31 @@
                 this.commandOperator.getGlobalSetting(data, resultCallback);
             });
             ws_connector.on(Command.RTCOffer, (data, resultCallback) => {
-                ws_connector.broadcast(ws, Command.RTCOffer, data);
+                this.clusterBroadcast.publish_broadcast(Command.SendMessage, data);
                 if (resultCallback) {
                     resultCallback();
                 }
             });
             ws_connector.on(Command.RTCRequest, (data, resultCallback) => {
-                ws_connector.broadcast(ws, Command.RTCRequest, data);
+                this.clusterBroadcast.publish_broadcast(Command.RTCRequest, data);
                 if (resultCallback) {
                     resultCallback();
                 }
             });
             ws_connector.on(Command.RTCAnswer, (data, resultCallback) => {
-                ws_connector.broadcast(ws, Command.RTCAnswer, data);
+                this.clusterBroadcast.publish_broadcast(Command.RTCAnswer, data);
                 if (resultCallback) {
                     resultCallback();
                 }
             });
             ws_connector.on(Command.RTCIceCandidate, (data, resultCallback) => {
-                ws_connector.broadcast(ws, Command.RTCIceCandidate, data);
+                this.clusterBroadcast.publish_broadcast(Command.RTCIceCandidate, data);
                 if (resultCallback) {
                     resultCallback();
                 }
             });
             ws_connector.on(Command.RTCClose, (data, resultCallback) => {
-                ws_connector.broadcast(ws, Command.RTCClose, data);
+                this.clusterBroadcast.publish_broadcast(Command.RTCClose, data);
                 if (resultCallback) {
                     resultCallback();
                 }
@@ -294,7 +295,7 @@
          */
         post_update(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.Update, reply);
+                this.clusterBroadcast.publish_broadcast(Command.Update, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -310,7 +311,7 @@
         post_addTileContent(ws, resultCallback) {
             return (err, reply) => {
                 // broadcastしない.
-                // ws_connector.broadcast(ws, Command.Update);
+                // this.clusterBroadcast.publish_broadcast(Command.Update);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -323,7 +324,7 @@
          */
         post_updateMetaData(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateMetaData, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateMetaData, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -336,7 +337,7 @@
          */
         post_updateGroup(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateGroup, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateGroup, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -349,7 +350,7 @@
          */
         post_updateContent(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateContent, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateContent, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -362,7 +363,7 @@
          */
         post_updateDB(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateContent, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateContent, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -375,7 +376,7 @@
          */
         post_deleteContent(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.DeleteContent, reply);
+                this.clusterBroadcast.publish_broadcast(Command.DeleteContent, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -391,7 +392,7 @@
                 let socketid,
                     id,
                     i;
-                ws_connector.broadcast(ws, Command.DeleteWindowMetaData, reply);
+                this.clusterBroadcast.publish_broadcast(Command.DeleteWindowMetaData, reply);
 
                 for (socketid in this.commandOperator.executer.socketidToHash) {
                     if (this.commandOperator.executer.socketidToHash.hasOwnProperty(socketid)) {
@@ -418,7 +419,7 @@
          */
         post_updateWindowMetaData(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateWindowMetaData, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateWindowMetaData, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -431,7 +432,7 @@
          */
         post_updateVirtualDisplay(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateVirtualDisplay, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateVirtualDisplay, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -444,7 +445,7 @@
          */
         post_updateMouseCursor(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateMouseCursor, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateMouseCursor, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -458,7 +459,7 @@
          */
         post_updateSetting(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.UpdateSetting, reply);
+                this.clusterBroadcast.publish_broadcast(Command.UpdateSetting, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -471,7 +472,7 @@
          */
         post_db_change(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.ChangeDB, reply);
+                this.clusterBroadcast.publish_broadcast(Command.ChangeDB, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -484,7 +485,7 @@
          */
         post_updateAuthority(ws, resultCallback) {
             return (err, reply) => {
-                ws_connector.broadcast(ws, Command.ChangeAuthority, reply);
+                this.clusterBroadcast.publish_broadcast(Command.ChangeAuthority, reply);
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
@@ -497,14 +498,14 @@
          */
         post_askDisplayPermission(ws) {
             return (err, data) => {
-                ws_connector.broadcast(ws, Command.AskDisplayPermission, data);
+                this.clusterBroadcast.publish_broadcast(Command.AskDisplayPermission, data);
             }
         }
 
         post_updateDisplayPermission(ws, resultCallback) {
             return (err, reply) => {
                 // 拒否設定されたDisplayにはbraodcastできないようにしているので、個別で、変更されたDisplayのみに送る
-                // ws_connector.broadcast(ws, Command.UpdateDisplayPermissionList, reply);
+                // this.clusterBroadcast.publish_broadcast(Command.UpdateDisplayPermissionList, reply);
                 const allDisplayCache = this.commandOperator.executer.allDisplayCache;
                 let targetSocketIDList = [];
                 for (let i = 0; i < reply.length; ++i) {
@@ -524,7 +525,7 @@
                         }
                     });
                 }
-                ws_connector.broadcastToTargets(targetSocketIDList, ws, Command.UpdateDisplayPermissionList, {});
+                this.clusterBroadcast.publish_broadcastToTargets(targetSocketIDList, Command.UpdateDisplayPermissionList, {});
                 if (resultCallback) {
                     resultCallback(err, reply);
                 }
