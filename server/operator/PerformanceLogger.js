@@ -126,12 +126,10 @@
             };
 
             // ws_connector.broadcastをすり替え
-            const originalBroadcast = ws_connector.broadcast;
-            ws_connector.broadcast = (ws, method, args, resultCallback) => {
+            const originalBroadcast = this.clusterBroadcast.publish_broadcast.bind(this.clusterBroadcast);
+            this.clusterBroadcast.publish_broadcast = (method, args) => {
                 try {
-
                     if (args !== undefined && args && args.hasOwnProperty('id')) {
-
                         if (BroadcastMethodToMeaning.hasOwnProperty(method)) {
                             let label = BroadcastMethodToMeaning[method];
 
@@ -150,7 +148,7 @@
                 } catch (e) {
                     console.error(e)
                 }
-                originalBroadcast(ws, method, args, resultCallback);
+                originalBroadcast(method, args);
             };
         }
 
@@ -189,7 +187,8 @@
          * パフォーマンス計測用フラグの設定
          * @param {*} enableMeasureTime 
          */
-        setEnableMeasureTime(enableMeasureTime) {
+        setEnableMeasureTime(enableMeasureTime,clusterBroadcast) {
+            this.clusterBroadcast = clusterBroadcast;
             this.enableMeasureTime = enableMeasureTime;
             if (this.enableMeasureTime) {
                 // ファイル準備

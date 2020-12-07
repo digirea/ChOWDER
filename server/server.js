@@ -180,7 +180,7 @@
 		// パフォーマンス計測用の設定
 		if (settings && settings.hasOwnProperty('enableMeasureTime') && String(settings.enableMeasureTime) === "true" ) {
 			Logger.setExecuter(executer);
-			Logger.setEnableMeasureTime(true);
+			Logger.setEnableMeasureTime(true,clusterBroadcast);
 		}
 
 		// http/httpsサーバを有効にするかどうか
