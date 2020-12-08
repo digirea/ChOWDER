@@ -3,8 +3,7 @@
  * Copyright (c) 2016-2018 RIKEN Center for Computational Science. All rights reserved.
  */
 
-"use strict";
-
+import Store from "./store.js";
 import PopupBackground from "../components/popup_background";
 import Input from "../components/input";
 import Button from "../components/button";
@@ -33,11 +32,30 @@ class LayerDialog extends EventEmitter {
         this.setting = {};
         this.csv = null;
         this.json = null;
+
+        this.store.on(Store.EVENT_DONE_UPLOAD, (err, data) => {
+            if (err) {
+                if (this.errorText) {
+                    this.errorText.textContent = 'Error: ' + err;
+                }
+            } else if (data.hasOwnProperty('path')) {
+                if (data.path.indexOf('.csv') > 0){
+                    this.changeInputURLValue(data.path)
+                } else if (data.path.indexOf('.json') > 0){
+                    this.changeInputJSONValue(data.path)
+                }
+            }
+        });
     }
 
     changeInputURLValue(fileName) {
         const port = window.location.port ? ":" + window.location.port : "";
         this.urlInput.value = window.location.protocol + "//" + window.location.hostname + port + "/" + fileName;
+    }
+
+    changeInputJSONValue(fileName) {
+        const port = window.location.port ? ":" + window.location.port : "";
+        this.jsonURLInput.value = window.location.protocol + "//" + window.location.hostname + port + "/" + fileName;
     }
 
     init() {
@@ -62,11 +80,16 @@ class LayerDialog extends EventEmitter {
         this.createTypeRow();
         this.createIDRow();
         this.createTitleRow();
+        this.createJSONRow();
         this.createStyleRow();
         this.createMTLRow();
         this.createZoomRow();
-        this.createFileOpenRow();
         this.createFormatRow();
+        this.createEPSGRow();
+
+        this.createCSVOpenRow();
+        this.createJSONOpenRow();
+        this.createErrorText();
 
         this.endCallback = null;
         this.createPopupBackground();
@@ -114,14 +137,23 @@ class LayerDialog extends EventEmitter {
                 this.mtlRow.style.display = "none";
             }
             if (type === ITownsConstants.TypeBargraph) {
-                this.fileOpenRow.style.display = "block";
+                this.csvOpenRow.style.display = "block";
+                this.jsonOpenRow.style.display = "block";
+                this.jsonRow.style.display = "block";
             } else {
-                this.fileOpenRow.style.display = "none";
+                this.csvOpenRow.style.display = "none";
+                this.jsonOpenRow.style.display = "none";
+                this.jsonRow.style.display = "none";
             }
             if (type === ITownsConstants.TypeElevation) {
                 this.formatRow.style.display = "block";
             } else {
                 this.formatRow.style.display = "none";
+            }
+            if (type === ITownsConstants.Type3DTile) {
+                this.epsgRow.style.display = "block";
+            } else {
+                this.epsgRow.style.display = "none";
             }
             this.changeInputURLValue(SampleURLFileNames[type]);
         });
@@ -169,6 +201,21 @@ class LayerDialog extends EventEmitter {
         this.styleRow.style.display = "none";
     }
 
+    createJSONRow() {
+        this.jsonURLTitle = document.createElement('p');
+        this.jsonURLTitle.className = "layer_dialog_sub_title";
+        this.jsonURLTitle.innerText = "JSON:";
+        this.jsonURLInput = document.createElement('textarea');
+        this.jsonURLInput.className = "layer_dialog_url_input";
+        this.jsonURLInput.value = "https://localhost/userdata/itowns/csv_sample/setting.json";
+
+        this.jsonRow = this.createRow();
+        this.jsonRow.className = "layer_dialog_row2"
+        this.jsonRow.appendChild(this.jsonURLTitle);
+        this.jsonRow.appendChild(this.jsonURLInput);
+        this.jsonRow.style.display = "none";
+    }
+
     createMTLRow() {
         this.mtlURLTitle = document.createElement('p');
         this.mtlURLTitle.className = "layer_dialog_sub_title";
@@ -211,37 +258,120 @@ class LayerDialog extends EventEmitter {
         this.zoomRow.appendChild(this.zoomMaxTitle);
         this.zoomRow.appendChild(this.zoomMaxSelect.getDOM());
     }
+    
+    createErrorText() {
+        // エラー表示用文字列
+        this.errorRow = this.createRow();
+        this.errorText = document.createElement('span');
+        this.errorText.className = 'layer_dialog_error'
+        this.errorText.textContent = 'Error:'
+        this.errorText.style.display = 'none';
+        this.errorRow.appendChild(this.errorText);
+    }
 
-    createFileOpenRow() {
-        this.fileOpenTitle = document.createElement('p');
-        this.fileOpenTitle.className = "layer_dialog_fileopen_title";
-        this.fileOpenTitle.innerText = "Import From File:";
-        this.fileOpenInput = new Input('file');
-        this.fileOpenInput.type = "file";
-        this.fileOpenInput.getDOM().style.display = "inline-block";
+    createCSVOpenRow() {
+        this.csvOpenTitle = document.createElement('p');
+        this.csvOpenTitle.className = "layer_dialog_fileopen_title";
+        this.csvOpenTitle.innerText = "Import CSV File:";
+        this.csvOpenInput = new Input('file');
+        this.csvOpenInput.type = "file";
+        this.csvOpenInput.getDOM().style.display = "inline-block";
 
-        this.fileOpenRow = this.createRow();
-        this.fileOpenRow.appendChild(this.fileOpenTitle);
-        this.fileOpenRow.appendChild(this.fileOpenInput.getDOM());
-        this.fileOpenRow.style.display = "none";
-        
-        this.fileOpenInput.on(Input.EVENT_CHANGE, (err, evt) => {
-            this.csv = null;
+        // csvアップロード中のぐるぐる回るアイコン
+        this.csvLoadingImage = document.createElement('span');
+        this.csvLoadingImage.className = 'layer_dialog_csv_loading'
+        this.csvLoadingImage.textContent = 'Uploading...'
+        this.csvLoadingImage.style.display = 'none';
+
+        this.csvOpenRow = this.createRow();
+        this.csvOpenRow.appendChild(this.csvOpenTitle);
+        this.csvOpenRow.appendChild(this.csvOpenInput.getDOM());
+        this.csvOpenRow.appendChild(this.csvLoadingImage);
+        this.csvOpenRow.style.display = "none";
+
+        this.csvOpenInput.on(Input.EVENT_CHANGE, (err, evt) => {
+            this.csvLoadingImage.style.display = 'inline';
+            this.errorText.style.display = 'none';
+
             let files = evt.target.files;
             let fileReader = new FileReader();
             fileReader.onload = (e) => {
-                let data = new Uint8Array(e.target.result);
-                let converted = window.Encoding.convert(data, {
-                    to: 'UNICODE',
-                    from: 'AUTO'
-                });
-                let str = Encoding.codeToString(converted);
-                let parsed = window.Papa.parse(str);
-                if (parsed.errors.length == 0) {
-                    this.csv = str;
-                } else {
-                    console.error(parsed.errors);
+                try {
+                    let data = new Uint8Array(e.target.result);
+                    let converted = window.Encoding.convert(data, {
+                        to: 'UNICODE',
+                        from: 'AUTO'
+                    });
+                    // パースできるか確かめる
+                    let str = Encoding.codeToString(converted);
+                    let parsed = window.Papa.parse(str);
+                    if (parsed.errors.length == 0) {
+                        console.error("upload")
+                        this.action.upload({
+                            filename: files[0].name,
+                            type : ITownsConstants.UploadTypeCSV,
+                            binary: e.target.result
+                        });
+                    } else {
+                        throw 'Failed to parse CSV.'
+                    }
+                } catch(err) {
+                    this.errorText.textContent = 'Error:' + err.toString();
+                    this.errorText.style.display = 'block';
                 }
+                this.csvLoadingImage.style.display = 'none';
+            };
+            fileReader.readAsArrayBuffer(files[0]);
+        });
+    }
+
+    createJSONOpenRow() {
+        this.jsonOpenTitle = document.createElement('p');
+        this.jsonOpenTitle.className = "layer_dialog_fileopen_title";
+        this.jsonOpenTitle.innerText = "Import JSON File:";
+        this.jsonOpenInput = new Input('file');
+        this.jsonOpenInput.type = "file";
+        this.jsonOpenInput.getDOM().style.display = "inline-block";
+
+        // csvアップロード中のぐるぐる回るアイコン
+        this.jsonLoadingImage = document.createElement('span');
+        this.jsonLoadingImage.className = 'layer_dialog_csv_loading'
+        this.jsonLoadingImage.textContent = 'Uploading...'
+        this.jsonLoadingImage.style.display = 'none';
+
+        this.jsonOpenRow = this.createRow();
+        this.jsonOpenRow.appendChild(this.jsonOpenTitle);
+        this.jsonOpenRow.appendChild(this.jsonOpenInput.getDOM());
+        this.jsonOpenRow.appendChild(this.jsonLoadingImage);
+        this.jsonOpenRow.style.display = "none";
+
+        this.jsonOpenInput.on(Input.EVENT_CHANGE, (err, evt) => {
+            this.jsonLoadingImage.style.display = 'inline';
+            this.errorText.style.display = 'none';
+
+            let files = evt.target.files;
+            let fileReader = new FileReader();
+            fileReader.onload = (e) => {
+                try {
+                    let data = new Uint8Array(e.target.result);
+                    let str = new TextDecoder().decode(data);
+
+                    // パースできるか確かめる
+                    let parsed = JSON.parse(str);
+                    if (parsed) {
+                        this.action.upload({
+                            filename: files[0].name,
+                            type : ITownsConstants.UploadTypeJSON,
+                            binary: e.target.result
+                        });
+                    } else {
+                        throw 'Failed to parse JSON.'
+                    }
+                } catch(err) {
+                    this.errorText.textContent = 'Error:' + err.toString();
+                    this.errorText.style.display = 'block';
+                }
+                this.jsonLoadingImage.style.display = 'none';
             };
             fileReader.readAsArrayBuffer(files[0]);
         });
@@ -291,6 +421,44 @@ class LayerDialog extends EventEmitter {
         });
     }
 
+    createEPSGRow() {
+        this.epsgTitle = document.createElement('p');
+        this.epsgTitle.className = "layer_dialog_sub_title";
+        this.epsgTitle.innerText = "Conversion:";
+        
+        this.epsgFromTitle = document.createElement('p');
+        this.epsgFromTitle.className = "layer_dialog_epsg_title layer_dialog_epsg_from_title";
+        this.epsgFromTitle.innerText = "From";
+
+        this.epsgSrcSelect = new Select();
+        this.epsgSrcSelect.addOption("EPSG:4978", "EPSG:4978");
+        this.epsgSrcSelect.addOption("EPSG:3857", "EPSG:3857");
+        this.epsgSrcSelect.addOption("EPSG:2446", "EPSG:2446");
+        this.epsgSrcSelect.addOption("Custom", "Custom");
+        this.epsgSrcSelect.getDOM().className = "layer_dialog_epsg_min_select";
+        this.epsgSrcSelect.setSelectedIndex(0);
+
+        this.epsgToTile = document.createElement('p');
+        this.epsgToTile.className = "layer_dialog_epsg_title";
+        this.epsgToTile.innerText = "To";
+
+        this.epsgDstSelect = new Select();
+        this.epsgDstSelect.addOption("EPSG:4978", "EPSG:4978");
+        this.epsgDstSelect.addOption("EPSG:3857", "EPSG:3857");
+        this.epsgDstSelect.addOption("EPSG:2446", "EPSG:2446");
+        this.epsgDstSelect.addOption("Custom", "Custom");
+        this.epsgDstSelect.getDOM().className = "layer_dialog_epsg_max_select";
+        this.epsgDstSelect.setSelectedIndex(0);
+
+        this.epsgRow = this.createRow();
+        this.epsgRow.style.display = "none"
+        this.epsgRow.appendChild(this.epsgTitle);
+        this.epsgRow.appendChild(this.epsgFromTitle);
+        this.epsgRow.appendChild(this.epsgSrcSelect.getDOM());
+        this.epsgRow.appendChild(this.epsgToTile);
+        this.epsgRow.appendChild(this.epsgDstSelect.getDOM());
+    }
+
     createPopupBackground() {
         this.okButton = new Button();
         this.okButton.setDataKey("OK");
@@ -338,6 +506,12 @@ class LayerDialog extends EventEmitter {
                 } else {
                     data.tileMatrixSet = 'PM'
                 }
+            }
+            if (data.type === ITownsConstants.Type3DTile) {
+                data.conversion = {
+                    src : this.epsgSrcSelect.getSelectedValue(),
+                    dst : this.epsgDstSelect.getSelectedValue()
+                };
             }
 
             if (this.endCallback) {
