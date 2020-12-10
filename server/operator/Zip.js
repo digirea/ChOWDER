@@ -31,7 +31,11 @@
          */
         static _extractFile(zip,file,extractDir){
             return new Promise((resolve,reject)=>{
+                // console.log("extractDir",extractDir)
                 const filepath = path.join(extractDir,zip.files[file].name);
+                // console.log("filepath",filepath)
+                const relativeDir = path.join("userdata",extractDir.split("\\public").slice(-1)[0]);
+                // console.log("relativeDir",relativeDir)
                 if(zip.files[file].options.dir === true){
                     if(!fs.existsSync(filepath)){
                         console.log("[mkdir] : ",filepath);
@@ -40,7 +44,6 @@
                                 console.log(err)
                                 reject({err:err,dir:null});
                             };
-                            const relativeDir = extractDir.split("\\public").slice(-1)[0];
                             resolve({err:null,dir:path.join(relativeDir,zip.files[file].name)});
                         });
                     }else{
@@ -56,7 +59,6 @@
                             console.log(err)
                             reject({err:err,dir:null});
                         };
-                        const relativeDir = extractDir.split("\\public").slice(-1)[0];
                         resolve({err:null,dir:path.join(relativeDir,zip.files[file].name)});
                     });
                 }

@@ -3254,8 +3254,8 @@
         /**
          * upload
          * @method upload
-         * @param {Object} param param
-         * @param {BLOB} binaryData binaryData
+         * @param {{type:string}} param param
+         * @param {Blob} binaryData binaryData
          * @param {Function} callback (string err, {string dirname})=>{}
          */
         upload(param, binaryData, callback) {
@@ -3263,7 +3263,7 @@
             if (param.type === "qgis2three.js") {
                 /* qgis app 用のqgis2three.jsファイル */
                 const timestamp = Util.createTimestamp();
-                const extractDir = "../public/userdata/qgis/" + timestamp + "/";
+                const extractDir = path.join(__dirname,"..","..","public","userdata","qgis",timestamp);
                 /* タイムスタンプでディレクトリ掘る */
                 fs.mkdir(extractDir, { recursive: true }, (err) => {
                     if (err) {
@@ -3314,6 +3314,7 @@
                                     }); 
                                 }else{
                                     /* なんか htmlDir とか htmlFilePath とかのパス周りがおかしいかも */
+                                    console.log("invalid path?")
                                     console.log("it is not qgis2three.js file");
                                     callback(new Error("it is not qgis2three.js file").toString(), null);
                                 }
