@@ -371,7 +371,7 @@
          * @param {Function} endCallback 終了時に呼ばれるコールバック
          */
         getMetaData(socketid, json, endCallback) {
-            // console.log("GetMetaData:" + json.id);
+            console.log("GetMetaData:" + json.id);
             this.executer.getMetaData(socketid, json.type, json.id, (err, metaData) => {
                 if (endCallback) {
                     // Historyの場合は全タイル登録済かどうかのフラグを返す
