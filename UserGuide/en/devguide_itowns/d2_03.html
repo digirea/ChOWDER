@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,96 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">About chowder_injection</h1>
+
+        <h2 id="chowder_injectionについて詳細">About chowder_injection (details)</h2>
+        <p>The implementation code for <code>chowder_injection</code> is,
+            <code>src/js/chowder_itowns_injection/</code>.
+        </p>
+        <p>chowder_injection does the following.</p>
         <ul>
-            <li>OS
+            <li>
+                <p>Controlling resize events in iTowns</p>
                 <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
+                    <li>Whenever a resize event occurs on a page that uses iTowns, the camera and other elements are
+                        updated within iTowns,<br>
+                        Since the frustum set for display division is shifted, ChOWDER's display view suppresses this
+                        resize event.</li>
                 </ul>
             </li>
-            <li>Webブラウザ
+            <li>
+                <p>Adding and Deleting Layers</p>
                 <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
+                    <li>When a layer add/delete operation is performed in the ChOWDER iTowns App, chowder_injection
+                        actually adds/deletes the layer to/from the iTowns content being displayed.</li>
+                    <li>
+                        The xyz specification of the URL when adding a layer corresponds not only to <code>${z}/${x}/${y}</code> of
+                        iTowns, but also to {z}/{x}/{y} used in Geographical Survey Institute maps, etc.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Obtaining and changing layer properties
+                </p>
+                <ul>
+                    <li>When iTowns contents are loaded in ChOR iTowns App, layer data in iTowns contents are acquired,
+                        and some layer properties (transparency, show/hide, etc.) can be displayed and changed in
+                        ChOWDER iTowns App.<br>
+                        When a layer property is changed, the changed data is saved in RedisDB used by ChOWDER as
+                        metadata in the ChOWDER content.
+                </ul>
+            </li>
+            <li>
+                <p>Special handling according to data</p>
+                <ul>
+                    <li>
+                        Special data-specific support is provided in the createLayerByType and createLayerConfigByType
+                        functions in src/js/chowder_itowns_injection/store.js.
+                    </li>
+                    <li>Modification of the iTowns library itself and specification of the input source EPSG (EPSG4326)
+                        in order to support vector tile data of Geographical Survey Institute maps.</li>
+                    <li>To support Geographical Survey Institute map elevation data, the original parser for
+                        Geographical Survey Institute maps is used to expand elevation data when the extension is csv,
+                        txt, or png.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Thumbnail Registration for ChOWDER</p>
+                <ul>
+                    <li>We create thumbnail images for ChOWDER content.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Performance measurement function</p>
+                <ul>
+                    <li>When the button for performance measurement is pressed in the ChOWDER iTowns App, the time per
+                        frame, number of polygons displayed, etc. are measured in the chowder_injection of the iTowns
+                        content currently displayed on the ChOWDER display.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Timeline Function
+                </p>
+                <ul>
+                    <li>In the ChOWDER iTowns App, when the date and time are changed in the timeline, <code>timeCallback</code> is
+                        called with the injectChOWDER function's argument. timeCallback takes a Date object as its first
+                        argument that points to the date and time in the timeline.</li>
                 </ul>
             </li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
+        <h2 id="chowder_injectionと-chowder-itownsコンテンツ間の通信">Communication between chowder_injection, ChOWDER and iTowns contents</h2>
+        <p>ChOWDER reads chowder_injection and iTowns contents and displays them as contents,<br>
+            At this time, communication between ChOWDER and chowder_injection is performed using the standard <code>EventTarget interface</code>. The communication data follows JSONRPC2 as well as ChOWDER itself. For details, please refer to the following
+        </p>
+        <p>EventTarget - <a
+                href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget">https://developer.mozilla.org/ja/docs/Web/API/EventTarget</a>
+        </p>
+        <p>Communication code between ChOWDER and chowder_injection  - src/js/common/iframe_connector.js</p>
+        <img src="../image/itowns_connection.png" height="400">
+        <p>
+            In addition, between chowder_injection and iTowns content, the aforementioned injectChOWDER function is called to directly reference iTowns objects from chowder_injection The following is an example of a chowder_injection.
+        </p>
 
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
 
     </div>
 

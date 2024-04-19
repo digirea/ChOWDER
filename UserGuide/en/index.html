@@ -2,11 +2,15 @@
 <html>
 
 <head>
-  <title>TileViewer_Dev</title>
+  <title>index</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="../../katex.min.css">
+  <link rel="stylesheet" href="../katex.min.css">
+
+
+
+
 
   <style>
     code[class*=language-],
@@ -868,6 +872,10 @@
       border-bottom: solid 15px transparent;
       border-right: solid 20px #959e9b;
     }
+
+    li {
+      padding: 0.5em;
+    }
   </style>
   <!-- The content below will be included at the end of the <head> element. -->
   <script type="text/javascript">
@@ -882,24 +890,53 @@
 
   <div class="crossnote markdown-preview  ">
 
-    <h1 style="margin-top: 0em;">ChOWDER用TileViewer 実装詳細</h1>
-
-    <ul style="margin-top: 1em;"> 基本方針
+    <h1>ChOWDER User Guide</h1>
+    <ul style="padding-top: 3em;">
+      <li>
+        <p><a href="userguide/index.html">UserGuide</a></p>
+        <ul>
+          <li>Explains how to use ChOWDER.</li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="devguide/index.html">DeveloperGuide</a></p>
+        <ul>
+          <li>Explains how to develop ChOWDER.</li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="architecture/index.html">Architesture</a></p>
+        <ul>
+          <li>Describes the design of the cooperative workspace driver and the cooperative behavior framework.</li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="devguide_itowns/index.html">DeveloperGuide For ITownsSupport</a></p>
+        <ul>
+          <li>Provides an overview of iTowns content supporting ChOWDER and how to develop it.</li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="devguide_tileviewer/index.html">DeveloperGuide For TileViewer</a></p>
+        <ul>
+          <li>Provides an overview of TileViewer content that supports ChOWDER and explains how to develop it.</li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="tileviewer_api/index.html">TileViewer API</a></p>
+        <ul>
+          <li>Explains the development API for linking ChOWDER and TileViewer contents</li>
+        </ul>
+      </li>
+      <li>
+        <p><a href="tileviewer_dev/index.html">TileViewer for ChOWDER Implementation Details</a></p>
+        <ul>
+          <li>Explanation of the implementation of TileViewer functionality for ChOWDER
+          </li>
+        </ul>
+      </li>
     </ul>
 
-    <ul>座標系周りの仕様
-      <ul>
-        <li>スケールを行わない状況での座標系</li>
-        <li>画面中心へのスケーリング
-        </li>
-        <li>移動</li>
-        <li>画面のリサイズ等による拡縮</li>
-        <li>タイルのレベル変更</li>
-        <li>ビューポートの設定</li>
-    </ul>
-    </ul>
-    
-    <h2 style="margin-top: 1em;"><a href="../index.html" target="_parent">他のドキュメント</a> </h2>
   </div>
 
 

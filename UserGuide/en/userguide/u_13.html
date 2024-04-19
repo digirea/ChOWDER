@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,94 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Using the ChOWDER Display Application for Electron</h1>
+
+        <h2>Overflow</h2>
+        <p>The ChOWDER Display application for Electron can be used to automatically place frameless windows on the
+            screen.</p>
+        <h2>Installing the Application</h2>
+        <p>Installation of the ChOWDER Display for Electron is included in the ChOWDER installation.<br>
+            Install node.js and run the ChOWDER installation scripts as described in the "How to Install the
+            Application" section.
+        </p>
+        <h2>Launch the application</h2>
+        <p>Run the following files under the <code>standalone-electron</code> directory to launch the ChOWDER display
+            for Electron.</p>
         <ul>
-            <li>OS
+            <li>For Windows: ChOWDER-Standalone-Electron-win32-x64/ChOWDER-Standalone-Electron.exe</li>
+            <li>For Mac: ChOWDER-Standalone-Electron-darwin-x64/ChOWDER-Standalone-Electron.app</li>
+            <li>For Linux: ChOWDER-Standalone-Electron-linux-x64/ChOWDER-Standalone-Electron</li>
+        </ul>
+        <h2>
+            Application Settings</h2>
+        <p>The configuration of the ChOWDER display for Electron can be done in a configuration file in JSON format.<br>
+            The configuration file is created under the standalone-electron directory with the file name
+            <code>conf.json</code>.<br>
+            The format of the configuration file is as follows: conf.json:
+        </p>
+        <pre class="language-text">{
+    "url": "http://localhost/view.html",
+    "password" : "password",
+    "windows": {
+        "tile1": {
+            "group": "sample",
+            "position": [0, 0],
+            "size" : [1920, 1080],
+            "vda_position": [0, 0],
+            "vda_scale": 1.0,
+            "fullscreen": false,
+            "frame": false
+        },
+        "tile2": {
+            "group": "sample",
+            "position": [1920, 0],
+            "size" : [1920, 1080],
+            "vda_position": [1920, 0],
+            "vda_scale": 1.0,
+            "fullscreen": false,
+            "frame": false
+        }
+    }
+}
+</pre>
+        <ul>
+            <li><code>url</code> is the URL of the ChOWDER server.</li>
+            <li><code>password</code> is the password for permission to distribute the display.<br>
+                By setting the same password for ElectronDisplay in the controller,
+                content can be delivered without having to configure permissions for each display individually.</li>
+            <li><code>windows</code> is an object with the display ID as the key and display settings as the value.
                 <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
+                    <li><code>group</code> specifies the site.</li>
+                    <li><code>position</code> is the screen coordinate of the display device, and specifies the position
+                        of the
+                        window
+                        [horizontally or vertically] with the origin at the upper left corner of the display device
+                        screen.</li>
+                    <li><code>size</code> specifies the window size [ width, height ].
+                    </li>
+                    <li><code>vda_position</code> specifies the position of the VDA [ horizontally, vertically ] with the
+                        top left
+                        corner
+                        of the Virtual Display Screen as the origin.</li>
+                    <li><code>vda_scale</code> specifies the magnification ratio on the VDA.</li>
+                    <li><code>fullscreen</code> specifies whether the window should be displayed in fullscreen mode.
+                    </li>
+                    <li><code>frame</code> specifies whether to display the window frame.</li>
                 </ul>
             </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
+        <h2>Reflecting the application configuration</h2>
+        <p>Run npm install in the "standalone-electron" directory and overwrite the package to reflect the configuration.</p>
+        <h2>Installation on a remote host</h2>
+        <p>Copy the following folder containing the executable files to the remote host and execute it to start the ChOWDER display for Electron on the remote host.</p>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li>Windows version: ChOWDER-Standalone-Electron-win32-x64</li>
+            <li>Mac version: ChOWDER-Standalone-Electron-darwin-x64</li>
+            <li>Linux version: ChOWDER-Standalone-Electron-linux-x64</li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
+        <p>To edit the configuration file after copying it to the remote host, edit <code>conf.json</code> in the directory containing the executable file.</p>
 
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
 
     </div>
 

@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,110 +893,130 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Introduction</h1>
+
+        <p>This document describes the design of the cooperative workspace driver and the cooperative behavior
+            framework.</p>
+        <h1>System Configuration</h1>
+        <h2>Overall Configuration</h2>
+        <p>This system is a client-server program using node.js and websockets, and provides a huge screen space as a
+            virtual display where multiple applications and multiple users can collaborate. The configuration diagram is
+            shown below
+        </p>
+        <img src="../image/system.png" alt="構成図" width="500">
+        <h2>Server and Client Roles</h2>
+        <h3 id="サーバの役割">Roles of the Server </h3>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
+            <li>HTTP communication - sending HTML pages and other information to the client</li>
+            <li>Websocket communication - Communicate with the client's controller and display using the websocket
+                protocol.</li>
+            <li>Database input/output - Saves image data and text data sent by the client in redis and makes them
+                persistent.</li>
+            <li>Server-side rendering - The website with the submitted URL is rendered on the server side using
+                phantomjs and saved as a png image.</li>
+        </ul>
+        <h3 id="クライアント---コントローラの役割">
+            Client - Role of the controller</h3>
+        <ul>
+            <li>Registering and deleting displays</li>
+            <li>Metadata editing operations such as moving, scaling, etc.</li>
+            <li>Registration and deletion of contents (image data, text, URL)</li>
+            <li>Metadata editing operations such as moving, scaling, etc.</li>
+            <li>Setting the number of display divisions</li>
+            <li>Downloading content data</li>
+        </ul>
+        <h3 id="クライアント---ディスプレイの役割">
+            Role of Client-Display</h3>
+        <ul>
+            <li>Register own window as a display to the server</li>
+            <li>Display content as configured in the controller.</li>
         </ul>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
+        <h2>Server Configuration</h2>
+        <h3 id="サーバ">Server</h3>
+        <p>The server supports HTTP/HTTPS communication and websocket communication (ws/wss) using node.js. The ports for accepting each communication method are divided into different ports.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Communication method</th>
+                    <th>Usage </th>
+                    <th>Initial port</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HTTP</td>
+                    <td>Static pages and static contents </td>
+                    <td>80</td>
+                </tr>
+                <tr>
+                    <td>Websocket(ws)</td>
+                    <td>Providing dynamic contents via ChOWDER API, operation, etc.</td>
+                    <td>80</td>
+                </tr>
+                <tr>
+                    <td>HTTPS</td>
+                    <td>Provision of static pages and static contents </td>
+                    <td>443</td>
+                </tr>
+                <tr>
+                    <td>Websocket(wss)</td>
+                    <td>Provide dynamic contents via ChOWDER API, operation, etc. </td>
+                    <td>443</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The port number and permission can be changed in the server configuration file.</p>
+        <h3 id="データベース">Database</h3>
+        <p>The database uses redis for fast response.<br>
+            The data is stored using <a href="a_10.html">"Data Structure"</a>  for the data storage method</p>
+        <h3 id="その他ソフトウェア">Other Software</h3>
+        <p>PhantomJS and phantomjs, an npm wrapper for phantom.js, are used for web page rendering.<br>
+            Server-side rendering is used for web page rendering.</p>
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
+        <h2>Client Side Configuration</h2>
+        <p>The client side consists of a "controller" that performs operations such as adding and registering contents to the virtual display, and a "display" that only displays the contents.</p>
+        <h3 id="コントローラ">Controller</h3>
+        <p>The controller communicates with the server using Websocket.<br>
+            The screen image of the controller is shown below.</p>
+        <img src="../image/controller.png" alt="コントローラの画面イメージ" width="400">
+        <h3 id="ディスプレイ">Display </h3>
+        <p>he display shows the contents set by the controller. It communicates with the server using websocket, a function of HTML5. The screen image of the display is shown below.</p>
+        <img src="../image/display.png" alt="ディスプレイの画面イメージ" width="400">
+        
+        <h1>Overall Design</h1>
+        <p>ChOWDER is designed based on <a
+                href="https://github.com/facebook/flux/tree/master/examples/flux-concepts">Flux</a>, and the call flow is as shown in the figure below.</p>
+        <img src="../image/chowder_201903.png" height="280">
+        <p>Most operations in ChOWDER are described in <code>action.js</code>. For example, if you want to add a GUI and perform an arbitrary operation, you call a function defined in action.js from the GUI.</p>
+        <p>In addition, <code>store.js</code> holds the data and executes the business logic, but since the server-side RedisDB is the true store, the client-side store.js behaves as a cache.</p>
+        
+        <p>As for GUI, ShadowDOM should be used, but since ChOWDER was originally developed using (old) pure js, ShadowDOM is not used, and each component is separated as a component.</p>
+        <h1>Module Configuration</h1>
+        <h2>Server Folder Structure</h2>
+        <img src="../image/server_folders.png" height="280">
+        <p>In the server, <code>server/server.js</code>is the entry point.<br>
+            Commands corresponding to APIs are defined in <code>command.js</code>に定義されており, and their implementations are placed under <code>operator/</code>.</p>
+        <h2>Client Folder Structure</h2>
+        <img src="../image/client_folders.png" height="500">
+        <p>The public HTML pages on the client side are as follows</p>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li><code>index.html</code> :  top page</li>
+            <li><code>controller.html</code> :  controller page</li>
+            <li><code>display.html</code> : display page</li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
+        <p>
+            "controller.bundle.js" and "display.bundle.js" generated by <code>webpack</code>により生成された<code>are loaded from controller and display, respectively.</p>
+        <p>In addition, <code>js/controller_app.js</code> and <code>js/display_app.js</code> are entry points for webpack.</p>
+        <p>The source code is located in <code>public/src/js/</code> as follows.</p>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li><code>controller</code> :  source of controller/li>
+            <li><code>display</code> :  display source</li>
+            <li><code>components</code> : GUI components</li>
+            <li><code>common</code> : sources commonly used by controllers and displays</li>
         </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
 
     </div>
-
-
-
-
-
-
-
 
 
 </body>

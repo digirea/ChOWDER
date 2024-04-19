@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,102 +893,308 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Operations at the bottom of the controller screen</h1>
+
+        <h2>Display tab</h2>
+        <img src="../image/Display_TAB_2conn.png" alt="image" width="207">
+
+        <p>Displays a list of VirtualDisplays and Displays connected to the ChOWDER server.<br>
+            The controller can place this Display on the VirtualDisplay.<br>
+            By adding Contents on the placed Display, a workspace for sharing Contents is realized.<br>
+            Displays can be placed on the VirtualDisplaySpace by dragging and dropping them with the mouse.<br>
+            The above figure shows an example environment with a client connected.</p>
+        <img src="../image/newdisplay.png" alt="image" width="207">
+        <p>In the NewDisplays column, newly accessed Displays are displayed, and you can specify whether to allow or
+            disallow content delivery to the new Display.<br>
+            Until you allow it, no content will be delivered to the Display side<br>
+            Once selected, the information is saved and the next access will be delivered according to the saved
+            permission information.</p>
+
+        <h2>Virtual Display Settings</h2>
+        <img src="../image/VirtualDisplaySetting.png" alt="image" width="207">
+
+        <h3 id="分割数の設定">Setting the number of divisions</h3>
+        <p>When you select "Virtual Display" in the "Display" tab, you can configure the settings of the Virtual Display
+            in the Property window. In the above figure, the Virtual Display is set to 1500 pixels in width, 1500 pixels
+            in height, 2 horizontal divisions, and 2 vertical divisions.</p>
+
+        <h3 id="snap機能">snap function</h3>
+        <p>There is a "snap function" to precisely place a Display in a compartment.<br>
+            The mode can be changed from the drop-down list shown in the figure below.</p>
+        <img src="../image/MIGIUE_Disp.png" alt="Snap機能の設定プルダウンボタン" width="207">
+
         <ul>
-            <li>OS
+            <li>Free : Free placement.</li>
+            <li>Display : Display and Contents will be snapped to the placed Display.</li>
+            <li>Grid : Displays and Contents will be snapped along the partitioned sections by VirtualDisplaySetting.
+            </li>
+        </ul>
+        <p>The following figure shows a legend for placing a display using the snap function.</p>
+        <img src="../image/Snap1.png" alt="Snap機能ドラッグ時凡例" width="585">
+
+        <p>Another VirtualDisplaySpace scaling option is the Scale function.<br>
+            By holding down the right mouse button and dragging within the screen, the entire screen can be scaled.</p>
+        <img src="../image/MIGIUE_Scale.png" alt="scale後の例（コンテンツが小さく表示されている）" width="377">
+
+        <h3 id="ディスプレイとid">Display and ID</h3>
+        <p>IDs of connected displays are displayed on each connected display so that they can be identified.<br>
+            The ID is unique to each connected terminal and one ID is assigned to each terminal.</p>
+        <img src="../image/3Button1.png" alt="Display ID" width="283">
+
+        <h3 id="削除ボタン">Delete button</h3>
+        <p>Deletes the selected Display (disconnects from the ChOWDER server).</p>
+        <img src="../image/3Button2.png" alt="削除ボタン" width="377">
+
+        <p>※VirtualDisplay cannot be deleted.</p>
+
+        <h3 id="全選択ボタン">Select All button</h3>
+        <p>Selects all connected displays.</p>
+        <img src="../image/3Button3.png" alt="全選択ボタン" width="377">
+
+        <h3 id="displaygroupの設定">DisplayGroup settings</h3>
+        <p>In the Display tab, you can configure the DisplayGroup settings to be assigned to the display. Each
+            DisplayGroup can have one Virtual Display.
+        </p>
+        <p>The button "Add" allows you to add a group, and the order of the created groups can be changed. You can also
+            rename, change the group color, and delete a group by clicking on the "Settings" menu.</p>
+        <img src="../image/display_group1.png" alt="DisplayGroupの追加, 順序変更" height="321">
+
+        <br>
+        <img src="../image/display_group2.png" alt="DisplayGroupの設定" height="321">
+
+        <h3 id="displaygroupの割り当て">Assigning DisplayGroup</h3>
+        <p>You can change the group assigned to the display from the right-click menu of the display or the menu at the
+            lower right corner of the screen. However, the group of VirtualDisplay cannot be changed.</p>
+        <img src="../image/display_group3.png" alt="DisplayGroupの変更" height="321">
+
+        <h2>Content tab</h2>
+        <p>In this application, Contents are displayed on the display by dragging and dropping them from the Contents
+            tab at the bottom of the screen.</p>
+        <h3 id="contentsの表示">Displaying Contents</h3>
+        <p>Contents can be displayed by dragging and dropping them from the Contents list to the VirtualScreen area in
+            the center of the screen.</p>
+        <img src="../image/DragAndDropContent.png" alt="Contentsの表示" width="434">
+
+        <h3 id="コンテンツの操作">Manipulation of Contents</h3>
+        <p>The added Contents can be selected by left mouse click, or multiple contents can be selected by Ctrl + left
+            mouse click. When selected, manipulators and buttons for manipulation are displayed (see the figure below).
+        </p>
+        <ul>
+            <li>Buttons for manipulation during selection
                 <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
+                    <li>Highlight button ... highlights the selected contents.<br>
+                        The highlighted contents are shown with a group-colored thick frame in the Display.</li>
+                    <li>Show meta information button ... shows the meta information of the selected contents on the
+                        Display side.</li>
+                    <li>Hide button ... Hide the content from VirtualDisplaySpace.<br>
+                        You can drag the hidden contents from the contents list to show them again.
+                    </li>
                 </ul>
             </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
+        </ul>
+        <img src="../image/manip.png" alt="コンテンツ操作用マニピュレータ" height="321">
+
+        <h3 id="contentタブメニュー">Content tab menu</h3>
+        <p>By clicking the menu button at the bottom right of the tab area, you can perform various operations.</p>
+        <img src="../image/DragAndDropContent2.png" alt="Contentsの追加" width="434">
+
+        <h3 id="画像の差し替え">Replacing images</h3>
+        <p>Replaces the image selected on the Contents tab.<br>
+            An example of replacing an image is shown below..</p>
+        <img src="../image/SASHI.png" alt="画像の差し替えボタン" width="434">
+
+        <p>When specified as shown in the figure below, the Contents existing in the Contents tab will be replaced.
+            *Specification of image replacement*</p>
+        <img src="../image/YUMUSHI.PNG" alt="画像の差し替えし指定" width="434">
+        *Specification of image replacement*.
+        <br>
+        <img src="../image/SASHI2.png" alt="画像の差し替え結果" width="434">
+        *Result of image replacement*.
+
+        <h3 id="groupの設定">Group Settings </h3>
+        <p>In the Content tab, you can set up a Group to be assigned to the contents. Groups can be added and reordered
+            by clicking the "Add Group" button. You can also rename, change the group color, or delete a group by
+            clicking on the "Settings" menu.</p>
+        <img src="../image/group1.png" alt="Groupの追加, 順序変更" height="321">
+      
+        <br>
+        <img src="../image/group2.png" alt="Groupの設定" height="321">
+    
+        <h3 id="groupの割り当て">Assign Group</h3>
+        <p>Groups assigned to contents can be changed from the right-click menu of the contents or the menu in the lower right corner of the screen.</p>
+        <img src="../image/group3.png" alt="Groupの変更" height="321">
+      
+        <h2>Search Tab</h2>
+        <p>The Search tab allows you to search for added contents.</p>
+        <img src="../image/search_tab.png" alt="Contentsの検索が可能" width="434">
+       
+        <h3 id="メタデータの検索">Metadata Search</h3>
+        <p>The text box on the Search tab allows you to search for metadata. The search will be performed for the group whose checkbox is checked.</p>
+        <img src="../image/searchcheck.png" alt="対象となるグループの選択" width="434">
+       
+        <h2>Layout Tab</h2>
+        <p>The Layout tab allows you to save the current content display as a Layout.</p>
+        <h3 id="layoutの追加">Adding a Layout</h3>
+        <p>A Layout can be added from the right-click menu in the Layout list at the bottom of the screen, or from the menu in the lower right corner of the screen. Additions are made to groups whose checkboxes are checked.</p>
+        <h3 id="layoutの上書き">Overwrite Layout</h3>
+        <p>Overwrites the current content display state to the currently selected layout.</p>
+        <img src="../image/layout_tab.png" alt="Layoutタブ" width="434">
+      
+        <h3 id="groupの変更">Change Group</h3>
+        <p>Change the group to which a Layout belongs.</p>
+        <img src="../image/layoutmenu1.png" alt="Layoutメニュー" width="434">
+        
+        <h3 id="layoutの適用">Apply Layout</h3>
+        <p>Apply a Layout by dragging and dropping the Layout content from the Layout list at the bottom of the screen onto the screen.</p>
+        
+        <h2>Users Tab</h2>
+        <p>The Users tab allows you to view a list of users who are logged in to the current ChOWDER controller.</p>
+        <h3 id="userボタン">User Button</h3>
+        <p>Clicking on the name of a logged-in user in the Users tab will automatically take you to the Content tab with all content added by that user selected.</p>
+        <h2>Property Window</h2>
+        <img src="../image/Prop_Down.png" alt="image" width="188">
+        <p>The Property window displays the selected Contents, Display, ContentsID, and their respective Properties.<br>
+            The properties can be edited except for the ID as shown below, and the coordinates, display priority ( Zindex ), and the topmost display enforcement can be specified.<br>
+            Selected contents can be downloaded from the download button at the bottom of the Property window.</p>
+        <h2>Manipulation of Video Contents</h2>
+        <p>When a video content is selected on the controller that holds the video data, controls for operation are displayed in addition to the normal content controls.</p>
+        <h3 id="動画コントロール">Video Controls/h3>
+        <p>On the controller that holds the video, the following controls are displayed for the video content.</p>
+        <img src="../image/movie_control.png" alt="コントローラーでの動画コントロール" width="434">
+    
+        <p>Each control allows you to</p>
+        <ol>
+            <li>Play and pause the video</li>
+            <li>Seek video</li>
+            <li>Audio control on the controller PC</li>
+            <li>Video transmission ON/OFF</li>
+            <li>ON/OFF of audio transmission</li>
+        </ol>
+        <h3 id="動画設定">Video Settings </h3>
+        <p>When video content is selected on the controller holding the video, the Property window allows you to switch capture devices and configure delivery settings.</p>
+        <img src="../image/movie_setting.png" alt="動画設定" width="434">
+        
+        <p>You can configure the following settings</p>
+        <ol>
+            <li>Change the video input device (only available for camera-based video content).</li>
+            <li>Change the audio input device (only available for video content from the camera).</li>
+            <li>Video quality settings.<br>
+                <code>Manual</code> Allows you to set the bit rate of the video streamed by WebRTC. (*1)<br>
+                <code>Full size:</code>Switches to delivery mode using WebRTC Datachannel, allowing video to be delivered in full size and without degradation (*2)
             </li>
-        </ul>
+            <li>Audio quality setting allows you to set the bit rate of the audio streamed by WebRTC. (*1)</li>
+            <li>Refer to the WebRTC quality information stored in the content metadata.(*1)</li>
+        </ol>
+        <p>(※1)<br>
+            The bit rate set here will be used as the bit rate at the start of delivery.<br>
+            The bit rate is automatically changed by WebRTC to the optimal bit rate at the time of delivery, so the bit rate set here will differ from the actual bit rate.</p>
+        <p>(※2)<br>
+            <code>Full-size </code>option is available only when video files are delivered.
+        </p>
+        <h3 id="動画の一括操作">Batch operation of videos</h3>
+        <p>Video content in the same group can be played, paused, or cued in a batch.<br>
+            To do this, follow the steps below.</p>
+        <ol>
+            <li>Right-click on the Content tab → Batch control of videos in a group</li>
+            <li>Use the video batch control controller displayed at the bottom of the screen.</li>
+        </ol>
+        <img src="../image/movie_bulk.png" alt="動画設定" width="434">
+   
+        <h1>Controller Authority and Administration</h1>
+        <h2>Controller Authorization</h2>
+        <p>The following controller types are available, and passwords and access privileges can be set for each controller.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type </th>
+                    <th>Overview</th>
+                    <th>Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Administrator </td>
+                    <td>Administrator who can access all functions</td>
+                    <td>All functions including administration screen</td>
+                </tr>
+                <tr>
+                    <td>Group </td>
+                    <td>Authorization for each content group</td>
+                    <td>By default, only the group and default can be edited and viewed, subject to the access restrictions set in the administrator's screen.</td>
+                </tr>
+                <tr>
+                    <td>Moderator</td>
+                    <td>Sub administrator with access to most functions</td>
+                    <td>All functions, including admin</td>
+                </tr>
+                <tr>
+                    <td>Attendee</td>
+                    <td>General user who can add and manipulate content </td>
+                    <td>All functions except admin</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Special privileges<br>
+            Guest and Display can be used without password, and only access privileges can be set.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type </th>
+                    <th>Overview</th>
+                    <th>Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Guest</td>
+                    <td>Guest Allows entry without password</td>
+                    <td>By default, only default can edit and browse, subject to the access restrictions set in the administrator screen.</td>
+                </tr>
+                <tr>
+                    <td>Display</td>
+                    <td>Permissions when connected to Display</td>
+                    <td>By default, all groups can be edited and viewed, subject to the access restrictions set on the administrator screen.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Management screen</h2>
+        <p>By logging in to the controller as an administrator, you can access the management screen from the Management menu. On the management screen, you can access the controller privileges and configure various settings.</p>
+        <img src="../image/management1.png" alt="管理者ログイン時のメニュー" width="585">
+      
+        <br>
+        <img src="../image/management2.png" alt="管理画面" width="585" height="auto">
+        
+        <h3 id="db-管理">DB management</h3>
+        <p>In DB management, you can create, switch, rename, delete, and initialize a storage area. However, you cannot rename or delete the default storage area which is created automatically at first.</p>
+        <img src="../image/management3.png" alt=" DB 管理" width="585">
+        
+        <h3 id="履歴管理">History Management</h3>
+        <p>In the history management, you can set the maximum number of contents replacement history to be saved. The number of history records for each content is set here. This value is a global setting, and the same value is applied even if the DB is changed.</p>
+        <img src="../image/management4.png" alt=" 履歴管理" width="585">
+       
+        <h3 id="閲覧編集権限の設定">View/Edit Permission Settings</h3>
+        <p>In the "permissions" section, you can set permissions for each controller.</p>
+        <img src="../image/management5.png" alt=" 閲覧・編集権限の設定" width="585">
+       
+        <ol>
+            <li>Select a controller to be set.</li>
+            <li>Select the content group that the selected controller can edit and the content group that the selected controller can view. If you select "All", newly created groups are also viewable and editable.</li>
+            <li>Select the sites which are editable by the selected controller. If you select "All", then newly created sites are also viewable and editable.</li>
+            <li>Whether or not the selected controller is allowed to edit or display the group.</li>
+        </ol>
+        <h3 id="パスワードの設定">
+            Password setting</h3>
+        <p>In the password settings, you can change the password of the controller.<br>
+            The previous password is required only if you change the administrator's password.</p>
+        <img src="../image/management6.png" alt="パスワードの設定" width="585">
+       
+        <img src="../image/management6_2.png" alt="パスワードの設定" width="585">
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
-
+        *Password setting* *Password setting (for non-admins)* For `Moderator` and `Attendee`, you cannot login until you set the password in this setting. If you want to use `Moderator` and `Attendee` privileges, please be sure to set the password with the Admin privilege user in advance.
+        <h3 id="ディスプレイ設定">Display Settings</h3>
+        <p>In the display settings, you can change the permission settings for content delivery.<br>
+            Content will be delivered only to authorized displays.</p>
+        <img src="../image/management7.png" alt="ディスプレイ設定" width="585">
     </div>
 
 

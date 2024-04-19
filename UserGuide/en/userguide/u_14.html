@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,87 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Using HTTPS</h1>
+
+        <h2>Overview</h2>
+        <p>FireFox and GoogleChrome may enable screen sharing and camera sharing only when HTTPS is used due to security restrictions. By default, you can use pages with HTTPS by accessing the following URL and adding it to your exceptions.</p>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
+            <li>URL for HTTPS <a href="https://localhost">https://localhost</a></li>
+        </ul>
+        <h1>
+            Using COTURN</h1>
+        <h2>Overview</h2>
+        <p>Under Linux, coturn can be used as a STUN/TURN server for WebRTC. coturn is installed at the same time as the installation with install.sh and is used by default. If you wish to use a different STUN/TURN server, you can specify any STUN/TURN server by using the basic server settings.
+
+        </p>
+        <p>The following ports are used for UDP and TCP in the ChOWDER coturn settings.</p>
+        <ul>
+            <li>
+                <p>TCP & UDP ports : 5349 (tls-listening-port), 9092 (listening-port)</p>
             </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
+            <li>
+                <p>UDP port : 49152-65535</p>
             </li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
+        <h1>
+            Using Himawari Parser</h1>
+        <h2>Overview</h2>
+        <p>ChOWDER/server/parser contains a parser for DAT files of the <a
+                href="https://www.data.jma.go.jp/sat_info/himawari/satellite.html">weather satellite "Himawari"</a>. The parser is written for use in node.js and implemented by the following formatting information.</p>
+        <p>Himawari 8 and 9 Himawari Standard Data Usage Guide:<br>
+            <a
+                href="https://www.data.jma.go.jp/mscweb/ja/info/pdf/HS_D_users_guide_jp_v13.pdf">https://www.data.jma.go.jp/mscweb/ja/info/pdf/HS_D_users_guide_jp_v13.pdf</a>
+        </p>
+        <h2>How to use the parser for sunflowers</h2>
+        <p>(1) List the absolute paths of the data files (10 files) to be used for conversion in himawari_parse_test_file_list.txt.</p>
+        <p>(2) Execute himawari_parse_test.js with the following command to save various physical quantities as geotiff files (output.tiff).</p>
+        <blockquote>
+            <p>node --max-old-space-size=32000 himawari_parse_test.js</p>
+        </blockquote>
+        <p>The physical quantities to be saved are as follows.</p>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li>In Bands 1-6, radiance is converted to reflectance and stored as a physical quantity.</li>
+            <li>In Bands 7-16, radiance is converted to brightness temperature and stored as a physical quantity.</li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
+        <p>
+            How to convert data to latitude and longitude coordinates : <br>
+            <a href="https://www.data.jma.go.jp/mscweb/ja/info/sample_data_program.html">Sample Program for Loading Himawari Standard Data" by Japan Meteorological Satellite Center</a><br>
+            The method of converting data to latitude and longitude coordinates is implemented in javascript as the following function, referring to hisd_pixlin2lonlat.c in the "Himawari Standard Data Loading Sample Program" by the Japan Meteorological Satellite Center.
+        </p>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li>(in himawari_parser.js) HimawariConverter.convertPixLinToLonLat</li>
+            <li>(in himawari_parser.js) HimawariConverter.convertLonLatToPixLin</li>
         </ul>
+        <p>
+            For more detailed use, please refer to the code in himawari_parse_test.js and himawari_convert_test.js.</p>
 
+        <h1>Using the parser for solar radiation consortium data</h1>
+        <h2>Overview</h2>
+        <p>The parser for the data provided by <a href="http://www.amaterass.org/"> the Solar Radiation Consortium</a> is stored in ChOWDER/server/parser.<br>
+            The parser is written for use in node.js and is implemented by the following formatting information.</p>
+        <p>Solar Radiation Consortium About the data:<br>
+            <a href="http://www.amaterass.org/data.html">http://www.amaterass.org/data.html</a>
+        </p>
+        <h2>How to use the parser for Solar Radiation Consortium data</h2>
+        <ul>
+            <li>Running amaterass_parse_test.js with the following command will save the geophysical quantities stored in the data as a geotiff file (output.tiff).</li>
+        </ul>
+        <blockquote>
+            <p>node --max-old-space-size=32000 ./amaterass_parse_test.js amaterassDataAbsolutePath</p>
+        </blockquote>
+        <p>amaterassDataAbsolutePath should contain the absolute path of the data to be parsed</p>
+        <ul>
+            <li>When amaterass_convert_test.js is executed with the following command, the point cloud data in xyziRGB(.txt) format is saved as output.txt based on the cloud top height and cloud thickness stored in the data.</li>
+            <li>By default, about 400 million points of point cloud data are created, so please be careful about disk space.</li>
+        </ul>
+        <blockquote>
+            <p>node --max-old-space-size=32000 ./amaterass_convert_test.js heightFileAbsolutePath
+                thicknessFileAbsolutePath</p>
+        </blockquote>
+        <p>In heightFileAbsolutePath, enter the path to the cloud top height data as an absolute path</p>
+        <p>ThicknessFileAbsolutePath should be the path of the cloud thickness data in absolute path.</p>
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        
 
     </div>
 

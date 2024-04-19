@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,102 +893,186 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+
+        <h1 class="top-h1">ChOWDER Home Screen</h1>
+
+        <h2>Explanation of the home screen</h2>
+        <p>To access ChOWDER, type 「 <a href="http://localhost/">http://localhost/</a>
+            」in the address field of your web browser after starting the application as described above.<br>
+            After accessing ChOWDER, the home screen shown above will be displayed.<br>
+            ChOWDER has the following two modes (Display, Controller), and the home screen determines which mode to use.</p>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
+            <li>
+                <p>Controller: After the login screen, the user is redirected to the controller screen.</p>
             </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
+            <li>
+                <p>Display : Moves to the display screen.</p>
             </li>
         </ul>
+        <p> As described above, you can choose whether to use the accessed PC as a "Controller" or as a "Display".</p>
+        
+        <h1>Login Screen</h1>
+        <h2>Overview</h2>
+        <p>On the login screen, enter the user role (privileges), display name, and password for the "controller.</p>
+        <img src="../image/login.png" alt="ログイン画面概要" width="200"><br>
+        On the controller login screen, enter the user role (authority), display name, and password in the "Controller" field. Only when the "Controller" and "Password" match, login is possible. The display name can be entered freely.
+        <h1>Controller Screen Operations</h1>
+        <h2>Overview</h2>
+        <p>The controller is shown in the figure below.</p>
+        <img src="../image/cont_1.png" alt="コントローラ画面概要" width="585">
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
+        <h2>Connection Status</h2>
+        <p>The upper right part of the screen shows the status of the connection with the server as an icon.</p>
+        <img src="../image/connect.png" alt="サーバーとの接続ありの状態" width="283">
+        *With connection to the server*.
+        <br>
+        <img src="../image/disconnect.png" alt="サーバーとの接続が無い状態" width="283">
+        *No connection with the server*.
+        <h2>About Virtual Display Screen</h2>
+        <p>The center part is called "Virtual Display Screen" and is a general-purpose space for operating the display connected to ChOWDER, moving, manipulating, and deleting contents.</p>
+        <img src="../image/TDD_View.png" alt="VirtualDisplayScreenの凡例" width="585">
+        *Legend of Virtual Display Screen*.
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
-
+        <h2>Main Menu</h2>
+        <h3 id="上部に配置されたメニュー">Menu located at the top of the screen </h3>
+        <p>Various operations can be performed from the menu located at the top of the screen.
+        </p>
+        <img src="../image/Upper.png" alt="画面上部領域" width="415">
+        *Upper area of the screen*
+        <h3 id="displayボタン">Display Button</h3>
+        <p>As shown in the figure below, the Display window can be opened by pressing the Display button.</p>
+        <img src="../image/Left_Display.png" alt="Displayボタン押下時" width="415">
+        *When the Display button is pressed*
+        <h3 id="addメニュー">Add Menu</h3>
+        <p>From the Add menu, various contents can be added.<br>
+            Please refer to "Add Contents" for details.
+        </p>
+        <img src="../image/header01.png" alt="Addメニュー展開時" width="200">
+        *When the Add menu is expanded*.
+        <h3 id="settingメニュー">Setting Menu </h3>
+        <p>The Setting menu allows you to switch the display status of the remote cursor, switch languages, and display the administration screen. Only administrators can display the administration screen.<br>
+            For more information on the administration screen, please refer to "Controller Authority and Administration Screen".</p>
+        <img src="../image/SettingMenu.png" alt="Settingメニュー展開時" width="415">
+        *Setting menu is expanded*
+        <p>The remote cursor is displayed as follows.</p>
+        <img src="../image/remotecursor.png" alt="リモートカーソル" width="415">
+        *Remote cursor*
+        <p>Specify the size of the remote cursor on the display in pixels relative to the VirtualDisplay.</p>
+        <img src="../image/cursorsize.png" alt="カーソルサイズ" width="415">
+        *cursor size*
+        <p>Use the following menu to switch languages.</p>
+        <img src="../image/SettingMenu_language.png" alt="言語切り替え" width="415">
+        *Switch Language*
+        <h3 id="ホームに戻る">Return to Home </h3>
+        <p>You can return to home by clicking on the area marked "ChOWDER" as shown below.</p>
+        <img src="../image/home_return.png" alt="タイトル名のクリックでホームに戻る" width="415">
+        *Click on the title name to return to home*
+        <h3 id="コントローラidの設定">Set the controller ID</h3>
+        <p>You can set the controller ID in the area shown below.<br>
+            If you change the controller ID, it will be recognized as a different controller and you may be asked to re-enter the password.</p>
+        <img src="../image/controller_id.png" alt="コントローラIDの設定" width="415">
+        *Controller ID settings*
+        
+        
+        <h1>Controller Authority and Administration</h1>
+        <h2>Controller Authorization</h2>
+        <p>There are the following types of controllers, and passwords and access privileges can be set for each controller.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type </th>
+                    <th>Overview </th>
+                    <th>Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Administrators </td>
+                    <td>Administrators with access to all functions </td>
+                    <td>All functions including the admin screen</td>
+                </tr>
+                <tr>
+                    <td>Groups </td>
+                    <td>Permissions for each content group </td>
+                    <td>Subject to access restrictions set in the administrator's screen By default, only the group and default can edit and view content.</td>
+                </tr>
+                <tr>
+                    <td>Moderator</td>
+                    <td>Sub administrator with access to most functions </td>
+                    <td>All functions, including admin</td>
+                </tr>
+                <tr>
+                    <td>Attendee  </td>
+                    <td>General user who can add and manipulate content </td>
+                    <td>All functions except admin</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Special Permissions<br>
+            Guest and Display can be used without password and only access privileges can be set.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type </th>
+                    <th>Overview </th>
+                    <th>Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Guest</td>
+                    <td>Allows entry without password</td>
+                    <td>By default, only default allows editing and browsing, subject to the access restrictions set in the administrator screen.</td>
+                </tr>
+                <tr>
+                    <td>Display</td>
+                    <td>Permissions when connected to Display</td>
+                    <td>By default, all groups can be edited and viewed, subject to the access restrictions set on the administrator screen.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 id="management">Management screen</h2>
+        <p>By logging in to the controller as an administrator, you can access the management screen from the Management menu.<br>
+            The administration screen is accessible from the Management menu. On the administration screen, you can access the controller privileges and configure various settings.</p>
+        <img src="../image/management1.png" alt="管理者ログイン時のメニュー" width="585">
+        *Management screen Menu*
+        <br>
+        <img src="../image/management2.png" alt="管理画面" width="585" height="auto">
+        *Management screen*
+        <h3 id="db-管理">DB Management</h3>
+        <p>In DB management, you can create, switch, rename, delete, and initialize a storage area. However, you cannot rename or delete the storage named "default" which is created automatically at first.</p>
+        <img src="../image/management3.png" alt=" DB 管理" width="585">
+        *DB management*
+        <h3 id="履歴管理">History Management</h3>
+        <p>In the history management, you can set the maximum number of contents replacement history to be saved. The number of history records for each content is set here. This value is a global setting, and the same value is applied even if the DB is changed.</p>
+        <img src="../image/management4.png" alt=" 履歴管理" width="585">
+        *History management*
+        <h3 id="閲覧編集権限の設定">View/Edit Permission Settings</h3>
+        <p>In the "permissions" section, you can set permissions for each controller.</p>
+        <img src="../image/management5.png" alt=" 閲覧・編集権限の設定" width="585">
+        *Setting permissions to view/edit*
+        <ol>
+            <li>Select a controller to be set.</li>
+            <li>Select the content group that the selected controller can edit and the content group that the selected controller can view. If you select "All", newly created groups are also viewable and editable.</li>
+            <li>Select the sites which are editable by the selected controller. If you select "All", then newly created sites are also viewable and editable.</li>
+            <li>Whether or not the selected controller is allowed to edit or display the group.</li>
+        </ol>
+        <h3 id="パスワードの設定">
+            Password setting</h3>
+        <p>In the password settings, you can change the password of the controller.<br>
+            The previous password is required only if you change the administrator's password.</p>
+        <img src="../image/management6.png" alt="パスワードの設定" width="585">
+        *Password setting* 
+        <!--
+        <img src="../image/management6_2.png" alt="パスワードの設定" width="585">
+        *Password setting (for non-admins)* <br>
+            -->
+            
+        You cannot log in to `Moderator` and `Attendee` until you set the password with this setting. If you want to use `Moderator` and `Attendee` privileges, please be sure to set the password with the Admin privilege user in advance.
+        <h3 id="ディスプレイ設定">Display Settings </h3>
+        <p>In the display settings, you can change the permission settings for content delivery.<br>
+        Content will be delivered only to authorized displays.</p>
+        <img src="../image/management7.png" alt="ディスプレイ設定" width="585">
     </div>
 
 

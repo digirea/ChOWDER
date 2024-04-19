@@ -894,109 +894,142 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h1 class="top-h1">DB Management</h1>
+ 
+        <h2>About APIs for DB management</h2>
+ 
+        <p>The following <code>DB</code> represents the ChOWDER contents management area created in redisDB.<br>
+            Within the ChOWDER storage area of redisDB, multiple DBs created by the following method are included.<br>
+            These DBs can be operated in the management page of the ChOWDER controller.<br>
+            The corresponding methods are as follows</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Params</th>
+                    <th>Required </th>
+                    <th>Format </th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>NewDB</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>New addition of DB. <br>Update notification: ChangeDB</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>name</td>
+                    <td>○</td>
+                    <td>String</td>
+                    <td>DB name</td>
+                </tr>
+                <tr>
+                    <td>InitDB</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Initialization of  DB<br>Update notification: ChangeDB</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>name</td>
+                    <td>○</td>
+                    <td>String</td>
+                    <td>DB name</td>
+                </tr>
+                <tr>
+                    <td>DeleteDB</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Deletes DB <br>Update notification: ChangeDB</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>name</td>
+                    <td>○</td>
+                    <td>String</td>
+                    <td>DB name</td>
+                </tr>
+                <tr>
+                    <td>RenameDB</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Rename DB. <br>Update notification: UpdateSetting</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>name</td>
+                    <td>○</td>
+                    <td>String</td>
+                    <td>DB name before change</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>new_name</td>
+                    <td>○</td>
+                    <td>String</td>
+                    <td>DB name after change</td>
+                </tr>
+                <tr>
+                    <td>ChangeDB</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Change DB. <br>Update notification: ChangeDB</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>name</td>
+                    <td>○</td>
+                    <td>String</td>
+                    <td>DB name</td>
+                </tr>
+                <tr>
+                    <td>GetDBList</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Get DB list. Metadata is not required, so it is requested as {}. <br>Update notification: ChangeDB</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 id="グローバル設定">Global Settings </h2>
+        <p>In the server, global settings with server/setting.json as initial values are stored in the DB.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Params</th>
+                    <th>Required </th>
+                    <th>Format</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GetGlobalSetting</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td> Get global settings. <br>Update notification: None</td>
+                </tr>
+                <tr>
+                    <td>ChangeGlobalSetting</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Changes the global setting. The value that can be obtained by GetGlobalSetting is changed and used for updating.<br>Update notification: UpdateSetting</td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
-
-
-
-
-
-
 
 
 

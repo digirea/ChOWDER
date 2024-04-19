@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,109 +893,100 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
+        <h1 class="top-h1">About Displays</h1>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
+        <p>A display page is a page that can show the result of operations performed by a controller. All operations are
+            performed by the controller.</p>
+        <h2>How to register a display</h2>
+        <p>When a display page is opened while the server is running, it is automatically registered with the server
+            using the websocket API. After registration, the display page can be placed and moved by the controller in
+            the same way as the contents, and the placement information is retained in the database even after the
+            display page is closed, until it is explicitly deleted by the controller.</p>
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
+        <h2>Speeding up the display</h2>
+        <p>After receiving the content placement information, the display page judges whether the placement information
+            is in the area of its own display and acquires only the content in the area of the display to speed up the
+            display.</p>
+        <img src="../image/fastview1.png" alt="表示の高速化" width="500">
+        <p>In addition, when the content is moved beyond the display boundary, the content acquisition is executed when
+            it crosses the boundary, which causes a lag before the content is displayed. Therefore, the BoundingBox is
+            displayed instead before the content is displayed.</p>
+        <img src="../image/fastview2.png" alt="表示の高速化" width="500">
+        <h1>About VR Displays</h1>
+        <h2>About VR mode</h2>
+        <p>In VR displays, there are three modes: plane mode, curved surface mode, and 360-degree mode, and their
+            arrangements in the three-dimensional space are as follows.</p>
+        <h3 id="曲面モード">Curved surface mode</h3>
+        <p>In the curved surface mode, a cylindrical rectangular area with a horizontal viewing angle of approximately
+            180 degrees and a vertical viewing angle of 120 degrees is placed in front of the initial viewpoint
+            position, and a display display area with an aspect ratio of 16:9 is provided within the rectangular area as
+            a ChOWDER display, which is 3840px wide and 2160px high. The display is 3840px wide and 2160px high.</p>
+        <img src="../image/webxr_cylinder.png" alt="曲面モード" width="500">
+        <p>The height of the rectangular area is about 4234px, and the background image for ChOWDER VR Display is
+            displayed in the rectangular area.</p>
 
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
+        <h3 id="平面モード">Planar Mode </h3>
+        <p>In planar mode, a planar ChOWDER display is placed in front of the initial viewpoint position. The display is
+            3840px wide and 2160px high, and is positioned to provide a horizontal viewing angle of approximately 114
+            degrees and a vertical viewing angle of 120 degrees from the initial viewpoint position in static mode.</p>
+        <img src="../image/webxr_plane.png" alt="平面モード" width="500">
+        <h3 id="360度モード">360-degree mode </h3>
+        <p>The 360-degree mode extends the curved surface mode to a 360-degree cylindrical area. Within the rectangular
+            area, the display area is equivalent to 7680px wide and 2160px high.</p>
+        <img src="../image/webxr_360.png" alt="360度モード" width="500">
 
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h2>About contents on a VR display</h2>
+        <p>On the VR display, each content is displayed in WebGL using the three.js library by the following means.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Content type </th>
+                    <th>Display method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Text </td>
+                    <td>A text string rendered by html2canvas library is attached to a polygon in VR space as a texture
+                        image./td>
+                </tr>
+                <tr>
+                    <td>Still image</td>
+                    <td>A texture image is pasted onto a polygon in the VR space.</td>
+                </tr>
+                <tr>
+                    <td>WebRTC streaming video</td>
+                    <td>WebRTC Streaming Video Streaming video sent via WebRTC is captured via video tag and pasted onto
+                        polygons in the VR space as a video texture.　The audio is handled in the same way as normal
+                        WebRTC streaming.</td>
+                </tr>
+                <tr>
+                    <td>iTowns-based 3D WebGIS </td>
+                    <td>Captures the streaming contents of the canvas using html and pastes them as video textures on
+                        polygons in the VR space.</td>
+                </tr>
+                <tr>
+                    <td>Output HTML by Qgis2three plugin</td>
+                    <td>The contents of the canvas are captured by streaming html and pasted to polygons in the VR space
+                        as a video texture.</td>
+                </tr>
+                <tr>
+                    <td>PDF</td>
+                    <td>Capture the contents of the canvas as an image and paste it to the polygon in the VR space as a
+                        texture.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>HMD movement and distance to the display</h2>
+        <p>When the HMD is moved in the walking mode during the VR display, the camera position in the VR space is also
+            moved according to the position coordinates of the HMD. The camera position in the VR space also moves
+            according to the position coordinates of the HMD. Specifically, the position (in meters) obtained from the
+            HMD is multiplied by 500 and used as the camera position. As a result, 1222/500 = about 2.44 meters to reach
+            the display area. Assuming that a human's step length is about 70 cm, 2.44/0.7=3.48, which means that the
+            camera can reach the display area in about 3 to 4 steps.</p>
+        <img src="../image/webxr_position.png" alt="ディスプレイまでの距離" width="500">
 
     </div>
-
-
-
-
-
-
 
 
 

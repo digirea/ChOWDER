@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,115 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
+        <h1 class="top-h1">Display Screen Operations</h1>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
+        <h2>Overview</h2>
+        <img src="../image/display.png" alt="ディスプレイ画面概要" width="585">
+        <p>This section explains how to operate the display. Each tab, window, and function is explained.</p>
+        <h2>Display Operations: Menu</h2>
+        <p>In the display, a menu appears when you touch the screen with the mouse or with a tablet. In the menu,
+            several operations can be performed.</p>
+        <h3 id="コントローラ画面への切り替え">Switching to the controller screen </h3>
+        <p>You can switch from display mode to controller mode.</p>
+        <img src="../image/displaymenu1.png" alt="コントローラ画面への切り替え" width="207">
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
+        <h3 id="フルスクリーンへの切り替え">Switching to full screen</h3>
+        <p>You can switch between window mode and full screen mode. To return from full screen to window mode, select
+            the same menu again or press the ESC key.</p>
+        <img src="../image/displaymenu2.png" alt="フルスリーンへの切り替え" width="207">
 
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
+        <h3 id="display-idの設定">Setting Display ID</h3>
+        <p>You can set the ID of the display that can be recognized by the controller. After entering any character
+            string, press the Enter key to set it.</p>
+        <img src="../image/displaymenu3.png" alt="ディスプレイIDの設定" width="207">
 
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
+        <h1>VR Display</h1>
+        <h2>VR Mode</h2>
+        <p>When a ChOWDER page is displayed from the HMD device's web browser, it is recognized as a VR display and
+            WebXR allows the user to switch to an immersive VR mode.</p>
+        <h3 id="vrモードへの切り替え">Switching to VR mode</h3>
+        <p>When the ChOWDER page is displayed on the HMD device, it is registered on the ChOWDER server as a new VR
+            display, so it is necessary to set the permission on the controller first.</p>
+        <img src="../image/webxr1.png" alt="コントローラでの許可設定が必要" width="400">
 
+        <p>If the VR display is permitted, the VR Display button will appear, and pressing it will shift to the
+            immersive VR mode.</p>
+        <img src="../image/webxr2.png" alt="VR Displayボタン" width="400">
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h2>Setting up VR mode</h2>
+        <p>In the "basic server settings", you can switch the VR mode display method by specifying the VRMode in
+            setting.json.</p>
+        <h3 id="平面モード">Planar mode </h3>
+        <p>In planar mode, a planar ChOWDER display is placed in front of the initial viewpoint position. The display is
+            3840px wide and 2160px high, and is positioned to provide a view of approximately 114 degrees horizontal
+            viewing angle and 120 degrees vertical viewing angle from the initial viewpoint position in still mode.</p>
+        <img src="../image/webxr3.png" alt="平面モード" width="400">
+
+        <h3 id="曲面モード">Curved Surface Mode</h3>
+        <p>In curved mode, a cylindrical rectangular area with a horizontal viewing angle of approximately 180 degrees and a vertical viewing angle of 120 degrees is placed in front of the initial viewpoint position. The display is 3840px wide and 2160px high.</p>
+        <img src="../image/webxr4.png" alt="曲面モード" width="400">
+
+        <h3 id="360度モード">360-degree mode</h3>
+        <p>The 360-degree mode extends the curved surface mode to a 360-degree cylindrical area. Within the rectangular area, the display is 7680px wide and 2160px high.</p>
+        
+        <h2>Operation in VR mode</h2>
+        <p>In VR mode, you can use the hand controller of the VR device to select, move, zoom in and out, highlight and cancel the contents frame, and display and cancel the memo. The method of each operation is as follows.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Operation </th>
+                    <th>Controller operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Content Selection</td>
+                    <td>Move the cursor to the content and pull the trigger (PrimaryIndexTrigger).</td>
+                </tr>
+                <tr>
+                    <td>Deselect Contents</td>
+                    <td> Pull the trigger (PrimaryHandTrigger) of the controller that selected the contents.</td>
+                </tr>
+                <tr>
+                    <td>Move </td>
+                    <td>Tilt the controller in the direction you want to move it with the content selected.</td>
+                </tr>
+                <tr>
+                    <td>Expand</td>
+                    <td>Tilt the controller and pull the cursor away while pulling the PrimaryIndexTrigger on the left and right controllers for the same content.</td>
+                </tr>
+                <tr>
+                    <td>Reduce </td>
+                    <td>Tilt the controller while pulling the PrimaryIndexTrigger on the left and right controllers for the same content, and move the cursor closer.</td>
+                </tr>
+                <tr>
+                    <td>Highlighting and de-emphasizing the content frame</td>
+                    <td>After selecting the content, select the "☆" button with the PrimaryIndexTrigger.</td>
+                </tr>
+                <tr>
+                    <td>Highlighting and de-emphasizing a memo </td>
+                    <td>After selecting the content, select it by triggering the "i" button (PrimaryIndexTrigger).</td>
+                </tr>
+            </tbody>
+        </table>
+        <img src="../image/webxr5.png" alt="選択/強調表示" width="400">
+        
+        <h2>Limitations of VR Mode</h2>
+        <h3 id="ディスプレイエリアについて">About the display area </h3>
+        <p>In VR mode, content is displayed until it completely exits the display area. In addition, when moving content using a hand controller in VR mode, content can only be moved within the display area.</p>
+        <img src="../image/webxr6.png" alt="コンテンツ表示範囲" width="400">
+        
+        <h3 id="webglコンテンツitownを使用したコンテンツの表示">Displaying WebGL content (content using iTown) </h3>
+        <p>There is a problem that WebGL contents are displayed black when newly added while in VR mode display. As a workaround, exit VR mode once, wait a few seconds, and re-enter VR mode.</p>
+        <img src="../image/webxr7.png" alt="WebGLコンテンツが黒く表示される問題" width="600">
+        
+        <h3 id="pdfコンテンツの表示">Displaying PDF contents</h3>
+        <p>There is a problem that PDF contents are not displayed when newly added while in VR mode. As a workaround, exit VR mode once, wait a few seconds, and re-enter VR mode.</p>
+        <h3 id="アルファ透過のある静止画像について">About still images with alpha (transparency)</h3>
+        <p>For still images with alpha values, the threshold value is 0.5 to switch between displaying the image completely or making it transparent. (Alpha test) No blending of alpha values is performed, and the areas containing alpha are displayed or hidden.</p>
+        <h3 id="アニメーションgif形式の画像について">About Animated GIF format images</h3>
+        <p>Animated GIF format animated displays are not supported in VR mode.</p>
+
 
     </div>
 

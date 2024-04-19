@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,106 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
+        <h1 class="top-h1">How to develop iTowns content</h1>
 
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <p>This section describes how to develop iTowns content.</p>
+        <h2 id="基本的な開発方法">Basic Development Method </h2>
+        <p>To create iTowns content compatible with ChOWDER, first load the Javascript code called
+            <code>chowder_injection.bundle.js.</code></p>
+        <p>Since chowder_injection.bundle.js also controls the iTowns resizing event, it must be loaded before iTowns as
+            the order of loading in the html file.</p>
+        <pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../../chowder_injection.bundle.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../itowns/itowns.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+・・・
+</code></pre>
+        <p>Next, the injectChOWDER function must be called at the onload timing of the iTowns content page to enable
+            editing of iTowns layers, etc. in the iTowns content.<br>
+            The prototype of the function is as follows<br>
+            The call requires the view instance of itowns and the div element of the iTowns viewer as arguments.</p>
+        <pre data-role="codeBlock" data-info="js" class="language-javascript js"><code><span class="token doc-comment comment">/**
+ *  Function to make a web application using itowns chowder compatible
+ * injectChOWDER(view, viewerDiv); and call.
+ * <span class="token keyword keyword-@param">@param</span> <span class="token parameter">view</span> param view view instance of itowns. GlobeView, PlanarView, etc..
+ * <span class="token keyword keyword-@param">@param</span> <span class="token parameter">viewerDiv</span>  viewer div of itowns.
+ * <span class="token keyword keyword-@param">@param</span> <span class="token parameter">timeCallback</span> Callback function in the form of function(time) {}, which is called when the time is changed. 
+ */</span> 
+<span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">injectChOWDER</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">view<span class="token punctuation">,</span> viewerDiv<span class="token punctuation">,</span> timeCallback <span class="token operator">=</span> <span class="token keyword null nil keyword-null">null</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+	<span class="token comment">// ・・・</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>For example, the default Preset: Geographic Survey Map 3D calls</p>
+        <pre data-role="codeBlock" data-info="js" class="language-javascript js"><code><span class="token comment">// gsi.js</span>
+
+<span class="token comment">/// Display the Geographical Survey Institute map (Color) in a 3D sphere</span>
+<span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">onload</span> <span class="token operator">=</span> <span class="token keyword keyword-function">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Load the Geographical Survey Institute map (Color)</span>
+    <span class="token keyword keyword-function">function</span> <span class="token function">loadGSIColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        itowns<span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Fetcher</span></span><span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token string">'./gsi.json'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span> <span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-var">var</span> mapSource <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">itowns<span class="token punctuation">.</span>TMSSource</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token property-access">source</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-var">var</span> layer <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">itowns<span class="token punctuation">.</span>ColorLayer</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                <span class="token literal-property property">source</span><span class="token operator">:</span> mapSource<span class="token punctuation">,</span>
+                <span class="token literal-property property">updateStrategy</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token number">3</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            view<span class="token punctuation">.</span><span class="token method function property-access">addLayer</span><span class="token punctuation">(</span>layer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// `viewerDiv` will contain iTowns' rendering area (`&lt;canvas&gt;`)</span>
+    <span class="token keyword keyword-var">var</span> viewerDiv <span class="token operator">=</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">getElementById</span><span class="token punctuation">(</span><span class="token string">'viewerDiv'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-var">var</span> placement <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">coord</span><span class="token operator">:</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">itowns<span class="token punctuation">.</span>Coordinates</span><span class="token punctuation">(</span><span class="token string">"EPSG:4326"</span><span class="token punctuation">,</span> <span class="token number">138.7539</span><span class="token punctuation">,</span> <span class="token number">35.3539</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">range</span><span class="token operator">:</span> <span class="token number">25000</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-var">var</span> view <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">itowns<span class="token punctuation">.</span>GlobeView</span><span class="token punctuation">(</span>viewerDiv<span class="token punctuation">,</span> placement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">loadGSIColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">injectChOWDER</span><span class="token punctuation">(</span>view<span class="token punctuation">,</span> viewerDiv<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ←Called from here.</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+        <p>The iTowns official samples, for example, can be made to correspond to ChOWDER by calling <code>injectChOWDER</code> in the same way.</p>
+        <p>3dtiles_basic, pointcloud_3d_map, vector_tile_raster_3d, and view_3d_map, which are included in ChOWDER as Preset, can be made to correspond to ChOWDER for the iTowns official samples by loading chowder_ injection.bundle.js and modified to call the injectChOWDER function.
+
+        </p>
+        <h2 id="chowder-itowns-appのプリセットリストへの反映">Reflection of ChOWDER iTowns App in the preset list</h2>
+        <p>When a new preset is created in the Preset directory (ChOWDER/public/itowns/Preset/),<br>
+            By adding the name and relative URL of the created content to the preset_list.json file in the Preset directory,<br>
+            This will be reflected in the preset list of the ChOWDER iTowns App and can be used as a preset.</p>
+        <pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token comment">// preset_list.json</span>
+<span class="token punctuation">{</span>
+	<span class="token property">"preset_list"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+		<span class="token punctuation">{</span>
+			<span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"geographic map 2.5D"</span><span class="token punctuation">,</span>
+			<span class="token property">"url"</span> <span class="token operator">:</span> <span class="token string">"itowns/preset/gsi_planar/gsi_planar.html"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token punctuation">{</span>
+			<span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"geographic map 3D"</span><span class="token punctuation">,</span>
+			<span class="token property">"url"</span> <span class="token operator">:</span> <span class="token string">"itowns/preset/gsi/gsi.html"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token punctuation">{</span>
+			<span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"pointcloud_3d_map"</span><span class="token punctuation">,</span>
+			<span class="token property">"url"</span> <span class="token operator">:</span> <span class="token string">"itowns/preset/pointcloud_3d_map/pointcloud_3d_map.html"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token punctuation">{</span>
+			<span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"view_3d_map"</span><span class="token punctuation">,</span>
+			<span class="token property">"url"</span> <span class="token operator">:</span> <span class="token string">"itowns/preset/view_3d_map/view_3d_map.html"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token punctuation">{</span>
+			<span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"3dtiles_basic"</span><span class="token punctuation">,</span>
+			<span class="token property">"url"</span> <span class="token operator">:</span> <span class="token string">"itowns/preset/3dtiles_basic/3dtiles_basic.html"</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token punctuation">{</span>
+			<span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"vector_tile_raster_3d"</span><span class="token punctuation">,</span>
+			<span class="token property">"url"</span> <span class="token operator">:</span> <span class="token string">"itowns/preset/vector_tile_raster_3d/vector_tile_raster_3d.htm"</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre><img src="../image/itowns_preset_list.png" height="400">
+Example of Preset list display using the above JSON
 
     </div>
 

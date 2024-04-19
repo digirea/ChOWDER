@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,102 +893,90 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+
+        <h1 class="top-h1">Server Settings</h1>
+        <h2>Basic Server Settings</h2>
+        <p>The server program reads the <code>server/setting.json</code> file at startup to configure various settings.
+        </p>
+        <pre class="language-text">{
+    "wsMaxMessageSize": 67108864,
+    "reductionResolution" : 1920,
+    "enableMeasureTime" : false,
+    "stunServerUrl" : "",
+    "turnServerUrl" : "",
+    "turnServerUsername" : "",
+    "turnServerCredential" : "",
+    "enableHTTP" : true,
+    "enableSSL" : true,
+    "HTTPPort" : 80,
+    "SSLPort" : 443,
+    "enableCORS" : true,
+    "VRMode" : 'cylinder',
+    "reduceUpdate": false,
+    "reduceInterval" : 500,
+    "tileviewerCursorSize" : 100
+}
+</pre>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
+            <li><code>wsMaxMessageSize</code>sets the maximum message size that the server can send and receive at one
+                time.</li>
+            <li><code>reductionResolution</code> sets the size of the reduced image of the large image data. If large image data larger than this size is registered, a reduced image will be generated and used for display depending on the display resolution. The default is "1920".</li>
+            <li><code>enableMeasureTime</code>is set to enable or disable time log output. If time log output is
+                enabled, log files are output to tileimage/log and server/log. Also, logs in Display can be downloaded
+                on Display.</li>
+            <li>Specify the URL of the STUN server to be used for WebRTC connection in <code>stunServerUrl</code></li>
+            <li><code>turnServerUrl</code>specifies the URL of the TURN server used for WebRTC connection.</li>
+            <li><code>turnServerUsername</code> specifies the user name for authentication of the TURN server used in
+                WebRTC connection.</li>
+            <li><code>turnServerCredential</code> specifies the password for authentication of the TURN server used in
+                the WebRTC connection.</li>
+            <li><code>enableHTTP</code>specifies whether to enable HTTPS communication.</li>
+            <li><code>enableSSL</code>specifies whether to enable HTTPS communication.</li>
+            <li><code>HTTPPort</code>specifies the port number used for HTTP communication; the same port is used for
+                Websocket(ws) communication.</li>
+            <li><code>SSLPort</code>specifies the port number used for HTTPS communication; the same port is used for
+                Websocket(wss) communication.</li>
+            <li><code>enableCORS</code>specifies whether or not CORS is allowed for web content published by the ChOWDER
+                Server.</li>
+            <li><code>VRMode</code> specifies the VR mode to be used. Currently available values are "plane" (planar
+                view), "cylinder" (curved view), or "360" (360-degree view).</li>
+            <li>Set <code>reduceUpdate</code>to "true" to reduce the frequency of various update notifications from the
+                Controller. The default is false.
+            <li><code>reduceInterval</code>specifies the maximum waiting time in milliseconds to reduce the frequency of
+                update notifications when reduceUpdate is set to true. The default value is 500.
             </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
+            <li><code>tileviewerCursorSize</code>specifies the cursor size in relative value when RemoteCursor function
+                is used in TileViewer. The default value is 100.
             </li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
+        <h2>Administrator Initialization</h2>
+        <p>The administrator controller can be set at startup.<br>
+            By default, the administrator password is set to "admin".<br>
+            After logging in, changes can also be made from the <a href="u_03.html#management">Management screen.</a>
+        </p>
+        <h2>Administrator configuration file</h2>
+        <p>You can add/delete administrators at startup by creating an admin.json file in the top level folder of
+            ChOWDER ( the folder containing README.md ). The format of admin.json is as follows ( also described in the
+            admin.json.org file)</p>
+        <pre class="language-text">{
+    "administrator" : {
+        "command" : "add",
+        "password" : "admin"
+    },
+    "administrator2" : {
+        "command" : "delete",
+        "password" : "admin2"
+    }
+}
 </pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
-
+        <p>In this example, the controller "administrator" is added (overwritten) and "administrator2" is deleted.</p>
+        <p>To add (overwrite) a controller with the administrator name as a key, use "command" : "add",<br>
+            to delete a controller use "command" : "add", to delete a controller use "command" : "delete".<br>
+            To delete, enter "command" : "delete". When adding, "password" is required.<br>
+            This json file is loaded when ChOWDER is started, and the administrator is registered or deleted in the
+            DB.<br>
+            Once ChOWDER is started and the administrator is registered in the DB, the admin.json file is no longer
+            needed.</p>
     </div>
 
 

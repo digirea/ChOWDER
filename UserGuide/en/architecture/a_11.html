@@ -894,109 +894,158 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
+        <h1 class="top-h1">Controllers</h1>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
+        <h2>About Controllers</h2>
+        <p>The controller page is a page for performing various operations on contents and displays. Specifically, you can register, delete, move, and scale contents, delete, move, and scale displays, update the size of the entire virtual display, and change the number of virtual display divisions.</p>
+        <h2>About registration of contents</h2>
+        <p>Image files, text, text files, and URLs can be registered as contents in the controller. Image files are supported in jpg, gif, png, and bmp formats. URLs are rendered and registered as png format images on the server.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Content Type</th>
+                    <th>Format</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Text</td>
+                    <td>String</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Text file</td>
+                    <td>txt</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>image</td>
+                    <td>jpg, gif, png, bmp</td>
+                    <td>Video display can be realized by continuous update of images</td>
+                </tr>
+                <tr>
+                    <td>URL</td>
+                    <td>png</td>
+                    <td>Server-side rendering</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>About settings for the entire virtual display</h2>
+        <p>You can set the width, height, and the number of divisions of the entire virtual display.</p>
+        <h2>About contents/display settings</h2>
+        <p>The registered contents and displays can be freely arranged, moved, scaled, and so on on the rectangle that represents the virtual display. By activating the snap setting, the contents and displays can be arranged to fit to the division area of the virtual display.</p>
+        <h3 id="コンテンツ設定">Content Settings</h3>
+        <p>Contents have the following properties: x(x-coordinate), y(y-coordinate), w(width), h(height), z(zIndex), and can be moved, scaled, and the z-order can be changed.</p>
+        <h3 id="ディスプレイ設定">Display Settings</h3>
+        <p>The display has properties w(width), h(height), split x(number of splits in x direction), spilt y(number of splits in y direction), and by changing w and h, the width and height can be changed.<br>
+            By changing split x and split y, the virtual display is split by the specified number of divisions in each direction].</p>
+        <h3 id="スナップについて">About Snap</h3>
+        <p>When Free is selected, the snap setting is disabled, and when Display is selected, the snap setting snaps to the display.<br>
+When you choose "Grid", the snap setting is applied to the segmented area of the VirtualDisplay.<br>
+When placed, the top-left corner becomes the origin, and the content or the display is resized to fit into the divided area while keeping the aspect ratio.
+        </p>
+        <p>The following is an image of snap placement on the divided area</p>
+        <p><img src="../image/fitbefore.png" alt="スナップ配置前" width="500">Before snap placement<br>
+            <br><br>
+            <br><br>
+            <img src="../image/fitafter.png" alt="スナップ配置後" width="500">After snap placement
+        </p>
 
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h2 id="コントローラデータ">Controller Data</h2>
+        <p>The method of acquiring and updating data associated with the controller ID of a ChWODER controller.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Params</th>
+                    <th>Required</th>
+                    <th>Format </th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>UpdateControllerData</td>
+                    <td></td>
+                    <td></td>
+                    <td>Update controller data. <br>Update Notification: None</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>GetControllerData</td>
+                    <td></td>
+                    <td></td>
+                    <td>Retrieve controller data. <br>Update Notification: None</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 id="webrtc">WebRTC </h2>
+        <p>Methods related to video delivery using WebRTC.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RTCRequest</td>
+                    <td>Make a WebRTC request.<br>Update Notification: None</td>
+                </tr>
+                <tr>
+                    <td>RTCOffer</td>
+                    <td>Notification of Offer.<br>Update Notification: None</td>
+                </tr>
+                <tr>
+                    <td>RTCAnswer</td>
+                    <td> Notification of Anser.<br>Update Notification: None</td>
+                </tr>
+                <tr>
+                    <td>RTCIceCandidate</td>
+                    <td>Notification of IceCandidate. <br>Update Notification: None</td>
+                </tr>
+                <tr>
+                    <td>RTCClose</td>
+                    <td>Close WebRTC.<br>Update Notification: None</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 id="ディスプレイ配信許可設定">Display delivery permission setting</h2>
+        <p>Methods related to display delivery permission.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AskDisplayPermission</td>
+                    <td>Ask whether or not the server is allowed to permit a new display. <br>Update Notification: AskDisplayPermission</td>
+                </tr>
+                <tr>
+                    <td>UpdateDisplayPermissionList</td>
+                    <td>Change the list of display permission settings.<br>Update Notification: UpdateDisplayPermissionList</td>
+                </tr>
+                <tr>
+                    <td>DeleteDisplayPermissionList</td>
+                    <td>elete Display Permission List. <br>Update Notification: DeleteDisplayPermissionList</td>
+                </tr>
+                <tr>
+                    <td>GetDisplayPermissionList</td>
+                    <td>Retrieve a list of display permission settings.<br>Update Notification: None</td>
+                </tr>
+            </tbody>
+        </table>
 
+        
     </div>
-
-
-
-
-
-
 
 
 

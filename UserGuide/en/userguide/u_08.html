@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,213 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Using Google Chrome Extension</h1>
+
+        <h2>Overview</h2>
+        <p>Google Chrome has a mechanism to extend its functionality called Extension. By adding a dedicated Extension for ChOWDER to Google Chrome, you can capture the web browser screen in real time and add it as content.</p>
+        <h2>Installing the Extension</h2>
+        <p>To install and add an extension to Chrome, you need to use the Chrome extension in developer mode.</p>
+        <ol>
+            <li>Open the browser's extensions page as shown below.</li>
+            <li>Enable the Developer Mode toggle to enter developer mode.</li>
+            <li>Restart Chrome and then open the extensions page again.</li>
+            <li>On the extensions page, click on the menu item "Load Unpackaged Extensions" and select the <code>ChOWDER/chrome_extension</code> directory to add them.
+
+            </li>
+        </ol>
+        <img src="../image/extension01.png" alt="拡張機能ページを開くメニュー" width="585">
+        
+        <br>
+        <img src="../image/extension02.png" alt="デベロッパーモードをトグル" width="585">
+       
+        <h2>Capturing with Extension</h2>
+        <p>Once you have added an Extension, you can click on the icon to start capturing.</p>
         <ul>
-            <li>OS
+            <li>
+                <p>Extension's menu</p>
                 <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
+                    <li>
+                        <p>Capture ... Capture the currently displayed web page and send it to ChOWDER.</p>
+                    </li>
+                    <li>
+                        <p>AutoCapture ... Capture the currently displayed web page and send it to ChOWDER continuously at the set time interval.</p>
+                    </li>
+                    <li>
+                        <p>Setting ... opens the setting menu.</p>
+                    </li>
                 </ul>
             </li>
-            <li>Webブラウザ
+        </ul>
+        <img src="../image/extension03.png" alt="Extensionのメニュー" width="207">
+      
+        <br>
+        <img src="../image/extension04.png" alt="AutoCapture開始後" width="207">
+        
+        <ul>
+            <li>
+                <p>Extension settings</p>
                 <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
+                    <li>
+                        <p>URL ... set the URL to connect to ChOWDER.</p>
+                    </li>
+                    <li>
+                        <p>Interval ... set the capture interval used by AutoCapture.</p>
+                    </li>
                 </ul>
             </li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
+        <img src="../image/extension_setting.png" alt="Extensionの設定" width="207">
+        
+        <h1>Using ChOWDER Desktop Capture</h1>
+        <h2>Overview</h2>
+        <p>ChOWDER Desktop Capture allows you to add the entire desktop, active application window, or selected area as image content to ChOWDER.</p>
+        <h2>Installation and Operating Environment</h2>
+        <h3 id="インストールスクリプトの実行">Running the installation script </h3>
+        <p>On Mac<br>
+            Run the following shell script under desktop capture</p>
+        <pre class="language-text">   $cd desktop_capture
+   $sh make$app.sh
 </pre>
+        <p>On Windows<br>
+            Execute the following file under desktop capture.</p>
+        <pre class="language-text">   &gt;cd desktop_capture
+   &gt;make$_app.bat
+</pre>
+        <h3 id="動作環境">Operating environment</h3>
+        <p>OS : Windows7, MacOSX 10.10</p>
 
-        <p>以下の構成でファイルが作成されます.</p>
+        <h2>How to use ChOWDER Desktop Capture</h2>
+        <p>ChOWDER Desktop Capture allows you to perform the following operations</p>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li>Selecting and sending a capture target/range</li>
+            <li>Set the interval for sending captured images</li>
+            <li>Set the destination URL for captured images</li>
+            <li>Set the group to which captured images will be sent</li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
+      
+        <h3 id="キャプチャ対象範囲の選択">
+            Selecting capture target/range </h3>
+        <h4 id="キャプチャ対象の選択">Selecting Capture Targets</h4>
+        <p>ChOWDER Desktop Capture will create thumbnails of the following items and display them at the bottom of the screen upon startup.</p>
+        <ul>
+            <li>Entire Desktop</li>
+            <li>active window</li>
+        </ul>
+        <img src="../image/dc_cap01.png" alt="サムネイル一覧" width="400">
+        <p>Capture targets can be changed by clicking on a thumbnail. The clicked target is displayed as a preview at the top of the screen and is ready to be captured.</p>
+        <img src="../image/dc_cap02.png" alt="キャプチャ対象のプレビュー" width="300">
+        
+        
+        <p>After selecting the capture target, press the "Capture Start" button to start sending images to ChOWDER.</p>
+        <img src="../image/dc_cap03.png" alt="Capture Start ボタン" width="600">
+        
+        <br>
+        <img src="../image/dc_cap04.png" alt="Capture Start ボタンを押した時" width="600">
+        
+        <h4 id="キャプチャ範囲の選択">Selecting the Capture Range </h4>
+        <p>In ChOWDER Desktop Capture, you can send a part of the screen as an image to ChOWDER by selecting an area.</p>
+        <p>After the "Set Capture Area" button is pressed, ChOWDER Desktop Capture will be minimized and the mouse cursor will change to an indicator for range selection. After dragging the mouse cursor to the area to be captured, release the mouse button to specify the area to be captured.</p>
+        <img src="../image/dc_cap05.png" alt="Set Capture Area ボタン" width="600">
+        
+        <br>
+        <img src="../image/dc_cap06.png" alt="範囲選択状態" width="600">
+        
+        <br>
+        <img src="../image/dc_cap07.png" alt="範囲選択プレビュー" width="600">
+       
+        <p>Transmission of the image is started by clicking the "Capture Start" button in the same way as "Select Capture Target".</p>
+        <h3 id="キャプチャ間隔の設定">Capture Interval Settings</h3>
+        <p>ChOWDER Desktop Capture allows you to set the interval for sending images to ChOWDER, which is changed by entering a numerical value in the form to the right of Capture Interval(sec) or by pressing the up/down buttons. The minimum interval is 0.05(sec). The initial value (1 sec) is entered by pressing the "Reset" button.</p>
+        <img src="../image/dc_cap08.png" alt="キャプチャ間隔設定フォーム" width="600">
+        
+        <p>The values for Capture Interval, CHOWDER URL, and Target Group will be retained at the next startup even if this application is exited.</p>
+        <h3 id="キャプチャ画像の送信先のurl-の設定">Captured Image Destination URL Settings</h3>
+        <p>ChOWDER Desktop Capture allows you to set the destination (ChOWDER) URL for images, which is changed by entering the destination URL in the form on the right side of ChOWDER URL. Click the "Reset" button to enter the initial value.</p>
+        <img src="../image/dc_cap09.png" alt="送信先URL 設定フォーム" width="600">
+        
+        <h3 id="キャプチャ画像のグループの設定">Setting up groups of captured images</h3>
+        <p>ChOWDER Desktop Capture allows you to set the destination group for captured images, which can be selected from the drop-down list on the right side of Target Group. The default value is entered by clicking the "Reload" button.</p>
+        <img src="../image/dc_cap10.png" alt="送信先グループ設定フォーム" width="600">
+        
+        <h1>Using Google Chrome Extension for WebRTC</h1>
+        <h2>Overview</h2>
+        <p>Using WebRTC, a function of HTML5, you can distribute video contents by screen sharing.<br>
+            Although screen sharing is not normally possible with Google Chrome due to security restrictions, installing the Chrome Extension will enable video distribution.</p>
+        <h2>Installing the Extension</h2>
+        <p>To install and add an extension to Chrome, you must use Chrome Extension in developer mode.</p>
+        <ol>
+            <li>Open the Extensions page of your browser as shown in Installing an Extension.</li>
+            <li>Enable the Developer Mode toggle to enter Developer Mode.</li>
+            <li>Restart Chrome and then open the extensions page again.</li>
+            <li>On the extensions page, click on the menu item "Load Unpackaged Extensions" and select the <code>ChOWDER/chrome_extension_for_webrtc</code> directory to add the extension.</li>
+        </ol>
+        <h2>
+            If the ChOWDER server is running on a different PC</h2>
+        <p>You need to add the server URL to "matches" in <code>chrome_extension_for_webrtc/manifest.json</code>. If you change it, you need to reinstall the extension.</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>[before]
+  "externally_connectable": {
+    "matches": ["*://127.0.0.1/*", "*://localhost/*"]
+  },
+</code></pre>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>[after]
+  "externally_connectable": {
+    "matches": ["*://127.0.0.1/*", "*://localhost/*", "*://any.somedomain.co.jp/*"]
+  },
+</code></pre>
+        <h2>Capturing with Extension</h2>
+        <p>Once you have added an Extension, you can start capturing by going to Add→ScreenShare and entering the ExtensionID in the dialog box.</p>
+        <img src="../image/AddContent_ScreenShare_View2.png" alt="ScreenShare開始時のExtensionIDの入力" width="600">
+   
+        <h1>Using Large-Scale Image Data Transmission Applications</h1>
+        <h2>Overflow</h2>
+        <p>Huge image data can be sent to the ChOWDER server via a CLI application.</p>
+        <h2>Application Configuration</h2>
+        <p>A configuration file can be used to specify the number of divisions and content IDs/groups. The configuration file is created under the <code>tileimag</code>e directory with the file name <code>config.json</code>.<br>
+            The format of the configuration file is as follows::</p>
+        <pre class="language-text">{
+    "id": "APIUser",
+    "password": "password",
+    "url": "ws://localhost:8081/v2/",
+    "xsplit": 8,
+    "ysplit": 8,
+    "contentid": "contentid",
+    "contentgrp": "default",
+    "reload_latest" : true,
+    "visible" : true
+}
 </pre>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li><code>id</code> is fixed to the <code>APIUser</code>.</li>
+            <li>Specify the <code>password</code> of the <code>APIUser</code> in " password ". The password can be changed from the password settings on the administration page.</li>
+            <li>Specify the URL of the ChOWDER WebSocket server in " url". Specify the URL not as a browser URL, but in a form that can be accessed from inside the server. Basically, <code>ws://localhost:{port number}/{chowder folder location in the server}/v2/</code>.
+            </li>
+            <li><code>xsplit</code> and ysplit can be used to specify the number of horizontal and vertical image splits, respectively.</li>
+            <li><code>contentid</code> and <code>contentgrp</code> can be content ID and content group, respectively.</li>
+            <li><code>reload_latest</code> can be set totrue or false to specify whether or not to continue displaying the latest images registered using the <code>--metadata</code> option, in Display.</li>
+            <li><code>visible</code>specifies whether the registered images are visible or invisible by true or false.</li>
         </ul>
+        <h2>
+            How to use the application</h2>
+        <p>Execute the following command from the command prompt or terminal. Specify the path to the image to be sent using the command argument.</p>
+        <h3 id="maclinuxの場合-1">For Mac/Linux</h3>
+        <p>Run the following shell script under the <code>bin</code> directory </p>
+        <pre class="language-text">./tileimage.sh
+</pre>
+        <h3 id="windowsの場合-1">For Windows</h3>
+        <p>Execute the following command under the <code>bin</code> directory.</p>
+        <pre class="language-text">tileimage.bat
+</pre>
+        <h3 id="コマンドオプション">Command options</h3>
+        <ul>
+            <li><code>--config</code> (optional): You can specify the path to the configuration file. By default, <code>tileimage/tileimage.json</code> is used.
+            </li>
+            <li><code>--metadata</code>(optional): allows you to set image metadata.</li>
+        </ul>
+        <p>
+            An example command is: tileimage/tileimage.json:</p>
+        <pre class="language-text">./tileimage.sh --config=conf.json --metadata="{\"key\":\"value\"}" image.jpg
+</pre>
 
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
 
     </div>
 

@@ -894,109 +894,339 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
+        <h1 class="top-h1">Data Structure</h1>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
+        <h2>About Data Structure</h2>
+        <h3 id="Data Structure of DB">Data Structure of DB</h3>
+        <p>This system uses redis as a database to store the contents and window information received by the server. The data structure of the DB is shown below.</p>
+        <p>Data Structure of DB</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Description </th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>tiled_server:t:DBID:virtual_display</td>
+                    <td>splitX</td>
+                    <td>Number of divisions in the x-direction of the entire virtual display</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>splitY</td>
+                    <td>Number of divisions in the y-direction of the entire virtual display</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgWidth</td>
+                    <td>Width of the entire virtual display</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgHeight</td>
+                    <td>Height of the entire virtual display</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:content:[Content ID]</td>
+                    <td>Binary or  text data </td>
+                    <td>Actual data of content</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:contentref:[Content ID]</td>
+                    <td>text data</td>
+                    <td>Reference count of content</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:content_backup:[Content ID]</td>
+                    <td>binary or text data</td>
+                    <td>Content backup</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:group_list</td>
+                    <td> JSON text data</td>
+                    <td>group definition list</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:group_user</td>
+                    <td> JSON text data</td>
+                    <td>group user information</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:metadata:[metadata ID]</td>
+                    <td>id</td>
+                    <td>metadata ID</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>content_id</td>
+                    <td>Content ID</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>type</td>
+                    <td>Content type</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>posx</td>
+                    <td>x-coordinate</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>posy</td>
+                    <td>y-coordinate</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>width</td>
+                    <td>width</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>height</td>
+                    <td>height</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgWidth</td>
+                    <td>initial width</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgHeight</td>
+                    <td>initial Height</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>zIndex</td>
+                    <td>zIndex</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>visible</td>
+                    <td>Display state</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>mime</td>
+                    <td>mime type</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>group</td>
+                    <td>group name</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>mark</td>
+                    <td>Highlight flag</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>mark_memo</td>
+                    <td>Meta information display flag</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>user_data_text</td>
+                    <td>User data (meta information)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>backup_list</td>
+                    <td>List of backup times for backups held</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>restore_index</td>
+                    <td>Index indicating which backups are being restored</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:DBID:metadata_backup:[metadata ID]:[time]</td>
+                    <td>JSON text data</td>
+                    <td>metadata backup</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:adminlist</td>
+                    <td>JSON text data</td>
+                    <td>admin definition list</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:admin_user</td>
+                    <td>JSON text data</td>
+                    <td>admin user information</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:default:window_content:[Content ID]</td>
+                    <td>id</td>
+                    <td>metadata ID</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>content_id</td>
+                    <td>Content ID</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>type</td>
+                    <td>window</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>posx</td>
+                    <td>x-coordinate</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>posy</td>
+                    <td>y-coordinate</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>width</td>
+                    <td>width</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>height</td>
+                    <td>height</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgWidth</td>
+                    <td>initial width</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgHeight</td>
+                    <td>initial height</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>visible</td>
+                    <td>Display state</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>reference_count</td>
+                    <td>reference count</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:default:window_contentref:[Content ID]</td>
+                    <td>text data</td>
+                    <td>window reference count</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:default:window_metadata:[metadata ID]</td>
+                    <td>id</td>
+                    <td>metadata ID</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>content_id</td>
+                    <td>Content ID</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>type</td>
+                    <td>window</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>posx</td>
+                    <td>x-coordinate</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>posy</td>
+                    <td>y-coordinate</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>width</td>
+                    <td>width</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>height</td>
+                    <td>height</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>orgHeight</td>
+                    <td>Initial height</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>visible</td>
+                    <td>Display state</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>mark_memo</td>
+                    <td>Meta information display flag</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>user_data_text</td>
+                    <td>user data (meta information)</td>
+                </tr>
+                <tr>
+                    <td>tiled_server:t:tiled_server:sessions</td>
+                    <td>default</td>
+                    <td>session ID</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
 
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h2>About Data Storage Method</h2>
+        <h3 id="idについて">About IDs</h3>
+        <p>Content information and window information are stored by assigning content ID and window ID, respectively. IDs are created with random 8-digit alphanumeric characters at the time of content storage on the server, and can be added by specifying an arbitrary ID to an add method such as "AddContent".</p>
+        <h3 id="格納形式について">Storage Format</h3>
+        <p>Image data and text data are stored as binary or UTF8 strings as they are sent from clients. URLs are stored as binaries of image data rendered by phantom.js.</p>
+        <h3 id="サーバで付与するメタデータについて">Metadata added by the server </h3>
+        <p>The image data is saved on the server side with mime automatically detected. For images rendered by phantomjs, posx, posy, width, height, orgWidth, orgHeight, and mime are added on the server side.</p>
+        <h3 id="参照カウントについて">About reference counts </h3>
+        <p>Since contents and windows may be referenced from multiple metadata or displays, reference counts are maintained on the server side.</p>
+        <h3 id="ユーザーデータについて">About user data</h3>
+        <p>User data (meta information) is stored in the content metadata as user_data_text.</p>
+        <p>user_data_text is in JSON text format and holds the following key-value values.</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>{
+            text : "The text entered in the meta information is stored here."
+}
+</code></pre>
+        <h3 id="グループ定義リストについて">About group definition list</h3>
+        <p>The group definition list ( tiled_server:t:default:group_list ) holds all registered group definitions in JSON text format as follows.</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>{
+"grouplist": [
+    {
+        "name": "default",
+        "id": "group_defalut"
+    },
+    {
+        "name": "test group",
+        "color": "rgb(85,255,58)",
+        "id": "b97b9952"
+    },
+    {
+        "name": "Blue group",
+        "color": "rgb(104,102,255)",
+        "id": "f66cac77"
+    },
+    {
+        "name": "Red group",
+        "color": "rgb(222,68,0)",
+        "id": "4e3a9dd6"
+    }
+]
+}
+</code></pre>
 
     </div>
-
-
-
-
-
-
 
 
 

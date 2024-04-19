@@ -919,18 +919,18 @@
         <ul>
             <li><code>wsMaxMessageSize</code>には、サーバーが1回で送受信できる最大メッセージサイズを設定します。</li>
             <li><code>reductionResolution</code>には、大規模画像データの縮小画像のサイズを設定します。このサイズ以上の大規模画像データを登録した場合は、縮小画像が生成され、表示解像度によっては縮小画像が表示に使用されます。
-            </li>
+                デフォルトは"1920"です。</li>
             <li><code>enableMeasureTime</code>には、時刻ログ出力を有効にするかどうかを設定します。時刻ログ出力を有効にした場合、tileimage/log、server/logに対してログファイルが出力されます。また、Display上でDisplayでのログがダウンロードできるようになります。
-            </li>
+                デフォルトは"false"です。</li>
             <li><code>stunServerUrl</code>には、WebRTC接続において使用する、STUNサーバのURLを指定します。</li>
             <li><code>turnServerUrl</code>には、WebRTC接続において使用する、TURNサーバのURLを指定します。</li>
             <li><code>turnServerUsername</code>には、WebRTC接続において使用する、TURNサーバの認証用ユーザー名を指定します。</li>
             <li><code>turnServerCredential</code>には、WebRTC接続において使用する、TURNサーバの認証用パスワードを指定します。</li>
-            <li><code>enableHTTP</code>には、HTTP通信を有効にするかどうかを指定します。</li>
-            <li><code>enableSSL</code>には、HTTPS通信を有効にするかどうかを指定します。</li>
-            <li><code>HTTPPort</code>には、HTTP通信で使用するポート番号を指定します。Websocket(ws)通信でも同様のポートが使用されます。</li>
-            <li><code>SSLPort</code>には、HTTPS通信で使用するポート番号を指定します。Websocket(wss)通信でも同様のポートが使用されます。</li>
-            <li><code>enableCORS</code>には、ChOWDER Serverで公開するウェブコンテンツに対し、CORSを許可するかどうかを指定します。</li>
+            <li><code>enableHTTP</code>には、HTTP通信を有効にするかどうかを指定します。デフォルトは"true"です。</li>
+            <li><code>enableSSL</code>には、HTTPS通信を有効にするかどうかを指定します。デフォルトは"true"です。</li>
+            <li><code>HTTPPort</code>には、HTTP通信で使用するポート番号を指定します。Websocket(ws)通信でも同様のポートが使用されます。デフォルトは"80"です</li>
+            <li><code>SSLPort</code>には、HTTPS通信で使用するポート番号を指定します。Websocket(wss)通信でも同様のポートが使用されます。デフォルトは"443"です</li>
+            <li><code>enableCORS</code>には、ChOWDER Serverで公開するウェブコンテンツに対し、CORSを許可するかどうかを指定します。デフォルトは"true"です。</li>
             <li><code>VRMode</code>には、使用するVRモードを指定します。現在指定可能な値は"plane"(平面表示)または"cylinder"(曲面表示)または"360"(360度表示)です。
             </li>
             <li><code>reduceUpdate</code>には、Controllerからの各種更新通知などが発行される頻度を減らす場合trueを設定します。デフォルトではfalseです。</li>
@@ -941,7 +941,8 @@
         </ul>
         <h2>管理者初期設定</h2>
         <p>管理者コントローラを起動時に設定することができます.<br>
-            デフォルトでは, 管理者パスワードは「admin」に設定されています</p>
+            デフォルトでは, 管理者パスワードは「admin」に設定されています。<br>
+            ログイン後は<a href="u_03.html#management">管理画面</a>からも変更することが出来ます。</p>
         <h2>管理者設定ファイル</h2>
         <p>ChOWDER の最上位フォルダ(<a href="http://README.md">README.md</a> があるフォルダ) に, admin.json ファイルを作成することで,<br>
             起動時に管理者の追加削除を行うことができます. admin.json の書式は以下の通りです(<a href="http://admin.json.org">admin.json.org</a>

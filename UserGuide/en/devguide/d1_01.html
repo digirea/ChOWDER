@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,69 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Introduction</h1>
+
+        <p>This document explains how to develop ChOWDER.
+        </p>
+        <h1>Development Environment
+        </h1>
+        <h3 id="サーバサイド">Server side
+        </h3>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
+            <li>redis</li>
+            <li>node.js</li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
+        <h3 id="クライアントサイド">
+            Client side
+        </h3>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li>webpack+babel</li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
+        <h1>Server and Client Roles</h1>
+        <h3 id="サーバの役割">Server Roles </h3>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li>HTTP communication - sending HTML pages and other information to the client</li>
+            <li>Websocket communication - Communicate with the client's controller and display via websocket.</li>
+            <li>Database input/output - Stores image and text data sent by the client in redis and makes them
+                persistent.</li>
+            <li>Server-side rendering - The website URL is rendered on the server side using phantomjs and saved as a
+                png image.</li>
+            <li>Configure various access permissions.</li>
+            <li>Intermediates communication for WebRTC video delivery.</li>
         </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h3 id="クライアント---コントローラの役割">
+            Client - Role of the Controller</h3>
+        <ul>
+            <li>The controller can control the arrangement of multiple displays, and can inquire the server to
+                register/delete/arrange the contents to be delivered to the displays.</li>
+            <li>If the controller has the Administrator privilege, the controller can set the permission settings such
+                as permission of content delivery.</li>
+        </ul>
+        <h3 id="クライアント---ディスプレイの役割">
+            Client - Display Role</h3>
+        <ul>
+            <li>Registers its own window to the server as a display.</li>
+                <li>Display the delivered contents.</li>
+        </ul>
+        <h1>
+            Debugging Method</h1>
+        <h3 id="サーバサイド-1">Server side </h3>
+        <p>After starting the ChOWDER server with <code>bin/run.bat</code> etc.
+            RedisDesktopManager, etc., you can easily view the data registered in reids.
+        </p>
+        <blockquote>
+            <p><a href="https://github.com/uglide/RedisDesktopManager">https://github.com/uglide/RedisDesktopManager</a>
+            </p>
+        </blockquote>
+        <h3 id="クライアントサイド-1">Client side </h3>
+        <p>On the client side, webpack and babel are used to transcompile Javascript code.</p>
+        <p>After starting the ChOWDER server with <code>bin/run.bat</code> etc., run</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>npm run watch
+        </code></pre>
+        <p>command will detect changes in the client-side files under public/ and run webpack if there are any changes. This is the most efficient way to develop.</p>
+        <p>After webpack runs, you need to reload your browser manually.Alternatively, you can run webpack manually by executing the following command.　</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>npm run webpack
+        </code></pre>
 
     </div>
 

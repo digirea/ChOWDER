@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,314 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Using the WebGL Distributed Rendering Functio</h1>
+
+        <h2>Overview</h2>
+        <p>Using iTowns, a GIS drawing library, GIS content can be drawn on a ChOWDER display using WebGL.</p>
+        <h2>How to use the application</h2>
+        <p>Access the following URL to use the WebGL distributed rendering function.<br>
+            For HTTPS URLs, you need to add an exception.</p>
         <ul>
-            <li>OS
+            <li>URL For HTTP … http://ChOWDER_Server_Address/itowns.html</li>
+            <li>URL For HTTPS … https://ChOWDER_Server_Address/itowns.html</li>
+        </ul>
+        <img src="../image/itowns1.png" alt="WebGL分散描画機能" width="500">
+        <p>Choose your APIUser password and the preset you wish to view, and log in.<br>
+            When the content is successfully loaded, the displayed preset will be added as a ChOWDER content at the same
+            time.</p>
+        <img src="../image/itowns2.jpg" alt="WebGL分散描画機能" width="500">
+        <ul>
+            <li>
+                <ol>
+                    <li>The registered content ID will be displayed.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="2">
+                    <li>The URL of the preset will be displayed</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="3">
+                    <li>GIS layers that can be operated are displayed.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="4">
+                    <li>GIS layers can be added and deleted.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="5">
+                    <li>GIS layer properties can be manipulated.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="6">
+                    <li>Performs display performance measurement functions</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="7">
+                    <li>For time-aware content, time changes made by timeline operations are reflected.</li>
+                </ol>
+            </li>
+        </ul>
+        <h2>Add GIS Layer Function</h2>
+        <p>By clicking the Add Layer button, a layer can be added in the Add Layer dialog.</p>
+        <img src="../image/itowns3.png" alt="レイヤー追加ダイアログ" width="500">
+        <p>The types of layers that can be added and how to specify the URL are as follows</p>
+        <ul>s
+            <li>Color : Layer by EPSG3857 color tile
                 <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
+                    <li><a
+                            href="http://server-address/%7Bz%7D/%7Bx%7D/%7By%7D.png">http://server-address/{z}/{x}/{y}.png</a>
+                        etc., and specify the tile number part by {x}{y}{z}.</li>
                 </ul>
             </li>
-            <li>Webブラウザ
+            <li>
+                Elevation : Layer with EPSG4326 elevation tiles and Geographical Survey Institute map DEM tiles
                 <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
+                    <li><a
+                            href="http://server-address/%7Bz%7D/%7Bx%7D/%7By%7D.txt">http://server-address/{z}/{x}/{y}.txt</a>
+                        etc., and specify the tile number part by {x}{y}{z}.</li>
+                </ul>
+            </li>
+            <li>
+                3DTile : Layer by 3D Tiles(b3dm) format
+                <ul>
+                    <li><a href="http://server-address/tileset.json">http://server-address/tileset.json</a>
+                        Specify the json address, e.g. <code>http://server-address/tileset.json</code> </li>
+                </ul>
+            </li>
+            <li>
+                3DTiles Timeseries : Layer with 3DTiles of time series
+                <ul>
+                    <li>Specify the json address, e.g. <code>http://server-address/timeseries.json</code> (see below for
+                        how to write json)</li>
+                </ul>
+            </li>
+            <li>PointCloud : Layer with point cloud data created by potree Converter
+                <ul>
+                    <li>Specify the json address as<a
+                            href="http://server-address/cloud.json">http://server-address/cloud.json</a>
+                        etc.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                PointCloudTimeSeries : Layer with point cloud data of time series created by potree Converter
+                <ul>
+                    <li><a href="http://server-address/timeseries.json">http://server-address/timeseries.json</a>
+                        etc. and specify the json address (json description method is described later)</li>
+                </ul>
+            </li>
+            <li>VectorTile : Vector tiles such as pbf
+                <ul>
+                    <li>Specify the address of the vector tile, e.g.<a
+                            href="http://server-address/vectortile.pbf">http://server-address/vectortile.pbf</a>
+                    </li>
+                    <li>Specify style.json for vector file, such as<a
+                            href="https://server-address/style.json">https://server-address/style.json</a>
+                    </li>
+                </ul>
+            </li>
+            <li>Bargraph : Layer to create a bargraph from an arbitrary CSV file
+                <ul>
+                    <li><a href="http://server-address/data1.csv">http://server-address/data1.csv</a>
+                        and specify the address of the CSV file, or upload it from a local file by
+                        <code>Import CSV File</code></li>
+                    <li><a href="http://server-address/setting1.json">http://server-address/setting1.json</a>
+                        and specify the address of the JSON file for configuration, or upload from a local file by
+                        <code>Import JSON File</code></li>
+                </ul>
+            </li>
+            <li>
+                OBJ : Layer mesh data in Wavefront OBJ format
+                <ul>
+                    <li>Specify the address of the OBJ file, e.g. <a
+                            href="http://server-address/teapot.obj">http://server-address/teapot.obj</a>
+                    </li>
+                    <li>Specify the address of the MTL file, e.g. <a
+                            href="http://server-address/default.mtl">http://server-address/default.mtl</a>
+                    </li>
                 </ul>
             </li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
+        <p>The ID is set to a name that will appear in the layer list. It must be a unique name.</p>
+        <p>ZOOM specifies the range (MIN, MAX) to which the data source is to be expanded. This corresponds to {z} in
+            the tile URL.</p>
+        <p>The json file to be specified as timeseries.json should be written as follows</p>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li>The time history is described in ISO8601 notation as a key.</li>
+            <li>For 3DTiles, enter the address of the timeserieset.json as the value.</li>
+            <li>For PointCloud, the value is the address of cloud.json. </li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
+        <p>In Type 3DTiles and 3DTiles Timeseries, you can specify the EPSG code for coordinate transformation when
+            loading. The method of specifying the EPSG code is as follows</p>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li>Conversion : From ・・・ Select or input the EPSG code of the data.</li>
+            <li>Conversion : To ・・・ Select or input the EPSG code of the data to be converted.</li>
         </ul>
+        <img src="../image/itowns4.png" alt="レイヤー追加ダイアログ" width="500">
+        <br><br>
+        <h2>GIS Layer Properties</h2>
+        <p>The following properties can be set from the GUI for each added layer type</p>
+        <ul _d-id="336360">
+            <li _d-id="336361"><span _d-id="349800">Common to all layers</span><span _d-id="349801"><br
+                        _d-id="336363"></span></li>
+            <ul _d-id="336364">
+                <li _d-id="336365"><span _d-id="349803">attribution - An arbitrary
+                        name or URL to identify the copyright holder of the data source.</span><span _d-id="349804"><br
+                            _d-id="336367"></span></li>
+            </ul>
+            <li _d-id="336368"><span _d-id="349806">color
+                    - any name or URL to indicate the copyright holder of the data source</span><span _d-id="349807"><br
+                        _d-id="336370"></span></li>
+            <ul _d-id="336371">
+                <li _d-id="336372"><span _d-id="349809">visible -
+                        visibility</span><span _d-id="349810"><br _d-id="336374"></span></li>
+                <li _d-id="336375"><span _d-id="349812">opacity - Opacity</span><span _d-id="349813"><br
+                            _d-id="336377"></span></li>
+            </ul>
+            <li _d-id="336378"><span _d-id="349815">Elevation</span><span _d-id="349816"><br _d-id="336380"></span></li>
+            <ul _d-id="336381">
+                <li _d-id="336382"><span _d-id="349818">scale - Elevation scale
+                        factor</span><span _d-id="349819"><br _d-id="336384"></span>
+                </li>
+            </ul>
+            <li _d-id="336385"><span _d-id="349821">3D Tiles</span><span _d-id="349822"><br _d-id="336387"></span></li>
+            <ul _d-id="336388">
+                <li _d-id="336389"><span _d-id="349824">visible - Visibility is
+                        hidden</span><span _d-id="349825"><br _d-id="336391"></span>
+                </li>
+                <li _d-id="336392"><span _d-id="349827">opacity - Opacity</span><span _d-id="349828"><br
+                            _d-id="336394"></span></li>
+                <li _d-id="336395"><span _d-id="349830">wireframe - wireframe
+                        visible/hide</span><span _d-id="349831"><br _d-id="336397"></span></li>
+                <li _d-id="336398"><span _d-id="349833">sseThreshold - threshold used
+                        for LoD processing</span><span _d-id="349834"><br _d-id="336400"></span></li>
+                <li _d-id="336401"><span _d-id="349836">offset tu, offset uv, offset
+                        u, offset v - Tangential position offset</span><span _d-id="349837"><br _d-id="336403"></span>
+                </li>
+                <li _d-id="336404"><span _d-id="349839">offset w - rotation offset
+                        around axis</span><span _d-id="349840"><br _d-id="336406"></span></li>
+            </ul>
+            <li _d-id="336407"><span _d-id="349842">PointCloud</span><span _d-id="349843"><br _d-id="336409"></span>
+            </li>
+            <ul _d-id="336410">
+                <li _d-id="336411"><span _d-id="349845">visible - display
+                        hidden</span><span _d-id="349846"><br _d-id="336413"></span>
+                </li>
+                <li _d-id="336414"><span _d-id="349848">bbox - bounding box
+                        visible/hide</span><span _d-id="349849"><br _d-id="336416"></span></li>
+                <li _d-id="336417"><span _d-id="349851">opacity - opacity</span><span _d-id="349852"><br
+                            _d-id="336419"></span></li>
+                <li _d-id="336420"><span _d-id="349854">size - point size in screen
+                        space</span><span _d-id="349855"><br _d-id="336422"></span>
+                </li>
+                <li _d-id="336423"><span _d-id="349857">sseThreshold - threshold used
+                        for LoD processing</span><span _d-id="349858"><br _d-id="336425"></span></li>
+                <li _d-id="336426"><span _d-id="349860">offset tu, offset uv, offset
+                        u, offset v - position offset in tangent direction</span><span _d-id="349861"><br
+                            _d-id="336428"></span></li>
+                <li _d-id="336429"><span _d-id="349863">offset w - rotation offset
+                        around the axis</span><span _d-id="349864"><br _d-id="336431"></span></li>
+            </ul>
+            <li _d-id="336432"><span _d-id="349866">Bargraph</span><span _d-id="349867"><br _d-id="336434"></span></li>
+            <ul _d-id="336435">
+                <li _d-id="336436"><span _d-id="349869">Time - select CSV column name
+                        containing ISO8601 time string</span><span _d-id="349870"><br _d-id="336438"></span></li>
+                <li _d-id="336439"><span _d-id="349872">Latitude - select CSV column
+                        name containing latitude values</span><span _d-id="349873"><br _d-id="336441"></span></li>
+                <li _d-id="336442"><span _d-id="349875">Longitude (Longitude) -
+                        Select a CSV column name that contains longitude values.</span><span _d-id="349876"><br
+                            _d-id="336444"></span></li>
+                <li _d-id="336445"><span _d-id="349878">Physic1 (bar length) - select
+                        the CSV column name to be used as the bar length value.</span></li>
+                <li _d-id="336465"><span _d-id="349880"><br _d-id="336448"></span>
+                </li>
+                <li _d-id="336449"><span _d-id="349882">- The overall length can be
+                        adjusted using a separate scale value.</span><span _d-id="349883"><br _d-id="336451"></span>
+                </li>
+                <li _d-id="336452"><span _d-id="349885">Physic 2 (bar color) - Select
+                        the CSV column name to be used as the bar color value.</span></li>
+                <li _d-id="336466"><span _d-id="349887"><br _d-id="336455"></span>
+                </li>
+                <li _d-id="336456"><span _d-id="349889">- Among the values contained
+                        in the CSV, values from minimum to maximum are assigned to the jet colormap and used as the
+                        color.</span></li>
+            </ul>
+        </ul>
+        <p>minimum value→<img src="../image/jet.png" alt="物理量2" width="300">←maximum value</p>
+        <h2>How to Setup and Operate Timeline for GIS</h2>
+        <p>The timeline for GIS allows you to specify the time corresponding to the data, as well as play and stop the timeline. An area called a range bar can be specified on the timeline, which ChOWDER uses as a display range for the data.</p>
+        <img src="../image/timeline.png" alt="タイムライン" width="500">
+        <ul>
+            <li>
+                <ol>
+                    <li>Play/Stop button - Play/Stop the timeline.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="2">
+                    <li>Range Bar - Used in ChOWDER as a range for displaying data.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="3">
+                    <li>Sync Button - Determines if the timeline time is synchronized between several different iTowns contents.
+                        <br>By default, the timeline is in sync
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <ol start="4">
+                    <li>Settings button - allows the user to set the display range of the timeline and the range of the range bar.</li>
+                </ol>
+            </li>
+        </ul>
+        <p>The range setting GUI for the settings buttons is as follows</p>
+        <img src="../image/timeline_setting.png" alt="タイムライン" width="500">
+        <ul>
+            <li>
+                <ol>
+                    <li>Timeline start and end date/time settings - these are usually changed automatically by scrolling the timeline or resizing the window.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="2">
+                    <li>Set the start and end date/time for the range bar - sets the valid range for the data display</li>
+                </ol>
+            </li>
+        </ul>
+        <p>
+            For more information on the data that corresponds to the timeline and what can be shown or hidden, please see below.</p>
+        <ul>
+            <li>
+                <p>Bargraph</p>
+                <ul>
+                    <li>Displays a bar graph if the value in the column specified as time is a timestamp before the timeline time</li>
+                    <li>If the timestamp is after the timeline time, the bargraph will be hidden.</li>
+                    <li>If there are multiple timestamps before the timeline time, all the relevant bars are displayed.</li>
+                </ul>
+            </li>
+            <li>
+                <p>3DTiles Timeseries</p>
+            </li>
+            <li>
+                <p>PointCloudTimeSeries</p>
+                <ul>
+                    <li>If the timestamp specified in the json is before the timeline time, the data will be displayed.</li>
+                    <li>If there are multiple timestamps specified in the json, only the data with the closest past timestamp will be displayed.</li>
+                </ul>
+            </li>
+        </ul>
+        <h2>
+            Controller Settings</h2>
+        <img src="../image/itowns5.jpg" alt="コントローラでの設定" width="500">
+        <p>The controller cannot control the camera or other aspects of the GIS content, but it can display and hide time information on the timeline in addition to the usual content settings</p>
 
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
 
     </div>
 

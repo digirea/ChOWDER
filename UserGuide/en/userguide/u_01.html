@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,10 +893,11 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">Introduction</h1>
+        <p>This document describes the operation of ChOWDER.</p>
+
+        <h2>System Requirements and Installation</h2>
+        <p>We have tested the following environment.</p>
         <ul>
             <li>OS
                 <ul>
@@ -906,7 +906,7 @@
                     <li>MacOSX 10.12</li>
                 </ul>
             </li>
-            <li>Webブラウザ
+            <li>Web Browser
                 <ul>
                     <li>Apple Safari 12.x</li>
                     <li>Firefox 65</li>
@@ -916,79 +916,91 @@
             </li>
         </ul>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
+        <h2>Installation</h2>
+        <h3 id="nodejsのインストール">Installation of Node.js</h3>
+        <p>Node.js (ver 16 series) must be installed in order for the portal GUI to work.<br>
+            From the official Node.js website (<code>https://nodejs.org/ja/download/releases</code>)click "Release" in
+            the "Node.js 16.xx.x" line to download and install Node.js for the corresponding platform. Download and
+            install Node.js for the corresponding platform (see the figure below).</p>
         <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
+        <h3 id="nodejsサブモジュールのインストール">Installing ChOWDER (getting it from git)</h3>
+        <p>Run a terminal in the folder where you want to install ChOWDER and execute the following command..</p>
         <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
 </pre>
 
-        <p>以下の構成でファイルが作成されます.</p>
+        <p>A file is created with the following configuration.</p>
+
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
+            <li>bin : executable script folder</li>
+            <li>client : client application folder</li>
+            <li>doc : document folder</li>
+            <li>redis : redis application folder</li>
+            <li>server : server application folder</li>
+            <li>chrome_extension : Google Chrome extension folder</li>
             <li>package.json</li>
         </ul>
+        <p>
+            The scripts stored in the bin folder are used to start the cooperative workspace driver.</p>
 
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
+
+
+        <h3 id="nodejsサブモジュールのインストール">Installation of Node.js sub-modules </h3>
+        <p>In the directory where you extracted the application, install the necessary third-party modules of Node.js
+            used in ChOWDER.</p>
+        <h2>Run the installation script</h2>
+        <h3 id="maclinuxの場合">In case of Mac/Linux</h3>
+        <p>Execute the following shell script under the bin directory.</p>
         <pre class="language-text">   $cd bin
    $sh install.sh
 </pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
+        <p>In Linux environment, if you want to install the turn server for WebRTC at the same time, execute the
+            following script.<br>
+            (We have confirmed that turn works only on Linux environment. Mac environment is not supported.)</p>
         <pre class="language-text">   $cd bin
    $sh install_with_turn.sh
 </pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
+        <h3 id="windowsの場合">In case of Windows</h3>
+        <p>Execute the following file under bin.</p>
         <pre class="language-text">   &gt;cd bin
    &gt;install.bat
 </pre>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li>On Windows, you will see errors for hiredis module and Python, but they are not required modules and
+                work fine.</li>
         </ul>
 
 
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
+        <h1>How to Start the Application</h1>
+        <h2>For Mac/Linux</h2>
+        <p>Run the following shell script under bin .</p>
         <pre class="language-text">   ./run.sh
 </pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
+        <h2>For Windows</h2>
+        <p>Execute the following file under bin.</p>
         <pre class="language-text">   &gt;cd bin
    &gt;run.bat
 </pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
+        <p>※ On Windows, redis may not start properly if virtual memory is set to 0KByte.<br>
+            In this case, please enable virtual memory temporarily.</p>
+        <h2>Confirmation of startup</h2>
+        <p>Run the startup script to start the ChOWDER server.</p>
         <pre class="language-text">   $sh run.sh
    (Windows版は run.bat)
 </pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
+        <h2>Access to the controller</h2>
+        <p>To access ChOWDER, type 「 <a href="http://localhost/">http://localhost/</a> 」in the address field of your web
+            browser.<br>
+            After accessing ChOWDER, the installation is complete when the following screen is displayed.</p>
         <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+
+        <h1>How to exit the application</h1>
+        <p>Terminate the application by performing the following two operations (both manual termination operations are
+            required).</p>
+        <h2>Termination of the server program</h2>
+        <p>Press CTRL+C to exit the terminal where " run.sh (bat) " was invoked, or kill the server program.</p>
+        <h2>Terminating redis</h2>
+        <p>Terminate the terminal where redis is running.</p>
 
     </div>
 

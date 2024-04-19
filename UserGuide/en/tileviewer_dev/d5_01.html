@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,66 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 id="基本方針" class="top-h1">Basic Policy </h1>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
+            <li>Smooth expansion and contraction between LoD levels of tiles.</li>
+            <li>Enable to limit the display range by viewport.</li>
+            <li>Enable moving, scaling, and changing the LoD level.</li>
+            <li> Coordinate values, etc., should be held in member variables, etc., and calculated based on them. Avoid
+                using values obtained from the DOM as much as possible.</li>
+            <li>A variable to maintain the appearance of the camera is retained as a camera value, so that the same
+                camera value can be set for another TileViewer that has been newly displayed, and the same appearance
+                will be achieved.</li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        <h1 id="座標系周りの仕様">Specifications around coordinate system </h1>
+        <h2 id="スケールを行わない状況での座標系">Coordinate system without scaling
+        </h2>
+        <p>The coordinate system in which the upper left corner of a level 0 tile is (0, 0) and the lower right corner
+            is (1, 1) is called camera space.</p>
+        <p>The coordinates in camera space in a non-scaling situation (i.e., level 0 tile is viewed in actual size) are
+            stored in baseScaleCamera.</p>
+        <img width="522" alt="camera.png (120.0 kB)" src="../image/tileviewer_camera.png">
+        <hr>
+        <h2 id="画面中心へのスケーリング">Scaling to the center of the screen</h2>
+        <p>Consider the situation when scaling to the center of the screen.<br>
+            The coordinates of the scaled screen in the camera space are stored in this.camera.<br>
+The scale value at this time is also stored in transformScale.</p>
+        <img width="522" alt="camera2.png (122.3 kB)" src="../image/tileviewer_camera2.png">
+        <hr>
+        <h2 id="移動">Moving </h2>
+        <p>To move the viewpoint, first move baseScaleCamera in the camera space, and then obtain this.camera from the result, considering transformScale.</p>
+        <hr>
+        <h2 id="画面のリサイズ等による拡縮">Scaling by screen resizing, etc.</h2>
+        <p>
+            Scaling is performed while maintaining the appearance of the screen as much as possible.<br>            
+            In other words, scaling is performed on the tiles while keeping the point of interest as it appears.<br>            
+            If the aspect ratio after scaling is the same, the appearance of the tiles after scaling is the same.<br>            
+            If the aspect ratios are different, either the vertical or horizontal orientation may be maintained, but since most displays in the world are horizontal, the horizontal orientation is maintained.</p>
+        <img width="502" alt="camera4.png (118.1 kB)" src="../image/tileviewer_camera3.png">
+        <p>In this case, it is necessary to calculate a new baseScaleCamera and a new transformScale from the scaled area, which is quite complicated.<br> 
+            The new baseScaleCamera is obtained by calculating the scaling around the point of interest based on the amount of scaling of the drawing area and the number of pixels before and after drawing.<br>             
+            The new transformScale was obtained by multiplying the value of the scaling of the drawing area in the width direction by the original transformScale.</p>
+        <img width="482" alt="camera5.png (121.9 kB)" src="../image/tileviewer_camera4.png">
+        <hr>
+        <h2 id="タイルのレベル変更">Changing Tile Levels</h2>
+        <p>When the level of a tile is changed, the total number of pixels in all images for each level naturally differs, but since we want the appearance to be the same when the level is changed, we scale each tile by the necessary amount (say ratio) to make the total number of pixels equal to the total number of pixels at level 0.</p>
+        <p>If the aforementioned scaling by transformScale is not performed, i.e., transformScale=1, the more the level is increased, the smaller the width of the tile becomes, and the level is increased while maintaining the same appearance.</p>
+        <pre data-role="codeBlock" data-info="js" class="language-javascript js"><code><span class="token comment">// The part of the image element width calculation。</span>
+        tileInfo<span class="token punctuation">.</span><span class="token property-access">w</span> <span class="token operator">=</span> <span class="token known-class-name class-name">Math</span><span class="token punctuation">.</span><span class="token method function property-access">ceil</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token property-access">width</span> <span class="token operator">/</span> ratio<span class="token punctuation">.</span><span class="token property-access">x</span> <span class="token operator">*</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token property-access">transformScale</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tileInfo<span class="token punctuation">.</span><span class="token property-access">h</span> <span class="token operator">=</span> <span class="token known-class-name class-name">Math</span><span class="token punctuation">.</span><span class="token method function property-access">ceil</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token property-access">height</span> <span class="token operator">/</span> ratio<span class="token punctuation">.</span><span class="token property-access">y</span> <span class="token operator">*</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token property-access">transformScale</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        </code></pre>
+        <p>On the other hand, using transformScale in conjunction with transformScale, the level is basically zoomed in with transformScale, and when the actual size of the level can be displayed at the current screen size, the level is increased.</p>
+        <p>By doing so, for example, if the image consists of tiles of 256x256pixel each, the width of the image elements will be scaled above or below 256 between levels, but the image at the new level will be displayed as 256x256pixel when the level is switched.
+        </p>
+        <hr>
+        <h2 id="ビューポートの設定">Setting viewport</h2>
+        <p>When the upper left corner is (0, 0) and the lower right corner is (1, 1) in the "this.camera" area, it is possible to specify the viewport in which the tile should be displayed.</p>
+        <p>
+            The DOM is simply processed so that tiles outside the viewport are not displayed when determining the DOM placement.<br>
+            For tiles that are slightly inside the viewport, images outside the viewport are naturally loaded, so the map and other information will be displayed as if they are slightly outside the viewport, as shown below.<br>
+            
+If you want to use them, you need to display them only in the viewport by using DOM styles, etc.</p>
+        <img width="621" alt="camera6.png (122.1 kB)" src="../image/tileviewer_camera5.png">
 
     </div>
 

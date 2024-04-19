@@ -894,109 +894,38 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
-        <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
-        </ul>
+        <h1 class="top-h1">Extensions</h1>      
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+       
+        <h1>About ChromeExtension</h1>
+        <p>ChOWDER's Chrome Extension (referred to as ChOWDER Extension) can be installed as a Chrome browser extension to capture any page opened in the Chrome browser as an image and send it to ChOWDER via websocket connection.<br>
+            The configuration of the plugin is shown below.</p>
+        <img src="../image/extension.png" alt="ChOWDER Extensionの構成" width="500">
+        <p>Captures are obtained using chrome.tabs.captureVisibleTab, which is an API of Chrome Extension, and the image format is PNG.
+            Due to the API specification, only one active tab can be captured.
+            The ChOWDER Extension settings are stored using chrome.storage.</p>
+        <h1>About iTownsApp</h1>
+        <p>The iTownsApp is a GIS display function that allows you to set/use iTowns-based contents as ChOWDER contents.
+            Unlike other contents such as images, iTowns contents are type: webgl contents that contain URLs of iTowns contents in metadata.
+            They must be initialized using the chowder_injection function.
+            After the content is initialized, it is displayed in an inline frame in the display/controller.<br>
+            The relationship between the display/controller and the contents is shown below.
+        </p>
+        <img src="../image/itowns_connection.png" alt="iTownsAppコンテンツの関係図" width="500">
+        <p>For details of development using iTownsApp, please refer to DeveloperGuide_ForITownsSupport.md separately.</p>
+        <h1>About TileViewer</h1>
+        <p>As a GIS display function, contents using color tile images of EPSG3857 and those using satellite images of the meteorological satellite Himawari-8 can be set/used as TileViewer contents in ChOWDER.
+            Unlike other contents such as images, TileViewer contents are type: tileviewer contents, which contain URLs of tiled contents in metadata.
+            It must be initialized using the chowder_injection function.
+            After the contents are initialized, they are displayed in an inline frame in the display/controller.</p>
+        <p>The relationship between the display/controller and the contents is the same as in the case of iTownsApp, with inter-server communication using WebSocket and communication between the iframe and the html parent page using the EventTarget interface.</p>
+        <p>For details of development using TileViewer, please refer to DeveloperGuide_ForTileViewer.md (DeveloperGuide For TileViewer).
+            For details of TileViewer API, refer to TileViewer_API.md, and for details of TileViewer implementation, refer to TileViewer_Dev.md (Implementation Details of TileViewer for ChOWDER).</p>
+        <h1>System Requirements</h1>
+        <p>TileViewer works with Google Chrome, Firefox and Safari on Windows, Linux and MacOSX.
+            Check with the latest version of each browser.</p>
 
     </div>
-
-
-
-
-
-
 
 
 

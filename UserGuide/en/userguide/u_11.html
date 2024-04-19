@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,237 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+
+        <h1 class="top-h1">Using TileViewer</h1>
+        <h2>Overview</h2>
+        <p>Using the 2D TileViewer, you can register satellite images of the Sunflower meteorological satellite and map
+            data in Web Mercator format as ChOWDER contents and draw them on the ChOWDER display.</p>
+        <h2>How to use the application</h2>
+        <p>You can access the following URL to use the TileViewer functions.</p>
         <ul>
-            <li>OS
+            <li>URL for HTTP … http://ChOWDER_Server_Address/tileviewer.html</li>
+            <li>URL for HTTPS … https://ChOWDER_Server_Address/tileviewer.html</li>
+        </ul>
+        <p>
+            Select the APIUser password and the file to be used, and log in.</p>
+        <img src="../image/tileviewer1.png" alt="TileViewerの利用" width="500">
+        <p>Select the APIUser password and the preset to be displayed, and log in.</p>
+        <p>When the content is successfully loaded, the displayed preset will be added as a ChOWDER content at the same
+            time.</p>
+        <img src="../image/tileviewer2.png" alt="TileViewerの利用" width="500">
+        <ul>
+            <li>
+                <ol>
+                    <li>The time (date and time) of the displayed content will be shown, and the date and time can be
+                        changed.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="2">
+                    <li>From left to right: Display Layer Menu, Display Help, Enable Remote Cursor, and Change Remote
+                        Cursor Color button.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="3">
+                    <li>Play/Stop button for time (date/time).</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="4">
+                    <li>Specifies the scale of the timeline.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="5">
+                    <li>Enables/disables the range bar on the timeline.</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="6">
+                    <li>Timeline. Allows manipulation of the time (date/time).</li>
+                </ol>
+            </li>
+            <li>
+                <ol start="7">
+                    <li>A toggle button that toggles whether or not the time in the timeline is synchronized between
+                        content.</li>
+                </ol>
+            </li>
+        </ul>
+        <h2>Layer Menu</h2>
+        <img src="../image/tileviewer3.png" alt="TileViewerの利用" width="500">
+
+        <ul _d-id="551244">
+            <ol _d-id="551245">
+                <li _d-id="551246"><span _d-id="557695">Content ID is
+                        displayed</span><span _d-id="557696"><br _d-id="551248"></span>
+                </li>
+                <li _d-id="551249"><span _d-id="557698">The URL of the preset that is the
+                        source of the content is displayed.</span><span _d-id="557699"><br _d-id="551251"></span></li>
+                <li _d-id="551252"><span _d-id="557701">The layer list containing the
+                        current content is displayed.</span><span _d-id="557702"><br _d-id="551254"></span></li>
+                <li _d-id="551255"><span _d-id="557704">From left to right: move layer
+                        order up, move layer order down, add new layer, delete new layer.</span><span _d-id="557705"><br
+                            _d-id="551257"></span></li>
+                <li _d-id="551258"><span _d-id="557707">The tile URL of the layer is
+                        displayed.</span><span _d-id="557708"><br _d-id="551260"></span>
+                </li>
+                <li _d-id="551261"><span _d-id="557710">From the top, it is the setting
+                        of layer visibility (visible) and the setting of layer opacity (opacity).</span><span
+                        _d-id="557711"><br _d-id="551263"></span></li>
+                <li _d-id="551264"><span _d-id="557713">Set the copyright information
+                        (name, URL) to the layer. </span><span _d-id="557716">If set, it
+                        will be displayed in the upper left corner of the content.</span><span _d-id="557717"><br
+                            _d-id="551266"></span></li>
+                <li _d-id="551267"><span _d-id="557719">Show/hide the time label in the
+                        upper left corner of the content.</span><span _d-id="557720"><br _d-id="551269"></span></li>
+                <li _d-id="551270"><span _d-id="557722">Toggles the zoom label in the
+                        lower right corner of the content.</span><span _d-id="557723"><br _d-id="551272"></span></li>
+                <li _d-id="551273"><span _d-id="557725">Selects whether the zoom rate is
+                        fixed for all controllers/displays.</span><span _d-id="557726"><br _d-id="551275"></span></li>
+                <li _d-id="551276"><span _d-id="557728">Allows
+                        you to set a fixed zoom rate when the zoom rate is set to fixed.</span></li>
+            </ol>
+        </ul>
+
+        <h2>Add Layer Function</h2>
+        <p>By clicking the Add Layer button, a layer can be added in the Add Layer dialog.</p>
+        <img src="../image/tileviewer4.png" alt="TileViewerの利用" width="500">
+        <p>The types of layers that can be added and how to specify the URL are as follows</p>
+        <ul>
+            <li><code>standard</code> : Layer with EPSG3857 color tiles
                 <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
+                    <li>For URL, specify <code>https://server-address/{z}/{x}/{y}.png</code>
+                        etc., and specify the tile number part by {x}{y}{z} or %x%y%z.
+                    </li>
+                    <li>ZOOM specifies the range (MIN, MAX) over which the data source is to be expanded. This
+                        corresponds to {z} in the tile URL.</li>
                 </ul>
             </li>
-            <li>Webブラウザ
+            <li><code>himawari8.jp</code> : Layers by Japan area of the Himawari 8 meteorological satellite
+                Specify
                 <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
+                    <li><code>https://localhost/himawari8/img/D531107/%cd/%w/%YYYY/%MM/%DD/%hh%mm%ss_%x_%y.png</code>
+                        and so on for URL. Variables for % are described below. As for the time (%hh%mm%ss), values are
+                        inserted every 2 minutes and 30 seconds.</li>
                 </ul>
             </li>
+            <li><code>himawari8.fd</code> : Full disk format layer of the Himawari 8 satellite
+                <ul>
+                    <li><code>https://localhost/himawari8/img/D531106/%cd/%w/%YYYY/%MM/%DD/%hh%mm%ss_%x_%y.png</code>
+                        and so on. The % variables are described below. For time (%hh%mm%ss), values are inserted every
+                        10 minutes.</li>
+                </ul>
+            </li>
+            <li><code>background image</code> : Add a background image. Or replace the existing background image.
+                <ul>
+                    <li>The URL should be <code>https://localhost/backgroundImage.png</code> etc.</li>
+                </ul>
+            </li>
+            <li><code>other</code> : Used for preset images that do not belong to the above.</li>
         </ul>
-
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
-
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
+        <p>The meanings of the % and {} variables are as follows</p>
         <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
+            <li>{x}{y}{z} or %x%y%z : Indicates xy and zoom rate z of the tile number.</li>
+            <li>%c : Indicates the dimension of the Sunflower 8 image</li>
+            <li>%w : Indicates the width of the image. It will be replaced by the image width described in SCALES when
+                the image is acquired.</li>
+            <li>%YYYYY%MM%DD : Indicates year, month, and day.</li>
+            <li>%hh%mm%ss : Indicates hour, minute, second</li>
         </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
+        <h2>How to set up and operate a timeline for TileViewer</h2>
+        <p>The timeline for TileViewer uses k2go Timeline ( <a
+                href="https://www.k2go.jp/public/Timeline/">https://www.k2go.jp/public/Timeline/</a>
+            ), which allows you to specify the time corresponding to the data, playback, stop, etc.
+        </p>
+        <p>When the RangeBar button on the bottom left is clicked and enabled, a range bar can be specified to control
+            the playback area.</p>
+        <p>Also, when the Sync button on the bottom right is enabled, the time information from the timeline operation
+            will be transmitted to all other TileViewer content for which Sync is enabled. The Sync button can be
+            toggled enabled/disabled by pressing the button.</p>
+        <img src="../image/tileviewer5.png" alt="TileViewerの利用" width="500">
+        <h2>Configuring Presets for TileViewer</h2>
+        <p>Presets for TileViewer are defined by json files stored in</p>
         <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
+            <li>Preset list definition file : public/sample_data/tileviewer/preset_list.json</li>
+            <li>Preset definition file : public/sample_data/tileviewer/settings/osm.json 等</li>
+        </ul>
+        <h3 id="プリセット一覧定義ファイル">
+            Preset list definition file</h3>
+        <p>"url": "sample_data/tileviewer/index.html?json=xxxx"<br>
+            with the name of the preset definition json file in the "xxxxx" part.</p>
+        <p>For example, for a preset that uses osm.json, specify the following</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>{
+    "preset_list": [
+        {
+            "name": "OpenStreetMap",
+            "url": "sample_data/tileviewer/index.html?json=osm"
+        }
+    ]
+}
+</code></pre>
+        <p>This will cause the OpenStreetMap preset to appear in the preset list when accessing the Tile Viewer,
+            allowing the use of tiled maps using the definition information in osm.json.</p>
+        <h3 id="プリセット定義ファイル">Preset Definition File </h3>
+        <p>The preset definition file contains the URL of the map and other information to create a state when the
+            preset is loaded.</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>//  An example of a preset definition file (json)
+{
+    "backgroundImage": "https://cyberjapandata.gsi.go.jp/xyz/std/0/0/0.png",
+    "maps": [{
+        "url": "https://cyberjapandata.gsi.go.jp/xyz/std/%z/%x/%y.png",
+        "zoom" : {
+            "min" : 0,
+            "max" : 18
+        },
+        "attribution":  {
+            "name" : "出典：国土地理院",
+            "url" : "https://maps.gsi.go.jp/development/ichiran.html"
+        },
+        "opacity": 1.0,
+        "visible" : true
+    }],
+    "geodeticSystem": "standard",
+    "initialPosition" : {
+        "center": {
+            "degrees": {
+                "lon": 139.69167,
+                "lat": 35.68944
+            }
+        }
+    },
+    "timeout" : 0,
+    "timeout_on_setting_date" : 5000,
+}
+
+</code></pre>
+        <ul>
+            <li>backgroundImage : Specify the URL of the background image.</li>
+            <li>maps : Define layers as an array. The following settings are available for each layer
+                <ul>
+                    <li>url : Specify the URL of the tile map</li>
+                    <li>zoom : If the geodeticSystem is standard, set the minimum and maximum zoom value.</li>
+                    <li>scales : If the geodeticSystem is other than standard, set the map information for each zoom
+                        level. (Refer to himawari_jp.json etc.)</li>
+                    <li>attribution : Specify the name (name) and URL (url) of the copyright information.</li>
+                    <li>opacity : Specify the opacity immediately after loading the preset. Default is 1.0.</li>
+                    <li>visible : Specify the state of visibility immediately after loading presets. Default is true.
+                    </li>
+
+                </ul>
+            </li>
+            <li>Specify the coordinate system of this preset. standard (for EPSG3857) himawari8.jp (for Himawari8 in
+                Japan) himawari8.fd (for Himawari8 in full disk) are available.
+
+            </li>
+            <li>initialPosition : Initial camera position can be specified in latitude and longitude.</li>
+            <li>timeout : Set the maximum waiting time in milliseconds to wait for tile display completion during normal
+                operation. Default is 0.</li>
+            <li>timeout_on_setting_date : Maximum waiting time in milliseconds to wait for tile display completion when
+                time is changed. Default is 1000.</li>
         </ul>
 
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
 
     </div>
 

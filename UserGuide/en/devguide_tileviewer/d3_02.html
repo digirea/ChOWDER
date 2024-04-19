@@ -857,7 +857,7 @@
             border-right: solid 20px #959e9b;
         }
 
-        
+
         html body h1 {
             font-size: 2.25em;
             font-weight: 300;
@@ -879,7 +879,6 @@
             padding-bottom: .3em;
             margin-top: 2em;
         }
-
     </style>
     <!-- The content below will be included at the end of the <head> element. -->
     <script type="text/javascript">
@@ -894,101 +893,144 @@
 
     <div class="crossnote markdown-preview  ">
 
-        <h1 class="top-h1">はじめに</h1>
-        <p>本書ではChOWDERの操作方法について解説します.</p>
-        <h2>動作環境とインストール</h2>
-        <p>以下の環境で動作確認を行っております.</p>
+        <h1 class="top-h1">How to develop TileViewer content</h1>
+
+
+        <p>This section describes how to develop TileViewer content.</p>
+        <h2 id="プリセットの開発方法">How to develop presets </h2>
+        <p>You can add your own presets to the preset list of TileViewerApp by preparing a preset configuration file in
+            json file.</p>
+        <p>Specifically, add a preset configuration file (json) at the following location, </p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>ChOWDER/public/sample_data/tileviewer/settings/my_new_preset.json</code>
+        </pre>
+        <p>and add a setting to read the added json file in the definition of preset_list.json.</p>
+        <pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token comment">// preset_list.json</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"preset_list"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token comment">// omisson</span>
+                <span class="token punctuation">{</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"GSI Map"</span><span class="token punctuation">,</span>
+                    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"sample_data/tileviewer/index.html?json=my_new_preset"</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token comment">// omisson</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+        </code></pre>
+        <p>For the parameters of the preset configuration file, see "UserGuide.md" Preset Definition File.
+        </p>
+        <h2 id="htmljsファイルを含めた独自コンテンツの開発方法">How to develop your own content including HTML/js files </h2>
+        <p>To develop content using <code>tileviewer.js</code>, you will need to create the following files</p>
         <ul>
-            <li>OS
-                <ul>
-                    <li>Linux(CentOS7)</li>
-                    <li>Windows10</li>
-                    <li>MacOSX 10.12</li>
-                </ul>
-            </li>
-            <li>Webブラウザ
-                <ul>
-                    <li>Apple Safari 12.x</li>
-                    <li>Firefox 65</li>
-                    <li>Chrome 72</li>
-                    <li>Edge 44</li>
-                </ul>
-            </li>
+            <li>tileviewer.js </li>
+            <li>An html file to load tileviewer.js </li>
+            <li>js file for initialization and tile operation using tileviewer.js </li>
         </ul>
 
-        <h2>インストール</h2>
-        <h3 id="nodejsのインストール">Node.jsのインストール </h3>
-        <p>ポータルGUIの動作にはNode.js(ver 16系列)のインストールが必要です.<br>
-            Node.jsの公式サイト(<code>https://nodejs.org/ja/download/releases</code>)から【Node.js
-            16.xx.x】の行の「Release」を押していただき、対応するプラットフォームのNode.js本体をダウンロードし,インストールします.(下図)</p>
-        <img src="../image/NodeJS.png" alt="node.jsのinstall画面" width="377">
+        <p><code>tileviewer.js</code> is stored in the following location</p>
+        <pre data-role="codeBlock" data-info="" class="language-text"><code>ChOWDER/public/sample_data/tileviewer/tileviewer.js
+        </code></pre>
+        <p>After confirming that these html and js files work by themselves, load the Javascript code named
+            chowder_tileviewer_injection.bundle.js to use them as TileViewer contents compatible with ChOWDER.
+            chowder_tileviewer_injection.bundle.js
+        </p>
+        <p>Since <code>chowder_tileviewer_injection.bundle.js</code> also controls TileViewer mouse events, it must be
+            loaded before TileViewer as the loading order in the html file.
+        </p>
+        <pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../../chowder_tileviewer_injection.bundle.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>tileviewer.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+        ・・・
+        </code></pre>
+        <p>Next, the injectChOWDER function must be called at the timing of the onload of the TileViewer contents page
+            to enable editing of TileViewer layers in the TileViewer contents.<br>
+            The prototype of the function is as follows.<br>
+            The call requires the view instance of itowns and the div element of the TileViewer viewer as arguments.</p>
+        <pre data-role="codeBlock" data-info="js" class="language-javascript js"><code><span class="token doc-comment comment">/**
+         * Function to make a web application with tileviewer chowder compatible.
+         * call injectChOWDER(viewerDiv); and
+         * <span class="token keyword keyword-@param">@param</span> <span class="token parameter">instance</span> TileViewer instance
+         * <span class="token keyword keyword-@param">@param</span> <span class="token parameter">viewerDiv</span> viewer div
+         * <span class="token keyword keyword-@param">@param</span> <span class="token parameter">timeCallback</span> Callback function in the form of function(time) {}, which is called when the time is changed
+         */</span>
+        <span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">injectChOWDER</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">instance<span class="token punctuation">,</span> viewerDiv<span class="token punctuation">,</span> timeCallback <span class="token operator">=</span> <span class="token keyword null nil keyword-null">null</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token comment">// ・・・</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        </code></pre>
+        <p>For example, in the default index.js, the following call is made</p>
+        <pre data-role="codeBlock" data-info="js" class="language-javascript js"><code><span class="token comment">// index.js</span>
+        
+        <span class="token comment">// omisson</span>
+        
+        <span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">onload</span> <span class="token operator">=</span>  <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token comment">// TileViewer initialize</span>
+            <span class="token keyword keyword-const">const</span> viewer <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">TileViewer</span><span class="token punctuation">(</span><span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">getElementById</span><span class="token punctuation">(</span><span class="token string">'tileviewer'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token comment">// get json</span>
+            <span class="token keyword keyword-const">const</span> url <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span><span class="token dom variable">location</span><span class="token punctuation">.</span><span class="token property-access">href</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-const">const</span> params <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token property-access">searchParams</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-const">const</span> jsonName <span class="token operator">=</span> params<span class="token punctuation">.</span><span class="token method function property-access">get</span><span class="token punctuation">(</span><span class="token string">'json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword control-flow keyword-if">if</span> <span class="token punctuation">(</span>jsonName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'settings/'</span> <span class="token operator">+</span> jsonName<span class="token operator">+</span><span class="token string">'.json'</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token parameter">response</span> <span class="token arrow operator">=&gt;</span> response<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token keyword keyword-async">async</span> <span class="token parameter">data</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+                        <span class="token comment">// Apply the preset settings specified by the GET parameter to TileViewer/span>
+                        <span class="token keyword control-flow keyword-await">await</span> viewer<span class="token punctuation">.</span><span class="token method function property-access">setOptions</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token comment">// create tile</span>
+                        <span class="token keyword control-flow keyword-await">await</span> viewer<span class="token punctuation">.</span><span class="token method function property-access">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        
+                        <span class="token keyword control-flow keyword-if">if</span> <span class="token punctuation">(</span><span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token property-access">chowder_view_type</span> <span class="token operator">!==</span> <span class="token keyword nil keyword-undefined">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            <span class="token comment">// call injectChWDER</span>
+                            <span class="token function">injectChOWDER</span><span class="token punctuation">(</span>viewer<span class="token punctuation">,</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">getElementById</span><span class="token punctuation">(</span><span class="token string">'tileviewer'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span> <span class="token keyword control-flow keyword-else">else</span> <span class="token punctuation">{</span>
+                            <span class="token comment"> </span>
+                            <span class="token function">showDebugGUI</span><span class="token punctuation">(</span>viewer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                        <span class="token comment">// Manipulate tileviewer with mouse events, etc.</span>
+                        <span class="token function">enableMouseEvents</span><span class="token punctuation">(</span>viewer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        </code></pre>
+        <p>Even if you develop your own using tileviewer.js, you can make it compatible with ChOWDER by calling
+            injectChOWDER in the same way.</p>
+        <p>If you develop your own using tileviewer.js, please refer to the tileviewer.js design document
+            "TileViewer_Dev" and API document "TileViewer_API".
 
-        <h3 id="nodejsサブモジュールのインストール">ChOWDERのインストール(gitからの取得) </h3>
-        <p>ChOWDERのインストールするフォルダでターミナルを実行し、以下のコマンドを実行します.</p>
-        <pre class="language-text">  git clone https://github.com/SIPupstreamDesign/ChOWDER.git
-</pre>
-
-        <p>以下の構成でファイルが作成されます.</p>
-        <ul>
-            <li>bin : 実行スクリプトフォルダ</li>
-            <li>client : クライアントアプリケーションフォルダ</li>
-            <li>doc : ドキュメントフォルダ</li>
-            <li>redis : redisアプリケーションフォルダ</li>
-            <li>server : サーバアプリケーションフォルダ</li>
-            <li>chrome_extension : Google Chrome 拡張機能フォルダ</li>
-            <li>package.json</li>
-        </ul>
-
-        <p>協調ワークスペースドライバの起動にはbinフォルダに格納されているスクリプトを使用します.</p>
-        <p>アプリケーションを展開したディレクトリに, ChOWDERで利用しているNode.jsの必要なサードパーティモジュールのインストールを行います.</p>
-        <h2>インストールスクリプトの実行</h2>
-        <h3 id="maclinuxの場合">Mac/Linuxの場合 </h3>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   $cd bin
-   $sh install.sh
-</pre>
-        <p>Linux環境において、WebRTC用のturnサーバを同時にインストールする場合は以下を実行します.<br>
-            (turnはLinux環境のみ動作確認しております. Mac環境では非対応となります.)</p>
-        <pre class="language-text">   $cd bin
-   $sh install_with_turn.sh
-</pre>
-        <h3 id="windowsの場合">Windowsの場合 </h3>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;install.bat
-</pre>
-        <ul>
-            <li>Windowsでは, インストール時に, hiredisモジュールやPythonのエラーが表示されますが, 必須モジュールではないため, 問題なく動作します.</li>
-        </ul>
-
-
-        <h1>アプリケーションの起動方法</h1>
-        <h2>Mac/Linuxの場合</h2>
-        <p>bin配下の以下のシェルスクリプトを実行します.</p>
-        <pre class="language-text">   ./run.sh
-</pre>
-        <h2>Windowsの場合</h2>
-        <p>bin配下の以下のファイルを実行します.</p>
-        <pre class="language-text">   &gt;cd bin
-   &gt;run.bat
-</pre>
-        <p>※ Windowsの場合、仮想メモリを0KByteにしていると、 redisが正常に起動しない場合があります.<br>
-            その場合は一時的に仮想メモリを有効にしてご利用ください.</p>
-        <h2>起動確認</h2>
-        <p>起動スクリプトを実行するとChOWDERサーバーが起動します.</p>
-        <pre class="language-text">   $sh run.sh
-   (Windows版は run.bat)
-</pre>
-        <h2>コントローラへアクセス</h2>
-        <p>ChOWDERへのアクセスは、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a> 」と入力することでアクセス出来ます.<br>
-            アクセスし、下図の画面が表示されたらインストールは完了となります。.</p>
-        <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
-        <h1>アプリケーションの終了方法</h1>
-        <p>以下2点の操作にて終了させます（両方の手動による終了操作が必要です）。</p>
-        <h2>サーバープログラムの終了</h2>
-        <p><a href="http://run.sh">run.sh</a>(bat)を起動したterminalをCTRL+Cで終了するか、 serverプログラムをkillします.</p>
-        <h2>redisの終了</h2>
-        <p>redisが起動しているterminalを終了させます.</p>
+        </p>
+        <h2 id="chowder-tileviewer-appのプリセットリストへの反映">Reflection in the preset list of the ChOWDER TileViewer App </h2>
+        <p> When a new Preset is created,<br>
+            By adding the name and relative URL of the created content to the preset_list.json in the Preset
+            directory,<br>
+            This will be reflected in the preset list of the ChOWDER TileViewer App and can be used as a Preset.<br>
+            By default, the preset settings are made using GET parameters, but you can also specify an html file without
+            GET parameters that you have created yourself.</p>
+        <pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token comment">// preset_list.json</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"preset_list"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">{</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Empty"</span><span class="token punctuation">,</span>
+                    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"sample_data/tileviewer/index.html?json=empty"</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token punctuation">{</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"HIMAWARI 8 Japan Area"</span><span class="token punctuation">,</span>
+                    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"sample_data/tileviewer/index.html?json=himawari_jp"</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token punctuation">{</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"HIMAWARI 8 Full Disk"</span><span class="token punctuation">,</span>
+                    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"sample_data/tileviewer/index.html?json=himawari_fd"</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token punctuation">{</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"GSI Map"</span><span class="token punctuation">,</span>
+                    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"sample_data/tileviewer/index.html?json=gsi"</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token punctuation">{</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"OpenStreetMap"</span><span class="token punctuation">,</span>
+                    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"sample_data/tileviewer/index.html?json=osm"</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+        </code></pre><img src="../image/tileviewer_preset_list.png" height="400">
+        Example of Preset list display using the above JSON
 
     </div>
 
