@@ -896,16 +896,16 @@
 
         <h1 class="top-h1">通信用APIの仕様</h1>
  
-        <p>クライアントサーバ間の通信についての仕様を記載します.</p>
-        <p>サーバではクライアントからwebsocketでメタバイナリを受け取り, メタデータに記載されているコマンドによって処理を行います. 処理を実行した後, クライアントに対して,
-            レスポンスを含んだメタバイナリをwebsocketにて送信します.</p>
-        <p>データの更新が発生した際は, 更新通知をクライアントに対してブロードキャストします.<br>
-            ディスプレイは, 更新通知を受け取ると, サーバへコンテンツ/ウィンドウ情報取得リクエストを送り, コンテンツ/ウィンドウ情報を取得する.</p>
-        <p>また, ディスプレイ新規表示時には, ディスプレイからサーバへ, ディスプレイ登録リクエストを発行し, 自身のディスプレイを登録する.</p>
+        <p>クライアントサーバ間の通信についての仕様を記載します。</p>
+        <p>サーバではクライアントからwebsocketでメタバイナリを受け取り, メタデータに記載されているコマンドによって処理を行います。 処理を実行した後, クライアントに対して,
+            レスポンスを含んだメタバイナリをwebsocketにて送信します。</p>
+        <p>データの更新が発生した際は, 更新通知をクライアントに対してブロードキャストします。<br>
+            ディスプレイは, 更新通知を受け取ると, サーバへコンテンツ/ウィンドウ情報取得リクエストを送り, コンテンツ/ウィンドウ情報を取得します。</p>
+        <p>また, ディスプレイ新規表示時には, ディスプレイからサーバへ, ディスプレイ登録リクエストを発行し, 自身のディスプレイを登録します。</p>
         <img src="../image/connection.png" alt="更新通知" width="500">
         <h2>メタバイナリ</h2>
         <p>クライアントサーバ間でやり取りするデータである, メタバイナリフォーマットのフォーマットを以下に示す.<br>
-            以下の表は, メタバイナリフォーマットの先頭から順に, 格納されているデータを示したものである.</p>
+            以下の表は, メタバイナリフォーマットの先頭から順に, 格納されているデータを示したものです。</p>
         <table>
             <thead>
                 <tr>
@@ -942,9 +942,9 @@
                 </tr>
             </tbody>
         </table>
-        <p>バージョンは, 現在通常2が入る.</p>
-        <p>コンテンツデータには, コンテンツの画像のバイナリデータまたはテキストデータを入れる.</p>
-        <p>メタデータには, JSON文字列を格納する. 具体的に以下のような値が入る.</p>
+        <p>バージョンは, 現在通常2が入ります。</p>
+        <p>コンテンツデータには, コンテンツの画像のバイナリデータまたはテキストデータを入れます。</p>
+        <p>メタデータには, JSON文字列を格納します。 具体的に以下のような値が入ります。</p>
         <pre data-role="codeBlock" data-info="" class="language-text"><code>　　{
 　　　　　　"jsonrpc" : "2.0",
 　　　　　　"method" : "AddContent",
@@ -956,14 +956,14 @@
 　　}
 </code></pre>
         <p>"jsonprc"は, 現在常に"2.0"となる</p>
-        <p>"method"は, サーバー（コントローラー）に与える命令を入れる. 命令の詳細については, リクエスト/レスポンスメッセージを参照.</p>
-        <p>"to"は, データの送り先を入れる.</p>
+        <p>"method"は, サーバー（コントローラー）に与える命令を入れます。 命令の詳細については, リクエスト/レスポンスメッセージを参照.</p>
+        <p>"to"は, データの送り先を入れます。</p>
         <ul>
             <li>to = master の場合：サーバ(コントローラ)へ送信するためのデータ</li>
             <li>to = client の場合: ディスプレイへ送信するためのデータ</li>
         </ul>
-        <p>"params"の"id"は, コンテンツを一意に識別するためのIDを入れる.</p>
-        <p>"params"の"type"は, コンテンツデータの種別を入れる. 種別は現在以下の通りです.</p>
+        <p>"params"の"id"は, コンテンツを一意に識別するためのIDを入れます。</p>
+        <p>"params"の"type"は, コンテンツデータの種別を入れます。 種別は現在以下の通りです.</p>
         <table>
             <thead>
                 <tr>
@@ -1007,7 +1007,7 @@
             </tbody>
         </table>
         <h2>リクエスト/レスポンスメッセージ</h2>
-        <p>通信API呼び出しは, メタバイナリ(method, params, 及び バイナリデータ)によって行う.<br>
+        <p>通信API呼び出しは, メタバイナリ(method, params, 及び バイナリデータ)によって行います。<br>
             サーバで受け付けているAPIについて, method名, 及び実行に必要なパラメータを, 以下に示す.</p>
         <h2 id="追加-取得">追加, 取得 </h2>
         <table>
@@ -1026,7 +1026,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>コンテンツを追加します. 既に登録済のIDが指定された場合は更新します. コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります. <br>更新通知:
+                    <td>コンテンツを追加します。 既に登録済のIDが指定された場合は更新します。 コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります。 <br>更新通知:
                         Update(追加完了時), UpdateContent(更新完了時)</td>
                 </tr>
                 <tr>
@@ -1258,7 +1258,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ウィンドウを追加します.<br>更新通知: UpdateWindowMetaData</td>
+                    <td>ウィンドウを追加します。<br>更新通知: UpdateWindowMetaData</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1293,7 +1293,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>グループを追加します.<br>更新通知: UpdateGroup</td>
+                    <td>グループを追加します。<br>更新通知: UpdateGroup</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1321,7 +1321,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>グループを削除します.<br>更新通知: UpdateGroup</td>
+                    <td>グループを削除します。<br>更新通知: UpdateGroup</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1342,7 +1342,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>コンテンツを取得します.<br>更新通知: 無し</td>
+                    <td>コンテンツを取得します。<br>更新通知: 無し</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1363,7 +1363,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>タイルコンテンツを取得します.<br>更新通知: 無し</td>
+                    <td>タイルコンテンツを取得します。<br>更新通知: 無し</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1405,7 +1405,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>メタデータを取得します.<br>更新通知: 無し</td>
+                    <td>メタデータを取得します。<br>更新通知: 無し</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1433,7 +1433,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ウィンドウメタデータを取得します.<br>更新通知: 無し</td>
+                    <td>ウィンドウメタデータを取得します。<br>更新通知: 無し</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1461,7 +1461,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>仮想ディスプレイ情報を取得します.<br>更新通知: 無し</td>
+                    <td>仮想ディスプレイ情報を取得します。<br>更新通知: 無し</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1475,7 +1475,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>グループリストを取得します. メタデータは不要なので{}としてリクエストします<br>更新通知: 無し</td>
+                    <td>グループリストを取得します。 メタデータは不要なので{}としてリクエストします<br>更新通知: 無し</td>
                 </tr>
             </tbody>
         </table>
@@ -1496,7 +1496,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>コンテンツを更新します. コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります.<br>更新通知: UpdateContent</td>
+                    <td>コンテンツを更新します。 コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります。<br>更新通知: UpdateContent</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1524,7 +1524,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>メタデータを更新します. <br>更新通知: UpdateMetaData</td>
+                    <td>メタデータを更新します。 <br>更新通知: UpdateMetaData</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1573,21 +1573,21 @@
                     <td>restore_key</td>
                     <td></td>
                     <td>String</td>
-                    <td>history_syncがtrueの場合に使用します. 大規模画像の復元対象のキーを指定します</td>
+                    <td>history_syncがtrueの場合に使用します。 大規模画像の復元対象のキーを指定します</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>restore_value</td>
                     <td></td>
                     <td>String</td>
-                    <td>history_syncがtrueの場合に使用します. 大規模画像の復元対象のバリューを指定します</td>
+                    <td>history_syncがtrueの場合に使用します。 大規模画像の復元対象のバリューを指定します</td>
                 </tr>
                 <tr>
                     <td>UpdateVirtualDisplay</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>仮想ディスプレイ情報を更新します. <br>更新通知: UpdateVirtualDisplay</td>
+                    <td>仮想ディスプレイ情報を更新します。 <br>更新通知: UpdateVirtualDisplay</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1608,7 +1608,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ウィンドウメタデータを更新します. <br>更新通知: UpdateWindowMetaData</td>
+                    <td>ウィンドウメタデータを更新します。 <br>更新通知: UpdateWindowMetaData</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1671,7 +1671,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>マウスカーソルを更新します. <br>更新通知: UpdateMouseCursor</td>
+                    <td>マウスカーソルを更新します。 <br>更新通知: UpdateMouseCursor</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1699,7 +1699,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>グループ情報を更新します. GetGroupListで取得可能な値を変更して更新に使用します <br>更新通知: UpdateGroup</td>
+                    <td>グループ情報を更新します。 GetGroupListで取得可能な値を変更して更新に使用します <br>更新通知: UpdateGroup</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1720,7 +1720,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>グループインデックスを変更します. <br>更新通知: ChangeGroupIndex</td>
+                    <td>グループインデックスを変更します。 <br>更新通知: ChangeGroupIndex</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1741,7 +1741,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>コンテンツを削除します. <bidr>更新通知: DeleteContent</bidr>
+                    <td>コンテンツを削除します。 <bidr>更新通知: DeleteContent</bidr>
                     </td>
                 </tr>
                 <tr>
@@ -1763,7 +1763,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ウィンドウメタデータを削除します. <br>更新通知: DeleteWindowMetaData</td>
+                    <td>ウィンドウメタデータを削除します。 <br>更新通知: DeleteWindowMetaData</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1784,28 +1784,28 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ウィンドウIDを表示通知を送ります. <br>通知: ShowWindowID</td>
+                    <td>ウィンドウIDを表示通知を送ります。 <br>通知: ShowWindowID</td>
                 </tr>
                 <tr>
                     <td>SendMessage</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ユーザ定義メッセージを全クライアントに送ります. paramには任意のJSONを入れられます. <br>通知: ShowWindowID</td>
+                    <td>ユーザ定義メッセージを全クライアントに送ります。 paramには任意のJSONを入れられます。 <br>通知: ShowWindowID</td>
                 </tr>
                 <tr>
                     <td>ReloadDisplay</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>ディスプレイ再読み込み通知を送ります. <br>通知: ReloadDisplay</td>
+                    <td>ディスプレイ再読み込み通知を送ります。 <br>通知: ReloadDisplay</td>
                 </tr>
                 <tr>
                     <td>Disconnect</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>websocketが切断された場合にクライアントに通知します. <br>通知: Disconnect</td>
+                    <td>websocketが切断された場合にクライアントに通知します。 <br>通知: Disconnect</td>
                 </tr>
             </tbody>
         </table>

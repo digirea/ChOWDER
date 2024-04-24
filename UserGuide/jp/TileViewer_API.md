@@ -77,7 +77,7 @@ lon, latが存在しない場合はlon, latにnullを入れて返す
 
 | Param | Type | Description |
 | --- | --- | --- |
-| mv | <code>Object</code> | { x : ..., y : ... } の形式で, 移動させる量をピクセル数で指定する. |
+| mv | <code>Object</code> | { x : ..., y : ... } の形式で, 移動させる量をピクセル数で指定します。 |
 
 <a name="TileViewer+setTransformScale"></a>
 

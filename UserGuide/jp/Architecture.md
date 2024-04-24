@@ -4,7 +4,7 @@
 はじめに
 ========================================================================================
 
-本書では協調ワークスペースドライバと協調動作フレームワークの設計について解説します.
+本書では協調ワークスペースドライバと協調動作フレームワークの設計について解説します。
 
 
 システム構成について
@@ -12,7 +12,7 @@
 
 全体の構成
 ---------------------------------------------------
-本システムは, node.js及びwebsocketsを用いたクライアントサーバプログラムであり, 複数のアプリケーションや,複数のユーザが共同作業を行える, 巨大なスクリーンスペースを, 仮想ディスプレイとして提供する. 構成図を以下に示す.
+本システムは, node.js及びwebsocketsを用いたクライアントサーバプログラムであり, 複数のアプリケーションや,複数のユーザが共同作業を行える, 巨大なスクリーンスペースを, 仮想ディスプレイとして提供します。 構成図を以下に示す.
 
 <img src="image/system.png" alt="構成図" width="500" />
 
@@ -42,7 +42,7 @@
 ---------------------------------------------------
 
 ### サーバ
-サーバは, node.jsを使用して, HTTP/HTTPSによる通信と, websocketによる通信(ws/wss)に対応している. それぞれの通信方法によって受付ポートを分けている. 
+サーバは, node.jsを使用して, HTTP/HTTPSによる通信と, websocketによる通信(ws/wss)に対応しています。それぞれの通信方法によって受付ポートを分けています。
 
 |通信方式|用途|初期ポート|
 | ---- | ---- | ---- |
@@ -55,7 +55,7 @@
 
 ### データベース
 
-データベースはredisを使用して高速なレスポンスを実現している. 
+データベースはredisを使用して高速なレスポンスを実現しています。
 データの格納方法については,  !!!TODO!!! を参照.
 
 ### その他ソフトウェア
@@ -68,14 +68,14 @@
 クライアントサイドは, 仮想ディスプレイに対してコンテンツの追加登録等の操作を行う「コントローラ」と, 表示のみを行う「ディスプレイ」から構成されている.
 
 ### コントローラ
-コントローラは, Websocketを用いてサーバと通信を行っている. 
+コントローラは, Websocketを用いてサーバと通信を行っています。
 コントローラの画面イメージを以下に示す.
 
 <img src="image/controller.png" alt="コントローラの画面イメージ" width="400" />
 
 
 ### ディスプレイ
-ディスプレイは, コントローラで設定したコンテンツを表示する. HTML5の機能であるwebsocketを用いてサーバと通信している. ディスプレイの画面イメージを以下に示す.
+ディスプレイは, コントローラで設定したコンテンツを表示します。 HTML5の機能であるwebsocketを用いてサーバと通信しています。ディスプレイの画面イメージを以下に示す.
 
 <img src="image/display.png" alt="ディスプレイの画面イメージ" width="400" />
 
@@ -132,7 +132,7 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 
 クライアントサーバ間の通信についての仕様を記載する.
 
-サーバではクライアントからwebsocketでメタバイナリを受け取り, メタデータに記載されているコマンドによって処理を行う. 処理を実行した後, クライアントに対して, レスポンスを含んだメタバイナリをwebsocketにて送信する.
+サーバではクライアントからwebsocketでメタバイナリを受け取り, メタデータに記載されているコマンドによって処理を行います。処理を実行した後, クライアントに対して, レスポンスを含んだメタバイナリをwebsocketにて送信する.
 
 データの更新が発生した際は, 更新通知をクライアントに対してブロードキャストする.
 ディスプレイは, 更新通知を受け取ると, サーバへコンテンツ/ウィンドウ情報取得リクエストを送り, コンテンツ/ウィンドウ情報を取得する.
@@ -145,7 +145,7 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 ---------------------------------------------------
 
 クライアントサーバ間でやり取りするデータである, メタバイナリフォーマットのフォーマットを以下に示す.
-以下の表は, メタバイナリフォーマットの先頭から順に, 格納されているデータを示したものである.
+以下の表は, メタバイナリフォーマットの先頭から順に, 格納されているデータを示したものです。
 
 |用途|データ型|バイト数|
 | ---- | ---- | ---- |
@@ -157,9 +157,9 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 
 バージョンは, 現在通常2が入る. 
 
-コンテンツデータには, コンテンツの画像のバイナリデータまたはテキストデータを入れる.
+コンテンツデータには, コンテンツの画像のバイナリデータまたはテキストデータを入れます。
 
-メタデータには, JSON文字列を格納する. 具体的に以下のような値が入る.
+メタデータには, JSON文字列を格納します。 具体的に以下のような値が入る.
 ```
 　　{
 　　　　　　"jsonrpc" : "2.0",
@@ -174,16 +174,16 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 
 "jsonprc"は, 現在常に"2.0"となる 
 
-"method"は, サーバー（コントローラー）に与える命令を入れる. 命令の詳細については, リクエスト/レスポンスメッセージを参照.
+"method"は, サーバー（コントローラー）に与える命令を入れます。 命令の詳細については, リクエスト/レスポンスメッセージを参照.
 
-"to"は, データの送り先を入れる.
+"to"は, データの送り先を入れます。
 
  - to = master の場合：サーバ(コントローラ)へ送信するためのデータ
  - to = client の場合: ディスプレイへ送信するためのデータ
  
-"params"の"id"は, コンテンツを一意に識別するためのIDを入れる.
+"params"の"id"は, コンテンツを一意に識別するためのIDを入れます。
 
-"params"の"type"は, コンテンツデータの種別を入れる. 種別は現在以下の通りです.
+"params"の"type"は, コンテンツデータの種別を入れます。 種別は現在以下の通りです.
 
 |typeの値|コンテンツの内容|
 | ---- | ---- |
@@ -206,7 +206,7 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 
 | Method | Params | 必須 | 形式 | 用途 | 
 | ---- | ---- | ---- | ---- | ---- |
-| AddContent | | | |コンテンツを追加します. 既に登録済のIDが指定された場合は更新します. コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります. <br>更新通知: Update(追加完了時), UpdateContent(更新完了時) |
+| AddContent | | | |コンテンツを追加します。 既に登録済のIDが指定された場合は更新します。 コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります。 <br>更新通知: Update(追加完了時), UpdateContent(更新完了時) |
 ||id | ○ | String | ID |
 || type | ○ | String | コンテンツ種別 | 
 || group |  | String | コンテンツグループ |
@@ -239,60 +239,60 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 || width  || Integer | コンテンツ幅 |
 || height  || Integer | コンテンツ高さ |
 || 任意のコンテンツパラメータ |  |  | key-valueペアとしてDBに格納される | 
-|　AddWindowMetaData　|| | | ウィンドウを追加します.<br>更新通知: UpdateWindowMetaData |
+|　AddWindowMetaData　|| | | ウィンドウを追加します。<br>更新通知: UpdateWindowMetaData |
 || id | ○ | String | ID |
 || type | ○ | String | コンテンツ種別 | 
 || width  || Integer | ウィンドウ幅 |
 || height  || Integer | ウィンドウ高さ |
-| AddGroup　|| | | グループを追加します.<br>更新通知: UpdateGroup |
+| AddGroup　|| | | グループを追加します。<br>更新通知: UpdateGroup |
 ||  name | ○ | String | グループ名 |
 ||  type | ○ | String | "content"または"display" |
 ||  color |  | String | グループ色 |
-| DeleteGroup　|| | | グループを削除します.<br>更新通知: UpdateGroup |
+| DeleteGroup　|| | | グループを削除します。<br>更新通知: UpdateGroup |
 || id | ○ | String | グループid |
 || name | ○ | String | グループ名 |
-| GetContent　|| | | コンテンツを取得します.<br>更新通知: 無し |
+| GetContent　|| | | コンテンツを取得します。<br>更新通知: 無し |
 || id | ○ | String | ID |
 || group || String | グループID |
-| GetTileContent　|| | | タイルコンテンツを取得します.<br>更新通知: 無し |
+| GetTileContent　|| | | タイルコンテンツを取得します。<br>更新通知: 無し |
 || id | ○ | String | ID |
 || content_id | ○ | String | コンテンツID | 
 || group || String | グループID |
 || history_id | ○ | String | ヒストリーID |
 || tile_index | ○ | Integer | タイル番号 | 
-|　GetMetaData|| | | メタデータを取得します.<br>更新通知: 無し |
+|　GetMetaData|| | | メタデータを取得します。<br>更新通知: 無し |
 || id | ○ | String | ID |
 || type | ○ | String | コンテンツ種別 | 
 || history_id || String | 大規模画像用ヒストリーID |
-| GetWindowMetaData|| | | ウィンドウメタデータを取得します.<br>更新通知: 無し |
+| GetWindowMetaData|| | | ウィンドウメタデータを取得します。<br>更新通知: 無し |
 || id | ○ | String | ID |
 || type | ○ | String | コンテンツ種別 | 
 || history_id || String | 大規模画像用ヒストリーID |
-|　GetVirtualDisplay|| | | 仮想ディスプレイ情報を取得します.<br>更新通知: 無し |
+|　GetVirtualDisplay|| | | 仮想ディスプレイ情報を取得します。<br>更新通知: 無し |
 || group | ○ | String | グループID |
-|　GetGroupList|| | | グループリストを取得します. メタデータは不要なので{}としてリクエストします<br>更新通知: 無し |
+|　GetGroupList|| | | グループリストを取得します。 メタデータは不要なので{}としてリクエストします<br>更新通知: 無し |
 
 ## 更新, 削除, 通知
 
 | Method | Params | 必須 | 形式 | 用途 | 
 | ---- | ---- | ---- | ---- | ---- |
-| UpdateContent|| | | コンテンツを更新します. コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります.<br>更新通知: UpdateContent |
+| UpdateContent|| | | コンテンツを更新します。 コンテンツによってはバイナリデータをMetaBinaryに入れる必要があります。<br>更新通知: UpdateContent |
 || id | ○ | String | ID |
 || content_id | ○ | String | コンテンツID | 
 || group |  | String | グループID |
-| UpdateMetaData| | | | メタデータを更新します. <br>更新通知: UpdateMetaData |
+| UpdateMetaData| | | | メタデータを更新します。 <br>更新通知: UpdateMetaData |
 || id | ○ | String | ID |
 || content_id | ○ | String | コンテンツID | 
 || type | ○ | String | コンテンツ種別 | 
 || group |  | String | グループID |
 || restore_index | | Integer | バックアップデータより復帰する場合はrestore_indexを指定します |
 || history_sync || "true" or "false" | 時系列大規模画像における同期フラグを指定します |
-|| restore_key || String | history_syncがtrueの場合に使用します. 大規模画像の復元対象のキーを指定します |
-|| restore_value || String | history_syncがtrueの場合に使用します. 大規模画像の復元対象のバリューを指定します |
-| UpdateVirtualDisplay| | | | 仮想ディスプレイ情報を更新します. <br>更新通知: UpdateVirtualDisplay |
+|| restore_key || String | history_syncがtrueの場合に使用します。 大規模画像の復元対象のキーを指定します |
+|| restore_value || String | history_syncがtrueの場合に使用します。 大規模画像の復元対象のバリューを指定します |
+| UpdateVirtualDisplay| | | | 仮想ディスプレイ情報を更新します。 <br>更新通知: UpdateVirtualDisplay |
 || group || String | グループIDを指定します |
 || その他VirtualDisplay情報 ||| GetVirtualDisplayで取得可能な値を変更して更新に使用します |
-| UpdateWindowMetaData| | | | ウィンドウメタデータを更新します. <br>更新通知: UpdateWindowMetaData |
+| UpdateWindowMetaData| | | | ウィンドウメタデータを更新します。 <br>更新通知: UpdateWindowMetaData |
 || id | ○ | String | ID |
 || group |  | String | コンテンツグループ |
 || posx  |  | Integer | コンテンツx座標) |
@@ -301,31 +301,31 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 || height  || Integer | コンテンツ高さ |
 || visible  || "true" or "false" | 可視不可視 |
 || user_data_text  || { "text" : "" }の形式の文字列 | memoに相当する内容 |
-| UpdateMouseCursor| | | | マウスカーソルを更新します. <br>更新通知: UpdateMouseCursor |
+| UpdateMouseCursor| | | | マウスカーソルを更新します。 <br>更新通知: UpdateMouseCursor |
 || controllerID || String | 更新メッセージ送り元のコントローラID |
 || rgb || "rgb(255, 255, 255)"といった色を表すString | マウスカーソル色 |
 || cursor_size || Integer | マウスカーソルサイズ |
-| UpdateGroup| | | | グループ情報を更新します. GetGroupListで取得可能な値を変更して更新に使用します <br>更新通知: UpdateGroup |
+| UpdateGroup| | | | グループ情報を更新します。 GetGroupListで取得可能な値を変更して更新に使用します <br>更新通知: UpdateGroup |
 || id | ○ | String | グループID |
 || name | ○ | String | グループ名 |
-| ChangeGroupIndex| | | | グループインデックスを変更します. <br>更新通知: ChangeGroupIndex |
+| ChangeGroupIndex| | | | グループインデックスを変更します。 <br>更新通知: ChangeGroupIndex |
 || id | ○ | String | グループID |
 || index | ○ | Integer | グループインデックス |
-| DeleteContent| | | | コンテンツを削除します. <bIDr>更新通知: DeleteContent |
+| DeleteContent| | | | コンテンツを削除します。 <bIDr>更新通知: DeleteContent |
 || id | ○ | String | ID |
 || content_id | ○ | String | コンテンツID |
-| DeleteWindowMetaData| | | | ウィンドウメタデータを削除します. <br>更新通知: DeleteWindowMetaData |
+| DeleteWindowMetaData| | | | ウィンドウメタデータを削除します。 <br>更新通知: DeleteWindowMetaData |
 || id | ○ | String | ID |
 || group | ○ | String | グループ名 |
-| ShowWindowID| | | | ウィンドウIDを表示通知を送ります. <br>通知: ShowWindowID |
-| SendMessage| | | | ユーザ定義メッセージを全クライアントに送ります. paramには任意のJSONを入れられます. <br>通知: ShowWindowID |
-| ReloadDisplay| | | | ディスプレイ再読み込み通知を送ります. <br>通知: ReloadDisplay |
-| Disconnect| | | | websocketが切断された場合にクライアントに通知します. <br>通知: Disconnect
+| ShowWindowID| | | | ウィンドウIDを表示通知を送ります。 <br>通知: ShowWindowID |
+| SendMessage| | | | ユーザ定義メッセージを全クライアントに送ります。 paramには任意のJSONを入れられます。 <br>通知: ShowWindowID |
+| ReloadDisplay| | | | ディスプレイ再読み込み通知を送ります。 <br>通知: ReloadDisplay |
+| Disconnect| | | | websocketが切断された場合にクライアントに通知します。 <br>通知: Disconnect
 
 ## DB管理
 以下の`DB`はredisDBの中に作成した, ChOWDERコンテンツ管理領域を表します。
 redisDBのChOWDER保存領域内に, 以下のmethodで作成した複数の`DB`が含まれます。
-これら`DB`は, ChOWDERコントローラの管理ページで操作することができます.
+これら`DB`は, ChOWDERコントローラの管理ページで操作することができます。
 対応するmethodは以下の通りです.
 
 | Method | Params | 必須 | 形式 | 用途 | 
@@ -348,50 +348,50 @@ redisDBのChOWDER保存領域内に, 以下のmethodで作成した複数の`DB`
 
 | Method | Params | 必須 | 形式 | 用途 | 
 | ---- | ---- | ---- | ---- | ---- |
-| GetGlobalSetting| | | | グローバル設定を取得します. <br>更新通知: なし |
-| ChangeGlobalSetting| | | | グローバル設定を変更します.GetGlobalSettingで取得可能な値を変更して更新に使用します  <br>更新通知: UpdateSetting |
+| GetGlobalSetting| | | | グローバル設定を取得します。 <br>更新通知: なし |
+| ChangeGlobalSetting| | | | グローバル設定を変更します。GetGlobalSettingで取得可能な値を変更して更新に使用します  <br>更新通知: UpdateSetting |
 
 ## ユーザー管理
 ログイン時ログアウトや, ChOWDERコントローラに管理者権限でログインした場合に管理画面より行う, 各種ユーザ管理に対応したmethodです. 
 
 | Method | Params | 必須 | 形式 | 用途 | 
 | ---- | ---- | ---- | ---- | ---- |
-| Login| | | | ログインします. <br>通知: AskDisplayPermission |
+| Login| | | | ログインします。 <br>通知: AskDisplayPermission |
 || id| id/password または loginkey どちらか必須| String | ログインID | 
 || password|  id/password または loginkey どちらか必須| String |  パスワード |
 || loginkey |  id/password または loginkey どちらか必須| String |  一度ログイン成功した際に得られる, 再アクセスのためのキーを指定 |
-| Logout| | | | ログアウトします. <br>更新通知: なし |
-|| loginkey | |  String |  一度ログイン成功した際に得られる, 再アクセスのためのキーを指定. 指定しない場合は, アクセス元クライアントのログインセッションが削除される. |
-| ChangePassword| | | | パスワードを変更します. <br>通知: なし |
-| ChangeAuthority| | | | 権限を変更します. <br>更新通知: ChangeAuthority |
-| GetUserList| | | | ユーザリストを取得します. <br>更新通知: なし |
-| GenerateControllerID| | | | コントローラIDを生成します. <br>更新通知: なし |
+| Logout| | | | ログアウトします。 <br>更新通知: なし |
+|| loginkey | |  String |  一度ログイン成功した際に得られる, 再アクセスのためのキーを指定. 指定しない場合は, アクセス元クライアントのログインセッションが削除されます。 |
+| ChangePassword| | | | パスワードを変更します。 <br>通知: なし |
+| ChangeAuthority| | | | 権限を変更します。 <br>更新通知: ChangeAuthority |
+| GetUserList| | | | ユーザリストを取得します。 <br>更新通知: なし |
+| GenerateControllerID| | | | コントローラIDを生成します。 <br>更新通知: なし |
 
 ## コントローラデータ
 ChWODERコントローラのコントローラIDに紐づくデータの取得更新methodです. 
 
 | Method | Params | 必須 | 形式 | 用途 | 
 | ---- | ---- | ---- | ---- | ---- |
-| UpdateControllerData | | | コントローラデータを更新します. <br>通知: なし |
-| GetControllerData| | | コントローラデータを取得します. <br>通知: なし |
+| UpdateControllerData | | | コントローラデータを更新します。 <br>通知: なし |
+| GetControllerData| | | コントローラデータを取得します。 <br>通知: なし |
 
 ## WebRTC
 WebRTCを使用した動画配信に関するmethodです. 
 
 | Method | 用途 | 
 | ---- |---- |
-| RTCRequest |WebRTCリクエストを行います. <br>通知: なし |
-| RTCOffer |Offerを通知します. <br>通知: なし |
-| RTCAnswer  |Anserを通知します. <br>通知: なし |
-| RTCIceCandidate |IceCandidateを通知します. <br>通知: なし |
-| RTCClose | WebRTCを終了します. <br>通知: なし |
+| RTCRequest |WebRTCリクエストを行います。 <br>通知: なし |
+| RTCOffer |Offerを通知します。 <br>通知: なし |
+| RTCAnswer  |Anserを通知します。 <br>通知: なし |
+| RTCIceCandidate |IceCandidateを通知します。 <br>通知: なし |
+| RTCClose | WebRTCを終了します。 <br>通知: なし |
 
 ## ディスプレイ配信許可設定
 ディスプレイ配信許可に関するmethodです. 
 
 | Method | 用途 | 
 | ---- | ---- | 
-| AskDisplayPermission |新規Displayを, サーバが許可して良いかどうかを取得します. <br>通知: AskDisplayPermission |
+| AskDisplayPermission |新規Displayを, サーバが許可して良いかどうかを取得します。 <br>通知: AskDisplayPermission |
 | UpdateDisplayPermissionList  |Display許可設定一覧の変更を行います <br>通知: UpdateDisplayPermissionList |
 | DeleteDisplayPermissionList | Display許可設定一覧を削除します <br>通知: DeleteDisplayPermissionList |
 | GetDisplayPermissionList |Display許可設定一覧を取得します<br>通知: なし |
@@ -401,8 +401,8 @@ WebRTCを使用した動画配信に関するmethodです.
 更新通知
 ---------------------------------------------------
 
-サーバへのリクエストに対して, 必ず同メソッド名で, リクエスト送信元クライアントへ, レスポンスが返送される.
-また, 一部のメソッドでは, サーバでの処理完了時に, クライアントへのレスポンスの返送に加えて, 更新通知が, 接続されている全てのディスプレイとコントローラに対して, ブロードキャストされる. 
+サーバへのリクエストに対して, 必ず同メソッド名で, リクエスト送信元クライアントへ, レスポンスが返送されます。
+また, 一部のメソッドでは, サーバでの処理完了時に, クライアントへのレスポンスの返送に加えて, 更新通知が, 接続されている全てのディスプレイとコントローラに対して, ブロードキャストされます。 
 
 サーバからブロードキャストされる更新通知の一覧を以下に示す.
 
@@ -454,10 +454,10 @@ metadata+と, 画像などのバイナリデータを組み合わせて,メタ�
 | "MetaBin:" | 1 | metadata+のサイズ | metadata | バイナリデータ |
 
 
-コントローラから, サーバに, メタバイナリを送信することで, 画像が登録される. サーバでは登録時に,
-オリジナルのイメージサイズを, orgWidth+, orgHeight としてメタデータに追加する. 
-登録が終了したら, “AddContent”メソッド名を含んだ, メタデータがコントローラに返信される. 
-もし, サーバでエラーが発生した場合は, "error" : "エラー文字列"を含んだメタデータが返信される.
+コントローラから, サーバに, メタバイナリを送信することで, 画像が登録されます。 サーバでは登録時に,
+オリジナルのイメージサイズを, orgWidth+, orgHeight としてメタデータに追加します。 
+登録が終了したら, “AddContent”メソッド名を含んだ, メタデータがコントローラに返信されます。 
+もし, サーバでエラーが発生した場合は, "error" : "エラー文字列"を含んだメタデータが返信されます。
 
 ```
 (返信)metadata = {
@@ -482,7 +482,7 @@ metadata+と, 画像などのバイナリデータを組み合わせて,メタ�
 
 ### DBのデータ構造
 
-本システムは, データベースとしてredisを使用しており, サーバによって受け付けたコンテンツやウィンドウ情報を保存している. 以下に, DBのデータ構造を示す.
+本システムは, データベースとしてredisを使用しており, サーバによって受け付けたコンテンツやウィンドウ情報を保存しています。以下に, DBのデータ構造を示す.
 
 DBのデータ構造
 
@@ -547,19 +547,19 @@ DBのデータ構造
 ---------------------------------------------------
 
 ### IDについて
-コンテンツ情報, ウィンドウ情報は, それぞれコンテンツID, ウィンドウIDを割り当てて, データを格納している. IDはサーバでコンテンツ保存時に, ランダムな英数字8桁で作成される, “AddContent”などの追加メソッドに, 任意のIDを指定して追加することができる.
+コンテンツ情報, ウィンドウ情報は, それぞれコンテンツID, ウィンドウIDを割り当てて, データを格納しています。IDはサーバでコンテンツ保存時に, ランダムな英数字8桁で作成される, “AddContent”などの追加メソッドに, 任意のIDを指定して追加することができる.
 
 ### 格納形式について
-画像データ, テキストデータは, クライアントから送信されたものをそのままバイナリまたはUTF8文字列として保存している. URLについては, phantom.jsでレンダリングした画像データをバイナリとして保存している.
+画像データ, テキストデータは, クライアントから送信されたものをそのままバイナリまたはUTF8文字列として保存しています。URLについては, phantom.jsでレンダリングした画像データをバイナリとして保存している.
 
 ### サーバで付与するメタデータについて
-画像データについては, サーバ側で保存する際に, mimeを自動判別して保存している. また, phantomjsでレンダリングした画像については,  posx, posy, width, height, orgWidth, orgHeight, mime を, サーバ側で付与している. 
+画像データについては, サーバ側で保存する際に, mimeを自動判別して保存しています。また, phantomjsでレンダリングした画像については,  posx, posy, width, height, orgWidth, orgHeight, mime を, サーバ側で付与しています。
 
 ### 参照カウントについて
-コンテンツ及びウィンドウは, 複数のメタデータまたはディスプレイから参照されることがあるため, 参照カウントをサーバ側で保持している. 
+コンテンツ及びウィンドウは, 複数のメタデータまたはディスプレイから参照されることがあるため, 参照カウントをサーバ側で保持しています。
 
 ### ユーザーデータについて
-コンテンツのメタデータに, user\_data\_textとしてユーザーデータ(メタ情報)を保持している. 
+コンテンツのメタデータに, user\_data\_textとしてユーザーデータ(メタ情報)を保持しています。
 
 user_data_textは, JSONテキスト形式で, 以下のようなキーバリューの値を保持している.
 
@@ -605,7 +605,7 @@ user_data_textは, JSONテキスト形式で, 以下のようなキーバリュ�
 コンテンツの登録について
 ---------------------------------------------------
 
-コントローラにて, 画像ファイル, テキスト, テキストファイル, URLをコンテンツとして登録することができる. 画像ファイルはjpg, gif, png, bmp形式に対応している. また, URLはサーバにてpng形式の画像としてレンダリングされて登録される.
+コントローラにて, 画像ファイル, テキスト, テキストファイル, URLをコンテンツとして登録することができる. 画像ファイルはjpg, gif, png, bmp形式に対応しています。また, URLはサーバにてpng形式の画像としてレンダリングされて登録されます。
 
 | コンテンツの種類 | 形式 | 備考 |
 | ---- | ---- | ---- |
@@ -629,12 +629,12 @@ user_data_textは, JSONテキスト形式で, 以下のようなキーバリュ�
 
 ### ディスプレイ設定
 ディスプレイは, w(幅), h(高さ), split x(x方向分割数), spilt y(y方向分割数)のプロパティを持っており, w, hを変更することで, 幅, 高さの変更を行うことが出来る. 
-また, split x, split y を変更することで,　各方向に指定した分割数で仮想ディスプレイが分割される.]
+また, split x, split y を変更することで,　各方向に指定した分割数で仮想ディスプレイが分割されます。]
 
 ### スナップについて
 スナップ設定は, Free, Display, Grid から選択でき, Freeを選択した場合はスナップ設定が無効になり Displayを選択した場合はディスプレイに対してスナップする設定となる.
 また, Gridを選択した場合はVirtualDisplayの分割領域に対してスナップする設定となる.
-配置した際は, 左上が原点となり, 分割領域に収まるようにコンテンツまたはディスプレイが, アスペクト比を保った状態でリサイズされる.
+配置した際は, 左上が原点となり, 分割領域に収まるようにコンテンツまたはディスプレイが, アスペクト比を保った状態でリサイズされます。
 
 分割した領域に対してスナップ配置しているイメージを以下に示す
 
@@ -650,7 +650,7 @@ user_data_textは, JSONテキスト形式で, 以下のようなキーバリュ�
 
 ディスプレイの登録について
 ---------------------------------------------------
-サーバが起動した状態でディスプレイページを開くと, websocketのAPIを用いて自動的にサーバに登録される. 登録後は, コントローラにてコンテンツと同様に配置, 移動することができ, ディスプレイページを閉じても, コントローラで明示的に削除するまでは, 配置情報をデータベースに保持する. 
+サーバが起動した状態でディスプレイページを開くと, websocketのAPIを用いて自動的にサーバに登録されます。 登録後は, コントローラにてコンテンツと同様に配置, 移動することができ, ディスプレイページを閉じても, コントローラで明示的に削除するまでは, 配置情報をデータベースに保持します。 
 
 表示の高速化について
 ---------------------------------------------------
@@ -659,7 +659,7 @@ user_data_textは, JSONテキスト形式で, 以下のようなキーバリュ�
 
 <img src="image/fastview1.png" alt="表示の高速化" width="500" />
 
-また, コンテンツをディスプレイ境界を超えて移動させた場合, 境界を越えた時点でコンテンツ取得が実行されるため, 表示までにラグが発生する. そのため, コンテンツが表示されるまでに, 代わりにBoundingBoxを表示している.
+また, コンテンツをディスプレイ境界を超えて移動させた場合, 境界を越えた時点でコンテンツ取得が実行されるため, 表示までにラグが発生します。 そのため, コンテンツが表示されるまでに, 代わりにBoundingBoxを表示している.
 
 <img src="image/fastview2.png" alt="表示の高速化" width="500" />
 
@@ -680,7 +680,7 @@ VRディスプレイでは, 平面モード, 曲面モード, 360度モードが
 
 <img src="image/webxr_cylinder.png" alt="曲面モード" width="500" />
 
-矩形領域の高さについては, 約4234px相当となり, 矩形部分にはChOWDER VR Display用背景画像を表示しています.
+矩形領域の高さについては, 約4234px相当となり, 矩形部分にはChOWDER VR Display用背景画像を表示しています。
 
 ### 平面モード
 
@@ -706,20 +706,20 @@ VRディスプレイでは, 各コンテンツは以下手段により, three.js
 
 |コンテンツ種別|表示方法|
 | ---- | ---- |
-|テキスト|VR空間上のポリゴンに, html2canvasライブラリを用いてレンダリングした文字列を, <br>テクスチャ画像として貼り付けます.|
+|テキスト|VR空間上のポリゴンに, html2canvasライブラリを用いてレンダリングした文字列を, <br>テクスチャ画像として貼り付けます。|
 |静止画像|VR空間上のポリゴンに, テクスチャ画像を貼り付けます|
-|WebRTCストリーミング動画|WebRTCを通じて送信されてくる動画のストリーミングをvideoタグを介してキャプチャし, <br>VR空間上のポリゴンに, 動画テクスチャとして貼り付けます.　<br>また,音声については通常のWebRTCによる配信と同様に処理します. |
-|iTownsベースの3DWebGIS|htmlの機能を用いてcanvasの内容をストリーミングキャプチャし, <br>VR空間上のポリゴンに, 動画テクスチャとして貼り付けます.|
-|Qgis2threeプラグインによる出力HTML|htmlの機能を用いてcanvasの内容をストリーミングキャプチャし, <br>VR空間上のポリゴンに, 動画テクスチャとして貼り付けます.|
-|PDF|htmlの機能を用いてcanvasの内容を画像としてキャプチャし, <br>VR空間上のポリゴンに, テクスチャとして貼り付けます.|
+|WebRTCストリーミング動画|WebRTCを通じて送信されてくる動画のストリーミングをvideoタグを介してキャプチャし, <br>VR空間上のポリゴンに, 動画テクスチャとして貼り付けます。　<br>また,音声については通常のWebRTCによる配信と同様に処理します。 |
+|iTownsベースの3DWebGIS|htmlの機能を用いてcanvasの内容をストリーミングキャプチャし, <br>VR空間上のポリゴンに, 動画テクスチャとして貼り付けます。|
+|Qgis2threeプラグインによる出力HTML|htmlの機能を用いてcanvasの内容をストリーミングキャプチャし, <br>VR空間上のポリゴンに, 動画テクスチャとして貼り付けます。|
+|PDF|htmlの機能を用いてcanvasの内容を画像としてキャプチャし, <br>VR空間上のポリゴンに, テクスチャとして貼り付けます。|
 
 HMDの移動とディスプレイまでの距離に関して
 -------------------------
 
 VR表示を行っている際に, HMDを歩行モードで移動した際は, HMDの位置座標に応じて, VR空間内におけるカメラ位置も移動する.
 移動量については, VRディスプレイの表示領域まで, 約3～4歩程度で到達するようにしている.
-具体的には, HMDから得られるposition(メートル)に対して, 500を乗算し, カメラ位置として使用している. 
-その結果, 1222/500=約2.44メートルで表示領域に到達する. 人間の歩幅は, 約70cmとすると, 2.44/0.7=3.48となり,
+具体的には, HMDから得られるposition(メートル)に対して, 500を乗算し, カメラ位置として使用しています。
+その結果, 1222/500=約2.44メートルで表示領域に到達します。 人間の歩幅は, 約70cmとすると, 2.44/0.7=3.48となり,
 約3～4歩程度で到達可能となる.
 
 <img src="image/webxr_position.png" alt="ディスプレイまでの距離" width="500" />
@@ -734,7 +734,7 @@ Chromeブラウザで開いている任意のページを画像としてキャ�
 
 キャプチャーは, Chrome ExtensionのAPIである, chrome.tabs.captureVisibleTabを用いて取得し, 画像形式はPNG形式となっている.
 APIの仕様上, キャプチャーできるタブは, アクティブになっているタブ1つのみとなっている.
-また, ChOWDER Extensionの設定値は, chrome.storageを用いて保存される.
+また, ChOWDER Extensionの設定値は, chrome.storageを用いて保存されます。
 
 iTownsAppについて
 ========================================================================================
@@ -742,13 +742,13 @@ iTownsAppについて
 GIS表示機能として, iTownsを使用したコンテンツを, ChOWDERコンテンツとして設定/使用できる.
 iTownsを使用したコンテンツは, 他の画像などのコンテンツと異なり, メタデータにiTownsコンテンツのURLを含んだ, type: webglのコンテンツであり, 
 chowder_injection関数を使用して初期化する必要がある.
-コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示される.
+コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示されます。
 
 このときのディスプレイ/コントローラとコンテンツの関係は, 以下のようになる.
 
 <img src="image/itowns_connection.png" alt="iTownsAppコンテンツの関係図" width="500" />
 
-iTownsAppを使用した開発の詳細については,　別途DeveloperGuide_ForITownsSupport.mdを参照してください.
+iTownsAppを使用した開発の詳細については,　別途DeveloperGuide_ForITownsSupport.mdを参照してください。
 
 TileViewerについて
 ========================================================================================
@@ -757,12 +757,12 @@ GIS表示機能として, EPSG3857のカラータイル画像を使用したコ�
 気象衛星ひまわり8号の衛星画像を使用したコンテンツを, ChOWDERのTileViewerコンテンツとして設定/使用できる.
 TileViewerを使用したコンテンツは,  他の画像などのコンテンツと異なり, メタデータにタイルコンテンツのURLを含んだ, type: tileviewerのコンテンツであり, 
 chowder_injection関数を使用して初期化する必要がある.
-コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示される.
+コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示されます。
 
 このときのディスプレイ/コントローラとコンテンツの関係は, iTownsAppの場合と同様に, 
 WebSocketによるサーバ間通信, 及び, EventTargetインタフェースによるiframe-html親ページ間での通信が行われる.
 
-TileViewerを使用した開発の詳細については,　別途 DeveloperGuide_ForTileViewer.md (DevelperGuide For TileViewer)を参照してください.
+TileViewerを使用した開発の詳細については,　別途 DeveloperGuide_ForTileViewer.md (DevelperGuide For TileViewer)を参照してください。
 また, TileViewerのAPIについては, TileViewer_API.mdを, TileViewerの実装詳細に関しては, TileViewer_Dev.md (ChOWDER用TileViewer 実装詳細)を参照してください。
 
 動作環境について

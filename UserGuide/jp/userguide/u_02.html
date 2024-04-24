@@ -940,12 +940,12 @@
             </li>
         </ul>
         <h2>管理者初期設定</h2>
-        <p>管理者コントローラを起動時に設定することができます.<br>
+        <p>管理者コントローラを起動時に設定することができます。<br>
             デフォルトでは, 管理者パスワードは「admin」に設定されています。<br>
             ログイン後は<a href="u_03.html#management">管理画面</a>からも変更することが出来ます。</p>
         <h2>管理者設定ファイル</h2>
         <p>ChOWDER の最上位フォルダ(<a href="http://README.md">README.md</a> があるフォルダ) に, admin.json ファイルを作成することで,<br>
-            起動時に管理者の追加削除を行うことができます. admin.json の書式は以下の通りです(<a href="http://admin.json.org">admin.json.org</a>
+            起動時に管理者の追加削除を行うことができます。 admin.json の書式は以下の通りです(<a href="http://admin.json.org">admin.json.org</a>
             ファイルにも記<br>
             載しております)</p>
         <pre class="language-text">{
@@ -961,9 +961,9 @@
 </pre>
         <p>この例では, コントローラ”administrator”が追加(上書き) され, ”administrator2”が削除されます</p>
         <p>キーとして管理者名を入れ, 追加(上書き) する場合は, ”command” : ”add”<br>
-            削除する場合は”command” : ”delete” と記載します. 追加時には”password”が必須です.<br>
-            このjson ファイルはChOWDER 起動時に読み込まれ, DB に管理者が登録または削除されます.<br>
-            一度ChOWDER を起動して, DB に登録された後は, admin.json ファイルは不要となります.</p>
+            削除する場合は”command” : ”delete” と記載します。 追加時には”password”が必須です.<br>
+            このjson ファイルはChOWDER 起動時に読み込まれ, DB に管理者が登録または削除されます。<br>
+            一度ChOWDER を起動して, DB に登録された後は, admin.json ファイルは不要となります。</p>
     </div>
 
 

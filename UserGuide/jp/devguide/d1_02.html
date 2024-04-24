@@ -896,26 +896,26 @@
 
         <h1 class="top-h1">全体的な設計</h1>
 
-        <p>ChOWDERは<a href="https://github.com/facebook/flux/tree/master/examples/flux-concepts">Flux</a>をベースにした設計となっており, 下図のような呼び出しフローになっている.</p>
+        <p>ChOWDERは<a href="https://github.com/facebook/flux/tree/master/examples/flux-concepts">Flux</a>をベースにした設計となっており, 下図のような呼び出しフローになっています。</p>
         <p><img src="../image/chowder_201903.png" alt="全体的な設計"></p>
-        <p>ChOWDERで行うほとんどの操作は, <code>action.js</code>に記載してあり, 例えばGUIを追加して任意の操作を行いたい場合は, GUIからaction.jsに定義された関数を呼び出すことになる.</p>
-        <p>また, <code>store.js</code>がデータを保持し, ビジネスロジックを実行するが, サーバサイドのRedisDBこそが真のStoreであるので, クライアントサイドのstore.jsはキャッシュとして振舞っている.</p>
-        <p><code>GUI</code>については, 本来ShadowDOMなどを使用するべきであるが, ChOWDERではもともと(古い)pure jsで開発していたため, その流れを汲んでShadowDOMは使用せず, 各部品を<code>component</code>として分離させている.</p>
+        <p>ChOWDERで行うほとんどの操作は, <code>action.js</code>に記載してあり, 例えばGUIを追加して任意の操作を行いたい場合は, GUIからaction.jsに定義された関数を呼び出すことになります。</p>
+        <p>また, <code>store.js</code>がデータを保持し, ビジネスロジックを実行するが, サーバサイドのRedisDBこそが真のStoreであるので, クライアントサイドのstore.jsはキャッシュとして振舞っています。</p>
+        <p><code>GUI</code>については, 本来ShadowDOMなどを使用するべきであるが, ChOWDERではもともと(古い)pure jsで開発していたため, その流れを汲んでShadowDOMは使用せず, 各部品を<code>component</code>として分離させています。</p>
         <h1>サーバのフォルダ構成</h1>
         <img src="../image/server_folders.png" height="280">
-        <p>サーバでは, <code>server/server.js</code>がエントリーポイントとなっている.<br>
-        APIに相当するコマンドが, <code>command.js</code>に定義されており, それらの実装が<code>operator/</code>以下に入っている.</p>
+        <p>サーバでは, <code>server/server.js</code>がエントリーポイントとなっています。<br>
+        APIに相当するコマンドが, <code>command.js</code>に定義されており, それらの実装が<code>operator/</code>以下に入っています。</p>
         <h1>クライアントのフォルダ構成</h1>
         <img src="../image/client_folders.png" height="500">
-        <p>クライアントサイドの公開HTMLページは以下の通り</p>
+        <p>クライアントサイドの公開HTMLページは以下の通りです。</p>
         <ul>
         <li><code>index.html</code> : トップページ</li>
         <li><code>controller.html</code> : コントローラのページ</li>
         <li><code>display.html</code> : ディスプレイのページ</li>
         </ul>
-        <p>コントローラ, ディスプレイから, <code>webpack</code>により生成された<code>controller.bundle.js</code>, <code>display.bundle.js</code>をそれぞれ読み込んでいる.</p>
-        <p>また, <code>js/controller_app.js</code>及び<code>js/display_app.js</code>がwebpack用エントリーポイントとなっている.</p>
-        <p>ソースコードは, <code>public/src/js/</code>に以下のように入っている.</p>
+        <p>コントローラ, ディスプレイから, <code>webpack</code>により生成された<code>controller.bundle.js</code>, <code>display.bundle.js</code>をそれぞれ読み込んでいます。</p>
+        <p>また, <code>js/controller_app.js</code>及び<code>js/display_app.js</code>がwebpack用エントリーポイントとなっています。</p>
+        <p>ソースコードは, <code>public/src/js/</code>に以下のように入っています。</p>
         <ul>
         <li><code>controller</code> : コントローラのソース</li>
         <li><code>display</code> : ディスプレイのソース</li>

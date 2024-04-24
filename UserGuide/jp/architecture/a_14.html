@@ -899,35 +899,35 @@
        
         <h1>ChromeExtensionについて</h1>
         <p>ChOWDERのChrome Extension(ChOWDER Extensionとする)は, Chromeブラウザの拡張機能としてインストールすることで,<br>
-            Chromeブラウザで開いている任意のページを画像としてキャプチャーし, websocket接続によりChOWDERへ送信することができる.<br>
+            Chromeブラウザで開いている任意のページを画像としてキャプチャーし, websocket接続によりChOWDERへ送信することができます。<br>
             プラグインの構成を以下に示す.</p>
         <img src="../image/extension.png" alt="ChOWDER Extensionの構成" width="500">
-        <p>キャプチャーは, Chrome ExtensionのAPIである, chrome.tabs.captureVisibleTabを用いて取得し, 画像形式はPNG形式となっている.<br>
-            APIの仕様上, キャプチャーできるタブは, アクティブになっているタブ1つのみとなっている.<br>
-            また, ChOWDER Extensionの設定値は, chrome.storageを用いて保存される.</p>
+        <p>キャプチャーは, Chrome ExtensionのAPIである, chrome.tabs.captureVisibleTabを用いて取得し, 画像形式はPNG形式となっています。<br>
+            APIの仕様上, キャプチャーできるタブは, アクティブになっているタブ1つのみとなっています。<br>
+            また, ChOWDER Extensionの設定値は, chrome.storageを用いて保存されます。</p>
         <h1>iTownsAppについて</h1>
-        <p>GIS表示機能として, iTownsを使用したコンテンツを, ChOWDERコンテンツとして設定/使用できる.<br>
+        <p>GIS表示機能として, iTownsを使用したコンテンツを, ChOWDERコンテンツとして設定/使用できます。<br>
             iTownsを使用したコンテンツは, 他の画像などのコンテンツと異なり, メタデータにiTownsコンテンツのURLを含んだ, type: webglのコンテンツであり,<br>
             chowder_injection関数を使用して初期化する必要がある.<br>
-            コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示される.</p>
-        <p>このときのディスプレイ/コントローラとコンテンツの関係は, 以下のようになる.</p>
+            コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示されます。</p>
+        <p>このときのディスプレイ/コントローラとコンテンツの関係は, 以下のようになります。</p>
         <img src="../image/itowns_connection.png" alt="iTownsAppコンテンツの関係図" width="500">
-        <p>iTownsAppを使用した開発の詳細については,　別途DeveloperGuide_ForITownsSupport.mdを参照してください.</p>
+        <p>iTownsAppを使用した開発の詳細については,　別途DeveloperGuide_ForITownsSupport.mdを参照してください。</p>
         <h1>TileViewerについて</h1>
         <p>GIS表示機能として, EPSG3857のカラータイル画像を使用したコンテンツ, 及び<br>
-            気象衛星ひまわり8号の衛星画像を使用したコンテンツを, ChOWDERのTileViewerコンテンツとして設定/使用できる.<br>
+            気象衛星ひまわり8号の衛星画像を使用したコンテンツを, ChOWDERのTileViewerコンテンツとして設定/使用できます。<br>
             TileViewerを使用したコンテンツは, 他の画像などのコンテンツと異なり, メタデータにタイルコンテンツのURLを含んだ, type: tileviewerのコンテンツであり,<br>
             chowder_injection関数を使用して初期化する必要がある.<br>
-            コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示される.</p>
+            コンテンツ初期化後に, ディプレイ/コントローラにおいて, インラインフレーム内に表示されます。</p>
         <p>このときのディスプレイ/コントローラとコンテンツの関係は, iTownsAppの場合と同様に,<br>
             WebSocketによるサーバ間通信, 及び, EventTargetインタフェースによるiframe-html親ページ間での通信が行われる.</p>
         <p>TileViewerを使用した開発の詳細については,　別途 DeveloperGuide_ForTileViewer.md (DevelperGuide For
-            TileViewer)を参照してください.<br>
+            TileViewer)を参照してください。<br>
             また, TileViewerのAPIについては, TileViewer_API.mdを, TileViewerの実装詳細に関しては, TileViewer_Dev.md (ChOWDER用TileViewer
             実装詳細)を参照してください。</p>
         <h1>動作環境について</h1>
-        <p>Windows, Linux, MacOSXのGoogleChrome, Firefox及びSafariで動作する.<br>
-            各ブラウザの最新のバージョンにて動作確認を行う.</p>
+        <p>Windows, Linux, MacOSXのGoogleChrome, Firefox及びSafariで動作します。<br>
+            各ブラウザの最新のバージョンにて動作確認を行います。</p>
 
     </div>
 

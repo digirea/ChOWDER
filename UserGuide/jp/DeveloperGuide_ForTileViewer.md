@@ -4,7 +4,7 @@ DevelperGuide For TileViewer
 はじめに
 ========================================================================================
 
-本書ではChOWDERに対応したTileViewerコンテンツの概要及び開発方法について解説します.
+本書ではChOWDERに対応したTileViewerコンテンツの概要及び開発方法について解説します。
 
 TileViewerコンテンツの概要
 ========================================================================================
@@ -21,7 +21,7 @@ ChOWDER/public/sample_data/tileviewer/preset_list.json
 ChOWDER/public/sample_data/tileviewer/settings/gsi.json
 ```
 を参照させるために, URLに以下のように
-GETパラメータにてファイル名相当の文字列を付与しています.
+GETパラメータにてファイル名相当の文字列を付与しています。
 ```json
 // preset_list.json
 {
@@ -38,7 +38,7 @@ GETパラメータにてファイル名相当の文字列を付与していま�
 
 
 ChOWDERでは、`sample_data/tileviewer/index.html`をiframeにて表示し, 
-読み込まれた`index.js`内で, GETパラメータである`gsi`を読み取り, `sample_data/tileviewer/settings/gsi.json`を読み込み, プリセットとして設定します.
+読み込まれた`index.js`内で, GETパラメータである`gsi`を読み取り, `sample_data/tileviewer/settings/gsi.json`を読み込み, プリセットとして設定します。
 
 <img src="image/tileviewer_iframe.png" height="400" />
 
@@ -61,14 +61,14 @@ TileViewerコンテンツの開発方法について記載します。
 
 ## プリセットの開発方法
 
-jsonファイルでプリセット設定ファイルを用意することで, TileViewerAppのプリセットリストに, 独自のプリセットを追加することができます.
+jsonファイルでプリセット設定ファイルを用意することで, TileViewerAppのプリセットリストに, 独自のプリセットを追加することができます。
 
 具体的には, 以下の場所にプリセット設定ファイル(json)を追加し, 
 ```
 ChOWDER/public/sample_data/tileviewer/settings/my_new_preset.json
 ```
 
-preset_list.jsonの定義に, 追加したjsonファイルを読み込む設定を追記します.
+preset_list.jsonの定義に, 追加したjsonファイルを読み込む設定を追記します。
 ```json
 // preset_list.json
 {
@@ -84,7 +84,7 @@ preset_list.jsonの定義に, 追加したjsonファイルを読み込む設定�
 ```
 
 プリセット設定ファイルのパラメータについては, 
-UserGuide.md プリセット定義ファイル を参照してください.
+UserGuide.md プリセット定義ファイル を参照してください。
 
 
 ## HTML/jsファイルを含めた独自コンテンツの開発方法

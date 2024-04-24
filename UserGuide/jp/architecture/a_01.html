@@ -896,18 +896,18 @@
 
         <h1 class="top-h1">はじめに</h1>
  
-        <p>本書では協調ワークスペースドライバと協調動作フレームワークの設計について解説します.</p>
+        <p>本書では協調ワークスペースドライバと協調動作フレームワークの設計について解説します。</p>
         <h1>システム構成について</h1>
         <h2>全体の構成</h2>
-        <p>本システムは, node.js及びwebsocketsを用いたクライアントサーバプログラムであり, 複数のアプリケーションや,複数のユーザが共同作業を行える, 巨大なスクリーンスペースを, 仮想ディスプレイとして提供する. 構成図を以下に示す.</p>
+        <p>本システムは, node.js及びwebsocketsを用いたクライアントサーバプログラムであり, 複数のアプリケーションや,複数のユーザが共同作業を行える, 巨大なスクリーンスペースを, 仮想ディスプレイとして提供します。 構成図を以下に示す.</p>
         <img src="../image/system.png" alt="構成図" width="500">
         <h2>サーバとクライアントの役割</h2>
         <h3 id="サーバの役割">サーバの役割 </h3>
         <ul>
         <li>HTTP通信 - クライアントに対してHTMLページなどを送信する</li>
-        <li>Websocket通信 - websocketプロトコルにより, クライアントのコントローラ及びディスプレイとの間で通信を行う</li>
-        <li>データベース入出力 - クライアントから送信された画像データやテキストデータをredisに保存し, 永続化する.</li>
-        <li>サーバサイドレンダリング - 送信されたURLのウェブサイトをphantomjsを用いてサーバサイドでレンダリングし, png画像として保存する.</li>
+        <li>Websocket通信 - websocketプロトコルにより, クライアントのコントローラ及びディスプレイとの間で通信を行います。</li>
+        <li>データベース入出力 - クライアントから送信された画像データやテキストデータをredisに保存し, 永続化します。</li>
+        <li>サーバサイドレンダリング - 送信されたURLのウェブサイトをphantomjsを用いてサーバサイドでレンダリングし, png画像として保存します。</li>
         </ul>
         <h3 id="クライアント---コントローラの役割">クライアント - コントローラの役割 </h3>
         <ul>
@@ -925,7 +925,7 @@
         </ul>
         <h2>サーバの構成</h2>
         <h3 id="サーバ">サーバ </h3>
-        <p>サーバは, node.jsを使用して, HTTP/HTTPSによる通信と, websocketによる通信(ws/wss)に対応している. それぞれの通信方法によって受付ポートを分けている.</p>
+        <p>サーバは, node.jsを使用して, HTTP/HTTPSによる通信と, websocketによる通信(ws/wss)に対応しています。それぞれの通信方法によって受付ポートを分けています。</p>
         <table>
         <thead>
         <tr>
@@ -957,33 +957,33 @@
         </tr>
         </tbody>
         </table>
-        <p>ポート番号及び使用許可については, サーバ設定ファイルより変更することができる.</p>
+        <p>ポート番号及び使用許可については, サーバ設定ファイルより変更することができます。</p>
         <h3 id="データベース">データベース </h3>
-        <p>データベースはredisを使用して高速なレスポンスを実現している.<br>
+        <p>データベースはredisを使用して高速なレスポンスを実現しています。<br>
         データの格納方法については,  <a href="a_10.html">【データ構造】</a> を参照.</p>
         <h3 id="その他ソフトウェア">その他ソフトウェア </h3>
-        <p>ウェブページレンダリング用にPhantomJS, 及びphantom.jsのnpmラッパーであるphantomjsを使用している.<br>
-        ウェブページレンダリングはサーバサイドレンダリングを行っている.</p>
+        <p>ウェブページレンダリング用にPhantomJS, 及びphantom.jsのnpmラッパーであるphantomjsを使用しています。<br>
+        ウェブページレンダリングはサーバサイドレンダリングを行っています。</p>
         <h2>クライアントの構成</h2>
-        <p>クライアントサイドは, 仮想ディスプレイに対してコンテンツの追加登録等の操作を行う「コントローラ」と, 表示のみを行う「ディスプレイ」から構成されている.</p>
+        <p>クライアントサイドは, 仮想ディスプレイに対してコンテンツの追加登録等の操作を行う「コントローラ」と, 表示のみを行う「ディスプレイ」から構成されています。</p>
         <h3 id="コントローラ">コントローラ </h3>
-        <p>コントローラは, Websocketを用いてサーバと通信を行っている.<br>
+        <p>コントローラは, Websocketを用いてサーバと通信を行っています。<br>
         コントローラの画面イメージを以下に示す.</p>
         <img src="../image/controller.png" alt="コントローラの画面イメージ" width="400">
         <h3 id="ディスプレイ">ディスプレイ </h3>
-        <p>ディスプレイは, コントローラで設定したコンテンツを表示する. HTML5の機能であるwebsocketを用いてサーバと通信している. ディスプレイの画面イメージを以下に示す.</p>
+        <p>ディスプレイは, コントローラで設定したコンテンツを表示します。 HTML5の機能であるwebsocketを用いてサーバと通信しています。ディスプレイの画面イメージを以下に示す.</p>
         <img src="../image/display.png" alt="ディスプレイの画面イメージ" width="400">
         <h1>全体的な設計</h1>
-        <p>ChOWDERは<a href="https://github.com/facebook/flux/tree/master/examples/flux-concepts">Flux</a>をベースにした設計となっており, 下図のような呼び出しフローになっている.</p>
+        <p>ChOWDERは<a href="https://github.com/facebook/flux/tree/master/examples/flux-concepts">Flux</a>をベースにした設計となっており, 下図のような呼び出しフローになっています。</p>
         <img src="../image/chowder_201903.png" height="280">
-        <p>ChOWDERで行うほとんどの操作は, <code>action.js</code>に記載してあり, 例えばGUIを追加して任意の操作を行いたい場合は, GUIからaction.jsに定義された関数を呼び出すことになる.</p>
-        <p>また, <code>store.js</code>がデータを保持し, ビジネスロジックを実行するが, サーバサイドのRedisDBこそが真のStoreであるので, クライアントサイドのstore.jsはキャッシュとして振舞っている.</p>
-        <p><code>GUI</code>については, 本来ShadowDOMなどを使用するべきであるが, ChOWDERではもともと(古い)pure jsで開発していたため, その流れを汲んでShadowDOMは使用せず, 各部品を<code>component</code>として分離させている.</p>
+        <p>ChOWDERで行うほとんどの操作は, <code>action.js</code>に記載してあり, 例えばGUIを追加して任意の操作を行いたい場合は, GUIからaction.jsに定義された関数を呼び出すことになります。</p>
+        <p>また, <code>store.js</code>がデータを保持し, ビジネスロジックを実行するが, サーバサイドのRedisDBこそが真のStoreであるので, クライアントサイドのstore.jsはキャッシュとして振舞っています。</p>
+        <p><code>GUI</code>については, 本来ShadowDOMなどを使用するべきであるが, ChOWDERではもともと(古い)pure jsで開発していたため, その流れを汲んでShadowDOMは使用せず, 各部品を<code>component</code>として分離させています。</p>
         <h1>モジュール構成</h1>
         <h2>サーバのフォルダ構成</h2>
         <img src="../image/server_folders.png" height="280">
-        <p>サーバでは, <code>server/server.js</code>がエントリーポイントとなっている.<br>
-        APIに相当するコマンドが, <code>command.js</code>に定義されており, それらの実装が<code>operator/</code>以下に入っている.</p>
+        <p>サーバでは, <code>server/server.js</code>がエントリーポイントとなっています。<br>
+        APIに相当するコマンドが, <code>command.js</code>に定義されており, それらの実装が<code>operator/</code>以下に入っています。</p>
         <h2>クライアントのフォルダ構成</h2>
         <img src="../image/client_folders.png" height="500">
         <p>クライアントサイドの公開HTMLページは以下の通り</p>
@@ -992,9 +992,9 @@
         <li><code>controller.html</code> : コントローラのページ</li>
         <li><code>display.html</code> : ディスプレイのページ</li>
         </ul>
-        <p>コントローラ, ディスプレイから, <code>webpack</code>により生成された<code>controller.bundle.js</code>, <code>display.bundle.js</code>をそれぞれ読み込んでいる.</p>
-        <p>また, <code>js/controller_app.js</code>及び<code>js/display_app.js</code>がwebpack用エントリーポイントとなっている.</p>
-        <p>ソースコードは, <code>public/src/js/</code>に以下のように入っている.</p>
+        <p>コントローラ, ディスプレイから, <code>webpack</code>により生成された<code>controller.bundle.js</code>, <code>display.bundle.js</code>をそれぞれ読み込んでいます。</p>
+        <p>また, <code>js/controller_app.js</code>及び<code>js/display_app.js</code>がwebpack用エントリーポイントとなっています。</p>
+        <p>ソースコードは, <code>public/src/js/</code>に以下のように入っています。</p>
         <ul>
         <li><code>controller</code> : コントローラのソース</li>
         <li><code>display</code> : ディスプレイのソース</li>

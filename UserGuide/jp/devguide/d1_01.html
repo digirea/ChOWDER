@@ -896,7 +896,7 @@
 
         <h1 class="top-h1">はじめに</h1>
 
-        <p>本書ではChOWDERの開発方法について解説します.</p>
+        <p>本書ではChOWDERの開発方法について解説します。</p>
         <h1>開発環境</h1>
         <h3 id="サーバサイド">サーバサイド </h3>
         <ul>
@@ -910,38 +910,38 @@
         <h1>サーバとクライアントの役割</h1>
         <h3 id="サーバの役割">サーバの役割 </h3>
         <ul>
-        <li>HTTP 通信 - クライアントに対して HTML ページなどを送信する</li>
-        <li>Websocket 通信 - websocketにより, クライアントのコントローラ及びディスプレイとの間で通信を行う</li>
-        <li>データベース入出力 - クライアントから送信された画像データやテキストデータを redis に保存し, 永続化する.</li>
-        <li>サーバサイドレンダリング - 送信された URL のウェブサイトを phantomjs を用いてサーバサイドでレンダリングし, png 画像として保存する.</li>
-        <li>各種アクセス権限の設定を行う.</li>
-        <li>WebRTCでの動画配信の通信の仲介を行う.</li>
+        <li>HTTP 通信 - クライアントに対して HTML ページなどを送信します。</li>
+        <li>Websocket 通信 - websocketにより, クライアントのコントローラ及びディスプレイとの間で通信を行います。</li>
+        <li>データベース入出力 - クライアントから送信された画像データやテキストデータを redis に保存し, 永続化します。</li>
+        <li>サーバサイドレンダリング - 送信された URL のウェブサイトを phantomjs を用いてサーバサイドでレンダリングし, png 画像として保存します。</li>
+        <li>各種アクセス権限の設定を行います。</li>
+        <li>WebRTCでの動画配信の通信の仲介を行います。</li>
         </ul>
         <h3 id="クライアント---コントローラの役割">クライアント - コントローラの役割 </h3>
         <ul>
-        <li>コントローラは, 複数のディスプレイの配置を制御したり, ディスプレイに配信するコンテンツの登録/削除/配置等をサーバに問い合わせて行うことができる.</li>
-        <li>また, Administrator権限がある場合は, コンテンツ配信許可不許可などの, 権限設定を行うことができる.</li>
+        <li>コントローラは, 複数のディスプレイの配置を制御したり, ディスプレイに配信するコンテンツの登録/削除/配置等をサーバに問い合わせて行うことができます。</li>
+        <li>また, Administrator権限がある場合は, コンテンツ配信許可不許可などの, 権限設定を行うことができます。</li>
         </ul>
         <h3 id="クライアント---ディスプレイの役割">クライアント - ディスプレイの役割 </h3>
         <ul>
-        <li>自身のウィンドウをディスプレイとしてサーバへ登録する.</li>
-        <li>配信されたコンテンツを表示する.</li>
+        <li>自身のウィンドウをディスプレイとしてサーバへ登録します。</li>
+        <li>配信されたコンテンツを表示します。</li>
         </ul>
         <h1>デバッグ方法</h1>
         <h3 id="サーバサイド-1">サーバサイド </h3>
         <p>ChOWDERサーバを<code>bin/run.bat</code>等で起動した後,<br>
-        <code>RedisDesktopManager</code>等で, reidsに登録したデータを簡単に閲覧できます</p>
+        <code>RedisDesktopManager</code>等で, reidsに登録したデータを簡単に閲覧できます。</p>
         <blockquote>
         <p><a href="https://github.com/uglide/RedisDesktopManager">https://github.com/uglide/RedisDesktopManager</a></p>
         </blockquote>
         <h3 id="クライアントサイド-1">クライアントサイド </h3>
-        <p>クライアントサイドでは, <code>webpack</code>, 及び <code>babel</code>を使用し, Javascriptコードのトランスコンパイルを行っています.</p>
+        <p>クライアントサイドでは, <code>webpack</code>, 及び <code>babel</code>を使用し, Javascriptコードのトランスコンパイルを行っています。</p>
         <p>ChOWDERサーバを<code>bin/run.bat</code>等で起動しした後,</p>
         <pre data-role="codeBlock" data-info="" class="language-text"><code>npm run watch
-        </code></pre><p>コマンドにより, <code>public/</code>以下のクライアントサイドのファイルの変更を検知し, 変更があれば<code>webpack</code>が走るようになります.<br>
-        この状態で開発すると効率的に開発できます.<br>
-        <code>webpack</code>が走ったあとは, ブラウザを手動でのリロードする必要があります.</p>
-        <p>または, 手動で以下のコマンドを実行することで<code>webpack</code>が走ります.</p>
+        </code></pre><p>コマンドにより, <code>public/</code>以下のクライアントサイドのファイルの変更を検知し, 変更があれば<code>webpack</code>が走るようになります。<br>
+        この状態で開発すると効率的に開発できます。<br>
+        <code>webpack</code>が走ったあとは, ブラウザを手動でのリロードする必要があります。</p>
+        <p>または, 手動で以下のコマンドを実行することで<code>webpack</code>が走ります。</p>
         <pre data-role="codeBlock" data-info="" class="language-text"><code>npm run webpack
         </code></pre>
 
