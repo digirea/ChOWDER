@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -1056,9 +1056,12 @@
         <p>The Property window displays the selected Contents, Display, ContentsID, and their respective Properties.<br>
             The properties can be edited except for the ID as shown below, and the coordinates, display priority ( Zindex ), and the topmost display enforcement can be specified.<br>
             Selected contents can be downloaded from the download button at the bottom of the Property window.</p>
+        
+        <a name="c1"></a>
         <h2>Manipulation of Video Contents</h2>
         <p>When a video content is selected on the controller that holds the video data, controls for operation are displayed in addition to the normal content controls.</p>
-        <h3 id="動画コントロール">Video Controls/h3>
+        
+        <h3 id="動画コントロール">Video Controls</h3>
         <p>On the controller that holds the video, the following controls are displayed for the video content.</p>
         <img src="../image/movie_control.png" alt="コントローラーでの動画コントロール" width="434">
     
@@ -1070,6 +1073,8 @@
             <li>Video transmission ON/OFF</li>
             <li>ON/OFF of audio transmission</li>
         </ol>
+
+
         <h3 id="動画設定">Video Settings </h3>
         <p>When video content is selected on the controller holding the video, the Property window allows you to switch capture devices and configure delivery settings.</p>
         <img src="../image/movie_setting.png" alt="動画設定" width="434">

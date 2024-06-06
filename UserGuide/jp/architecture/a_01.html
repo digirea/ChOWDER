@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -896,7 +896,7 @@
 
         <h1 class="top-h1">はじめに</h1>
  
-        <p>本書では協調ワークスペースドライバと協調動作フレームワークの設計について解説します。</p>
+        <p>本書ではChOWDERとChOWDERフレームワークの設計について解説します。</p>
         <h1>システム構成について</h1>
         <h2>全体の構成</h2>
         <p>本システムは, node.js及びwebsocketsを用いたクライアントサーバプログラムであり, 複数のアプリケーションや,複数のユーザが共同作業を行える, 巨大なスクリーンスペースを, 仮想ディスプレイとして提供します。 構成図を以下に示す.</p>
@@ -968,7 +968,7 @@
         <p>クライアントサイドは, 仮想ディスプレイに対してコンテンツの追加登録等の操作を行う「コントローラ」と, 表示のみを行う「ディスプレイ」から構成されています。</p>
         <h3 id="コントローラ">コントローラ </h3>
         <p>コントローラは, Websocketを用いてサーバと通信を行っています。<br>
-        コントローラの画面イメージを以下に示す.</p>
+        コントローラの画面イメージは以下になります。</p>
         <img src="../image/controller.png" alt="コントローラの画面イメージ" width="400">
         <h3 id="ディスプレイ">ディスプレイ </h3>
         <p>ディスプレイは, コントローラで設定したコンテンツを表示します。 HTML5の機能であるwebsocketを用いてサーバと通信しています。ディスプレイの画面イメージを以下に示す.</p>

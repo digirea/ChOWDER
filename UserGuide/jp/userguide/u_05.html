@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -897,7 +897,7 @@
 
         <h2>Displayタブ</h2>
         <img src="../image/Display_TAB_2conn.png" alt="image" width="207">
-        *Displayタブ*
+        
         <p>VirtualDisplayと、ChOWDERサーバーに接続されているDisplayの一覧を表示します。<br>
             コントローラは、このDisplayをVirtualDisplay上に配置することができます。<br>
             配置したDisplay上にContentsを追加することによってContentsを共有するワークスペースを実現します。<br>
@@ -910,7 +910,7 @@
             一度選択すると、情報が保存され、次のアクセスでは保存された許可情報に従って配信されます。</p>
         <h2>Virtual Displayの設定</h2>
         <img src="../image/VirtualDisplaySetting.png" alt="image" width="207">
-        *Virtual Displayの設定*
+       
         <h3 id="分割数の設定">分割数の設定 </h3>
         <p>Displayタブにて, Virtual Display を選択すると, Property ウィンドウにて, Virtual Display の設定が行えます。 上図では, 幅1500ピクセル,
             高さ1500ピクセル,
@@ -919,7 +919,7 @@
         <p>Displayを正確に区画に配置するための機能として「snap機能」があります。<br>
             下図のドロップダウンリストからモードの変更が行えます。</p>
         <img src="../image/MIGIUE_Disp.png" alt="Snap機能の設定プルダウンボタン" width="207">
-        *Snap機能の設定プルダウンボタン*
+        
         <ul>
             <li>Free : 自由配置となります。</li>
             <li>Display : 配置したDisplayに対してDisplay及びContentsがスナップするようになります。</li>
@@ -927,46 +927,46 @@
         </ul>
         <p>下図にsnap機能を用いて配置する凡例を示します。</p>
         <img src="../image/Snap1.png" alt="Snap機能ドラッグ時凡例" width="585">
-        *Snap機能ドラッグ時凡例*
+       
         <p>またVirtualDisplaySpaceの拡大縮小オプションとして、Scale機能があります。<br>
             画面内でマウスの右ボタンを押しながらドラッグ操作することで、画面全体を拡大縮小することができます。</p>
         <img src="../image/MIGIUE_Scale.png" alt="scale後の例（コンテンツが小さく表示されている）" width="377">
-        *scale後の例（コンテンツが小さく表示されている）*
+       
         <h3 id="ディスプレイとid">ディスプレイとID </h3>
         <p>接続されたDisplayのIDを各接続されたDisplay上に表示し、識別できるようにします。<br>
             尚、IDは、接続された端末固有であり、1端末につき1IDが割り当てられます。</p>
         <img src="../image/3Button1.png" alt="Display ID" width="283">
-        *Display ID*
+        
         <h3 id="削除ボタン">削除ボタン </h3>
         <p>選択したDisplayを削除(ChOWDERサーバーから切断)します。</p>
         <img src="../image/3Button2.png" alt="削除ボタン" width="377">
-        *削除ボタン*
+        
         <p>※尚、VirtualDisplayは削除することはできません。</p>
         <h3 id="全選択ボタン">全選択ボタン </h3>
         <p>接続されているDisplayすべてを選択状態にします。</p>
         <img src="../image/3Button3.png" alt="全選択ボタン" width="377">
-        *全選択ボタン*
+        
         <h3 id="displaygroupの設定">DisplayGroupの設定 </h3>
         <p>Displayタブでは, ディスプレイに割り当てるDisplayGroupの設定が行えます。<br>
             各DisplayGroupでは, Virtual Displayを1つ設定することができます。</p>
         <p>ボタンにより, グループの追加, 及び, 作成したグループの順序入れ替えを行います。<br>
             また, 設定メニューにより, グループの名前変更, グループ色変更, 削除を行います。</p>
         <img src="../image/display_group1.png" alt="DisplayGroupの追加, 順序変更" height="321">
-        *DisplayGroupの追加, 順序変更*
+      
         <br>
         <img src="../image/display_group2.png" alt="DisplayGroupの設定" height="321">
-        *DisplayGroupの設定*
+       
         <h3 id="displaygroupの割り当て">DisplayGroupの割り当て </h3>
         <p>ディスプレイ右クリックメニュー, または, 画面右下のメニューから, ディスプレイへ割り当てられたグループを, 変更することができます。 ただしVirtualDisplayのグループは変更できません。
         </p>
         <img src="../image/display_group3.png" alt="DisplayGroupの変更" height="321">
-        *DisplayGroupの変更*
+        
         <h2>Contentタブ</h2>
         <p>本アプリケーションでは, ディスプレイへのContentsの表示は, 画面下側のContentsタブからディスプレイにContentsをドラッグアンドドロップすることにより行います。</p>
         <h3 id="contentsの表示">Contentsの表示 </h3>
         <p>Contents一覧から, 中央のVirtualScreenの領域へ, ドラッグアンドドロップすることで, 表示させることができます。</p>
         <img src="../image/DragAndDropContent.png" alt="Contentsの表示" width="434">
-        *Contentsの表示*
+       
         <h3 id="コンテンツの操作">コンテンツの操作 </h3>
         <p>追加されたContentは, マウス左クリックにより選択, または, Ctrl + マウス左クリックにより複数選択することができます。<br>
             選択すると, 操作用マニピュレータ, 及び操作用ボタンが表示されます(下図)</p>
@@ -982,43 +982,43 @@
             </li>
         </ul>
         <img src="../image/manip.png" alt="コンテンツ操作用マニピュレータ" height="321">
-        *コンテンツ操作用マニピュレータ*
+        
         <h3 id="contentタブメニュー">Contentタブメニュー </h3>
         <p>タブ領域右下のメニューボタンを押下することで、各種操作が行えます。</p>
         <img src="../image/DragAndDropContent2.png" alt="Contentsの追加" width="434">
-        *Contentsの追加*
+        
         <h3 id="画像の差し替え">画像の差し替え </h3>
         <p>Contentsタブにて選択している画像の差し替えを行います。<br>
             差し替え例を以下に示します。</p>
         <img src="../image/SASHI.png" alt="画像の差し替えボタン" width="434">
-        *画像の差し替えボタン*
+       
         <p>下図の通り指定すると、Contentsタブに存在するContentsが差し替わります。</p>
         <img src="../image/YUMUSHI.PNG" alt="画像の差し替えし指定" width="434">
-        *画像の差し替え指定*
+        
         <br>
         <img src="../image/SASHI2.png" alt="画像の差し替え結果" width="434">
-        *画像の差し替え結果*
+       
         <h3 id="groupの設定">Groupの設定 </h3>
         <p>Contentタブでは, コンテンツに割り当てるGroupの設定が行えます。<br>
             ボタンにより, グループの追加, 及び, 作成したグループの順序入れ替えを行います。<br>
             また, 設定メニューにより, グループの名前変更, グループ色変更, 削除を行います。</p>
         <img src="../image/group1.png" alt="Groupの追加, 順序変更" height="321">
-        *Groupの追加, 順序変更*
+        
         <br>
         <img src="../image/group2.png" alt="Groupの設定" height="321">
-        *Groupの設定*
+        
         <h3 id="groupの割り当て">Groupの割り当て </h3>
         <p>コンテンツの右クリックメニュー, または, 画面右下のメニューから, コンテンツへ割り当てられたグループを, 変更することができます。</p>
         <img src="../image/group3.png" alt="Groupの変更" height="321">
-        *Groupの変更*
+        
         <h2>Searchタブ</h2>
         <p>Searchタブでは、追加したコンテンツのサーチが行えます。</p>
         <img src="../image/search_tab.png" alt="Contentsの検索が可能" width="434">
-        *Contentsの検索が可能*
+        
         <h3 id="メタデータの検索">メタデータの検索 </h3>
         <p>Searchタブにあるテキストボックスからは、メタデータの検索が行えます。 検索は、チェックボックスにチェックが入っているグループに対して行われます。</p>
         <img src="../image/searchcheck.png" alt="対象となるグループの選択" width="434">
-        *対象となるグループの選択*
+        
         <h2>Layoutタブ</h2>
         <p>Layout タブでは、現在のコンテンツの表示状態を、Layout として保存することができます。</p>
         <h3 id="layoutの追加">Layoutの追加 </h3>
@@ -1027,11 +1027,11 @@
         <h3 id="layoutの上書き">Layoutの上書き </h3>
         <p>選択中のレイアウトに, 現在のコンテンツの表示状態を上書きします。</p>
         <img src="../image/layout_tab.png" alt="Layoutタブ" width="434">
-        *Layoutタブ*
+       
         <h3 id="groupの変更">Groupの変更 </h3>
         <p>Layout が所属するグループを変更します。</p>
         <img src="../image/layoutmenu1.png" alt="Layoutメニュー" width="434">
-        *Layout メニュー*
+       
         <h3 id="layoutの適用">Layoutの適用 </h3>
         <p>画面下部Layout リスト内のLayout コンテンツを画面にドラッグアンドドロップすることで適用されます。</p>
         <h2>Usersタブ</h2>
@@ -1043,12 +1043,14 @@
         <p>Propertyウィンドウは選択されたContents、Display、ContentsID、 およびそれぞれのPropertyを表示します。<br>
             Propertyは以下の通りID以外を編集し、座標、表示の優先順位( Zindex )、及び、最上位に表示の強制を、指定することができます。<br>
             また、選択されたContentsはPropertyウィンドウ下部のダウンロードボタンから ダウンロードすることができます。</p>
+
+        <a name="c1"></a>
         <h2>動画コンテンツの操作</h2>
         <p>動画データを保持しているコントローラー上で、動画コンテンツを選択すると、通常のコンテンツのコントロールに加えて、動作用のコントロールが表示されます。</p>
         <h3 id="動画コントロール">動画コントロール </h3>
         <p>動画を保持しているコントローラーでは、動画コンテンツに次のようにコントロールが表示されます。</p>
         <img src="../image/movie_control.png" alt="コントローラーでの動画コントロール" width="434">
-        *コントローラーでの動画コントロール*
+        
         <p>各コントロールでは以下の操作が可能です</p>
         <ol>
             <li>動画の再生、一時停止</li>
@@ -1060,7 +1062,7 @@
         <h3 id="動画設定">動画設定 </h3>
         <p>動画を保持しているコントローラで、動画コンテンツを選択すると、Propertyウィンドウで、キャプチャデバイスの切り替えや、配信設定を行うことができます。</p>
         <img src="../image/movie_setting.png" alt="動画設定" width="434">
-        *動画設定*
+        
         <p>以下の設定を行うことができます。</p>
         <ol>
             <li>ビデオ入力デバイスを変更できます（カメラによる動画コンテンツの場合のみ設定可能）</li>
@@ -1087,7 +1089,7 @@
             <li>画面下に表示された動画一括制御コントローラより操作</li>
         </ol>
         <img src="../image/movie_bulk.png" alt="動画設定" width="434">
-        *動画の一括操作*
+        
         <h1>コントローラ権限と管理画面</h1>
         <h2>コントローラ権限</h2>
         <p>コントローラは以下の種別があり, 各コントローラごとにパスワード及びアクセス権限を設定することができます。</p>
@@ -1147,26 +1149,26 @@
         </table>
         <h2>管理画面</h2>
         <p>コントローラーに, 管理者でログインすることで、Management メニューから, 管理画面にアクセスすることができま<br>
-            す. 管理画面では, コントローラ権限や, 各種設定を行うことができます。</p>
+            す。管理画面では, コントローラ権限や, 各種設定を行うことができます。</p>
         <img src="../image/management1.png" alt="管理者ログイン時のメニュー" width="585">
-        *管理者ログイン時のメニュー*
+        
         <br>
         <img src="../image/management2.png" alt="管理画面" width="585" height="auto">
-        *管理画面*
+       
         <h3 id="db-管理">DB 管理 </h3>
         <p>DB 管理では, 保存領域の新規作成, 切り替え, 名前変更, 削除, 初期化, を行えます。ただし, 最初に自動で作ら<br>
             れるdefault という保存領域については, 名前変更及び削除は行えません。</p>
         <img src="../image/management3.png" alt=" DB 管理" width="585">
-        *DB 管理*
+        
         <h3 id="履歴管理">履歴管理 </h3>
         <p>履歴管理では, コンテンツの差し替え履歴の最大保存数を設定できます。 各コンテンツごとに, ここで設定した数だけ,<br>
             履歴が保存されます。 この値は, グローバルな設定値で, DB を変更した場合でも同じ値が適用されます。</p>
         <img src="../image/management4.png" alt=" 履歴管理" width="585">
-        *履歴管理*
+        
         <h3 id="閲覧編集権限の設定">閲覧・編集権限の設定 </h3>
         <p>閲覧・編集権限の設定では, コントローラごとの権限の設定が行えます。</p>
         <img src="../image/management5.png" alt=" 閲覧・編集権限の設定" width="585">
-        *閲覧・編集権限の設定*
+        
         <ol>
             <li>設定対象コントローラを選択します。</li>
             <li>選択中のコントローラが, 編集可能なコンテンツグループ, 及び, 閲覧可能なコンテンツグループを選択します。「全て」を選択した場合は, 新規に作成されたグループも閲覧・編集対象となります。
@@ -1178,9 +1180,9 @@
         <p>パスワードの設定では, コントローラのパスワード変更を行えます。<br>
             管理者のパスワードを変更する場合のみ, 変更前のパスワードが必要となります。</p>
         <img src="../image/management6.png" alt="パスワードの設定" width="585">
-        *パスワードの設定*
+        
         <img src="../image/management6_2.png" alt="パスワードの設定" width="585">
-        *パスワードの設定(管理者以外）*
+        
         `Moderator`及び `Attendee`については、この設定でパスワードを設定するまでログインが出来ません。`Moderator`及び
         `Attendee`権限を使用する場合は、必ず前もってAdmin権限ユーザーでパスワード設定を行ってください。
         <h3 id="ディスプレイ設定">ディスプレイ設定 </h3>

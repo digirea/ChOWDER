@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -918,36 +918,136 @@
 }
 </pre>
         <ul>
-            <li><code>wsMaxMessageSize</code>sets the maximum message size that the server can send and receive at one
-                time.</li>
-            <li><code>reductionResolution</code> sets the size of the reduced image of the large image data. If large image data larger than this size is registered, a reduced image will be generated and used for display depending on the display resolution. The default is "1920".</li>
-            <li><code>enableMeasureTime</code>is set to enable or disable time log output. If time log output is
-                enabled, log files are output to tileimage/log and server/log. Also, logs in Display can be downloaded
-                on Display.</li>
-            <li>Specify the URL of the STUN server to be used for WebRTC connection in <code>stunServerUrl</code></li>
-            <li><code>turnServerUrl</code>specifies the URL of the TURN server used for WebRTC connection.</li>
-            <li><code>turnServerUsername</code> specifies the user name for authentication of the TURN server used in
-                WebRTC connection.</li>
-            <li><code>turnServerCredential</code> specifies the password for authentication of the TURN server used in
-                the WebRTC connection.</li>
-            <li><code>enableHTTP</code>specifies whether to enable HTTPS communication.</li>
-            <li><code>enableSSL</code>specifies whether to enable HTTPS communication.</li>
-            <li><code>HTTPPort</code>specifies the port number used for HTTP communication; the same port is used for
-                Websocket(ws) communication.</li>
-            <li><code>SSLPort</code>specifies the port number used for HTTPS communication; the same port is used for
-                Websocket(wss) communication.</li>
-            <li><code>enableCORS</code>specifies whether or not CORS is allowed for web content published by the ChOWDER
-                Server.</li>
-            <li><code>VRMode</code> specifies the VR mode to be used. Currently available values are "plane" (planar
-                view), "cylinder" (curved view), or "360" (360-degree view).</li>
-            <li>Set <code>reduceUpdate</code>to "true" to reduce the frequency of various update notifications from the
-                Controller. The default is false.
-            <li><code>reduceInterval</code>specifies the maximum waiting time in milliseconds to reduce the frequency of
-                update notifications when reduceUpdate is set to true. The default value is 500.
-            </li>
-            <li><code>tileviewerCursorSize</code>specifies the cursor size in relative value when RemoteCursor function
-                is used in TileViewer. The default value is 100.
-            </li>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Setting name</th>
+                        <th>Overview</th>
+                        <th>Default value </th>
+                        <th>Maximum</th>
+                        <th>Minimum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>wsMaxMessageSize</td>
+                        <td>Sets the maximum message size that the server can send and receive at one time.</td>
+                        <td>67108864</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>reductionResolution</td>
+                        <td>Sets the size of the reduced image for large image data. If large image data larger than this size is registered, a reduced image will be generated, and depending on the display resolution, the reduced image will be used for display.</td>
+                        <td>1920</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>enableMeasureTime</td>
+                        <td>Enable/disable time log output. If time log output is enabled, log files are output to tileimage/log and server/log. Also, you can download the logs from the Display on the Display.
+                        </td>
+                        <td>false</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>stunServerUrl</td>
+                        <td>Specify the URL of the STUN server to be used for WebRTC connection.
+                            For WebRTC, see “<a href="u_04.html#c1">Add a video file</a>”.
+                        </td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>turnServerUrl</td>
+                        <td>Specify the URL of the TURN server to be used for WebRTC connection.</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>turnServerUsername</td>
+                        <td>Specify the User Name for authentication of the TURN server to be used for WebRTC connection.</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>turnServerCredential</td>
+                        <td>Specify the password for authentication of the TURN server to be used for WebRTC connection.</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>enableHTTP</td>
+                        <td>Specify whether to enable HTTP communication.</td>
+                        <td>true</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>enableSSL</td>
+                        <td>Specify whether to enable HTTPS communication. HTTP and HTTPS (SSL) communications can be used simultaneously.</td>
+                        <td>true</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>HTTPPort</td>
+                        <td>Specify the port number to be used for HTTP communication; the same port is used for Websocket(ws) communication.</td>
+                        <td>80</td>
+                        <td>0</td>
+                        <td>65535</td>
+                    </tr>
+                    <tr>
+                        <td>SSLPort</td>
+                        <td>Specify the port number to be used for HTTPS communication; the same port is used for Websocket(ws) communication.</td>
+                        <td>443</td>
+                        <td>0</td>
+                        <td>65535</td>
+                    </tr>
+                    <tr>
+                        <td>enableCORS</td>
+                        <td>Specifies whether CORS is allowed for web content published by the ChOWDER Server.</td>
+                        <td>true</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>VRMode</td>
+                        <td>Specify the VR mode to be used. Currently available values are “plane” (flat view), “cylinder” (curved view), or “360” (360-degree view).<br>
+                            Please refer to the section “<a href="u_06.html#c1">Setting up VR mode</a>” for details.
+                        </td>
+                        <td>cylinder</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>reduceUpdate</td>
+                        <td>Set to true to reduce the frequency of various update notifications from the Controller.</td>
+                        <td>false</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>reduceInterval</td>
+                        <td>If <code>reduceUpdate</code> is true, specify the maximum waiting time in milliseconds to reduce the frequency of update notifications.</td>
+                        <td>500</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>tileviewerCursorSize</td>
+                        <td>Specify the cursor size in relative value when RemoteCursor function is used in <code>TileViewer</code>.</td>
+                        <td>100</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+            </table>
+
         </ul>
         <h2>Administrator Initialization</h2>
         <p>The administrator controller can be set at startup.<br>
@@ -976,7 +1076,12 @@
             This json file is loaded when ChOWDER is started, and the administrator is registered or deleted in the
             DB.<br>
             Once ChOWDER is started and the administrator is registered in the DB, the admin.json file is no longer
-            needed.</p>
+            needed.<br>
+        
+            Also, for `Moderator` and `Attendee`, you will not be able to log in until you set your password in the settings screen after logging in separately.
+            If you wish to use the `Moderator` and `Attendee` privileges, please set the password in advance as a user with Admin privileges.<br>
+            For details, see  <a href="u_03.html#c2">“Password Settings”</a> below.
+        </p>
     </div>
 
 

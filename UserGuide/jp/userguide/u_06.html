@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -903,15 +903,15 @@
         <h3 id="コントローラ画面への切り替え">コントローラ画面への切り替え </h3>
         <p>ディスプレイモードからコントローラモードへ切り替えることができます。</p>
         <img src="../image/displaymenu1.png" alt="コントローラ画面への切り替え" width="207">
-        *コントローラ画面への切り替え*
+        
         <h3 id="フルスクリーンへの切り替え">フルスクリーンへの切り替え </h3>
         <p>ウインドウモードとフルスクリーンモードの切り替えが可能です。 フルスリーンからウインドウモードに戻る場合は、同じメニューを再度選択またはESCキーを押すことで 戻ることができます。</p>
         <img src="../image/displaymenu2.png" alt="フルスリーンへの切り替え" width="207">
-        *フルスリーンへの切り替え*
+        
         <h3 id="display-idの設定">Display IDの設定 </h3>
         <p>コントローラで認識可能なディスプレイのIDを設定することができます。 任意の文字列を入力後、エンターキーを押すことで、設定することができます。</p>
         <img src="../image/displaymenu3.png" alt="ディスプレイIDの設定" width="207">
-        *ディスプレイIDの設定*
+        
         <h1>VRディスプレイ</h1>
         <h2>VRモード</h2>
         <p>HMDデバイスのウェブブラウザから、ChOWDERのページを表示した際、<br>
@@ -920,10 +920,11 @@
         <p>HMDデバイスで、ChOWDERのページを表示したとき、新規VRディスプレイとしてChOWDERサーバに登録されるので、<br>
             まず、コントローラで許可設定を行う必要があります。</p>
         <img src="../image/webxr1.png" alt="コントローラでの許可設定が必要" width="400">
-        *コントローラでの許可設定が必要*
+        
         <p>VRディスプレイが許可されていると、VR Displayボタンが表示され、押下することで没入型のVRモードに移行します。</p>
         <img src="../image/webxr2.png" alt="VR Displayボタン" width="400">
-        *VR Displayボタン*
+        
+        <a name="c1"></a>
         <h2>VRモードの設定</h2>
         <p><a href="#%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E5%9F%BA%E6%9C%AC%E8%A8%AD%E5%AE%9A">サーバー基本設定</a>
             において、setting.jsonでVRModeを指定することで、<br>
@@ -933,13 +934,13 @@
             ディスプレイは幅3840px、高さ2160px相当で、<br>
             静止モードでの初期視点位置から、水平視野角約114度、垂直視野角が120度の範囲で見渡せるように配置されます。</p>
         <img src="../image/webxr3.png" alt="平面モード" width="400">
-        *平面モード*
+        
         <h3 id="曲面モード">曲面モード </h3>
         <p>曲面モードでは、初期視点位置の前方に、水平視野角約180度、垂直視野角が120度の円筒状の矩形領域が配置され、<br>
             矩形領域内に、ChOWDERディスプレイとして、アスペクト比16:9のディスプレイ表示領域を設け、<br>
             ディスプレイは幅3840px、高さ2160px相当で、表示されます。</p>
         <img src="../image/webxr4.png" alt="曲面モード" width="400">
-        *曲面モード*
+        
         <h3 id="360度モード">360度モード </h3>
         <p>360度モードは、曲面モードを360度の円筒状の領域に広げたもので、<br>
             矩形領域内に、表示されるディスプレイは幅7680px、高さ2160px相当となります。</p>
@@ -984,13 +985,13 @@
             </tbody>
         </table>
         <img src="../image/webxr5.png" alt="選択/強調表示" width="400">
-        *選択/強調表示例*
+        
         <h2>VRモードの制限事項</h2>
         <h3 id="ディスプレイエリアについて">ディスプレイエリアについて </h3>
         <p>VRモードでは、コンテンツが完全にディスプレイエリアから出るまで、表示されます。<br>
             また、VRモードのハンドコントローラを用いたコンテンツ移動では、ディスプレイエリア内でのみコンテンツを移動させることができます。</p>
         <img src="../image/webxr6.png" alt="コンテンツ表示範囲" width="400">
-        *はみ出たコンテンツの表示例*
+        
         <h3 id="webglコンテンツitownを使用したコンテンツの表示">WebGLコンテンツ(iTownを使用したコンテンツ)の表示 </h3>
         <p>WebGLコンテンツは、VRモード表示中に、新規追加した場合、黒く表示されてしまう問題があります。<br>
             回避方法としては、一度VRモードを終了し、数秒待ってからVRモードに再び入りなおしてください。</p>

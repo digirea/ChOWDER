@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -896,7 +896,7 @@
 
         <h1 class="top-h1">ディスプレイについて</h1>      
 
-        <p>ディスプレイページでは, コントローラで操作した結果のコンテンツを表示することができるページである. 操作は全てコントローラより行う仕様となっています。</p>
+        <p>ディスプレイページでは, コントローラで操作した結果のコンテンツを表示することができるページである。操作は全てコントローラより行う仕様となっています。</p>
         <h2>ディスプレイの登録について</h2>
         <p>サーバが起動した状態でディスプレイページを開くと, websocketのAPIを用いて自動的にサーバに登録されます。 登録後は, コントローラにてコンテンツと同様に配置, 移動することができ,
             ディスプレイページを閉じても, コントローラで明示的に削除するまでは, 配置情報をデータベースに保持します。</p>

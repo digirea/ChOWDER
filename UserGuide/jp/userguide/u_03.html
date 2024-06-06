@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -897,7 +897,7 @@
         <h1 class="top-h1">ChOWDERのホーム画面</h1>
 
         <h2>ホーム画面説明</h2>
-        <p>ChOWDERへのアクセスは、前述のアプリケーション起動を行った後、Webブラウザのアドレス欄に「 <a href="http://localhost/">http://localhost/</a>
+        <p>ChOWDERへのアクセスは、前述のアプリケーション起動を行った後、Webブラウザのアドレス欄に「http://{サーバーアドレス}:8080
             」と入力することでアクセス出来ます。<br>
             アクセスすると上述のホーム画面が表示されます。<br>
             ChOWDERは、以下の2つのモード(Display, Controller)を持っており、ホーム画面でどちらのモードを使うかを決定します。</p>
@@ -913,7 +913,7 @@
         <h1>ログイン画面</h1>
         <h2>概要</h2>
         <p>ログイン画面では、「コントローラ」でユーザーロール（権限）、表示名、パスワードの入力を行います。</p>
-        <img src="../image/login_b.png" alt="ログイン画面概要" width="200">
+        <img src="../image/login.png" alt="ログイン画面概要" width="200"><br>
         コントローラーログイン画面では、「コントローラ」でユーザーロール（権限）、表示名、パスワードの入力を行います。
         「コントローラ」と「パスワード」が一致した場合に限り、ログインが可能です。表示名は自由に入力することが出来ます。
         <h1>コントローラ画面の操作</h1>
@@ -924,58 +924,57 @@
         <h2>接続状態について</h2>
         <p>画面右上部分には、サーバーとの接続状態がアイコンで表示されます。</p>
         <img src="../image/connect.png" alt="サーバーとの接続ありの状態" width="283">
-        *サーバーとの接続ありの状態*
+      
         <br>
         <img src="../image/disconnect.png" alt="サーバーとの接続が無い状態" width="283">
-        *サーバーとの接続が無い状態*
-        <h2>Virtual Display Screenについて</h2>
-        <p>中央はVirtual Display Screenと呼ばれ、ChOWDERに接続された ディスプレイの操作、Contentsの移動、操作、削除等を行う 汎用スペースとなっております。</p>
-        <img src="../image/TDD_View.png" alt="VirtualDisplayScreenの凡例" width="585">
-        *VirtualDisplayScreenの凡例*
+       
+        <h2>Virtual Display Area について</h2>
+        <p>中央はVirtual Display Area ディスプレイの操作、Contentsの移動、操作、削除等を行う 汎用スペースとなっております。</p>
+        <img src="../image/TDD_View.png" alt="VirtualDisplayAreaの凡例" width="585">
+
         <h2>メインメニュー</h2>
         <h3 id="上部に配置されたメニュー">上部に配置されたメニュー </h3>
         <p>画面上部に配置されたメニューから各種操作が行えます。</p>
         <img src="../image/Upper.png" alt="画面上部領域" width="415">
-        *画面上部領域*
+        
         <h3 id="displayボタン">Displayボタン </h3>
-        <p>下図に示すとおり、Displayボタンを押下すると、 Displayウィンドウを開くことができます。</p>
+        <p>下図に示すとおり、Displayボタンを押下すると、 Displayウィンドウに切り替えることができます。</p>
         <img src="../image/Left_Display.png" alt="Displayボタン押下時" width="415">
-        *Displayボタン押下時*
+       
         <h3 id="addメニュー">Addメニュー </h3>
         <p>Addメニューからは各種コンテンツを追加することができます。<br>
             操作方法の詳細については <a
-                href="#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%81%AE%E8%BF%BD%E5%8A%A0">コンテンツの追加</a>
+                href="u_04.html">コンテンツの追加</a>
             を参照してください。
         </p>
         <img src="../image/header01.png" alt="Addメニュー展開時" width="200">
-        *Addメニュー展開時*
+        
         <h3 id="settingメニュー">Settingメニュー </h3>
         <p>Settingメニューからはリモートカーソルの表示状態切替や、言語の切り替え、管理画面の表示が行えます。管理画面の表示は管理者のみ可能です。<br>
-            管理画面については <a
-                href="#%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E6%A8%A9%E9%99%90%E3%81%A8%E7%AE%A1%E7%90%86%E7%94%BB%E9%9D%A2">コントローラ権限と管理画面</a>
+            管理画面については <a href="#c1">コントローラ権限と管理画面</a>
             を参照してください。</p>
         <img src="../image/SettingMenu.png" alt="Settingメニュー展開時" width="415">
-        *Settingメニュー展開時*
+       
         <p>リモートカーソルは以下のように表示されます。</p>
         <img src="../image/remotecursor.png" alt="リモートカーソル" width="415">
-        *リモートカーソル*
+        
         <p>ディスプレイに表示されるリモートカーソルのサイズを、VirtualDisplayを基準としたピクセル数で指定します。</p>
         <img src="../image/cursorsize.png" alt="カーソルサイズ" width="415">
-        *カーソルサイズ*
+        
         <p>言語の切り替えは以下のメニューで行います。</p>
         <img src="../image/SettingMenu_language.png" alt="言語切り替え" width="415">
-        *言語切り替え*
+        
         <h3 id="ホームに戻る">ホームに戻る </h3>
         <p>下図のように、ChOWDERと書かれた部分をクリックすると、 ホームに戻ることができます。</p>
         <img src="../image/home_return.png" alt="タイトル名のクリックでホームに戻る" width="415">
-        *タイトル名のクリックでホームに戻る*
+       
         <h3 id="コントローラidの設定">コントローラIDの設定 </h3>
         <p>下図の部分で、コントローラIDの設定を行うことができます。<br>
             コントローラIDを変更すると、別のコントローラとして認識されるので、パスワードの再入力が求められる場合があります。</p>
         <img src="../image/controller_id.png" alt="コントローラIDの設定" width="415">
-        *コントローラIDの設定*
         
         
+        <a name="c1"></a>
         <h1>コントローラ権限と管理画面</h1>
         <h2>コントローラ権限</h2>
         <p>コントローラは以下の種別があり, 各コントローラごとにパスワード及びアクセス権限を設定することができます。</p>
@@ -1000,7 +999,7 @@
                 </tr>
                 <tr>
                     <td>Moderator</td>
-                    <td>ほぼ全ての機能にアクセスできるサブ管理者</td>
+                    <td>ほぼ全ての機能にアクセスできるサブ管理者(Admin権限に関する変更は出来ません)</td>
                     <td>管理画面を含む全ての機能</td>
                 </tr>
                 <tr>
@@ -1024,53 +1023,56 @@
                 <tr>
                     <td>Guest</td>
                     <td>パスワード無しで入れるGuest</td>
-                    <td>管理者画面で設定したアクセス制限に従うデフォルトでは, default のみ編集閲覧が可能</td>
+                    <td>管理者画面で設定したアクセス制限に従う。デフォルトでは, default のみ編集閲覧が可能</td>
                 </tr>
                 <tr>
                     <td>Display</td>
                     <td>Display 接続時の権限</td>
-                    <td>管理者画面で設定したアクセス制限に従うデフォルトでは, 全てのグループの編集閲覧が可能</td>
+                    <td>管理者画面で設定したアクセス制限に従う。デフォルトでは, 全てのグループの編集閲覧が可能</td>
                 </tr>
             </tbody>
         </table>
         <h2 id="management">管理画面</h2>
         <p>コントローラーに, 管理者でログインすることで、Management メニューから, 管理画面にアクセスすることができま<br>
-            す. 管理画面では, コントローラ権限や, 各種設定を行うことができます。</p>
+            す。管理画面では, コントローラ権限や, 各種設定を行うことができます。</p>
         <img src="../image/management1.png" alt="管理者ログイン時のメニュー" width="585">
-        *管理者ログイン時のメニュー*
+        
         <br>
         <img src="../image/management2.png" alt="管理画面" width="585" height="auto">
-        *管理画面*
+        
         <h3 id="db-管理">DB 管理 </h3>
         <p>DB 管理では, 保存領域の新規作成, 切り替え, 名前変更, 削除, 初期化, を行えます。ただし, 最初に自動で作ら<br>
             れるdefault という保存領域については, 名前変更及び削除は行えません。</p>
         <img src="../image/management3.png" alt=" DB 管理" width="585">
-        *DB 管理*
+        
         <h3 id="履歴管理">履歴管理 </h3>
         <p>履歴管理では, コンテンツの差し替え履歴の最大保存数を設定できます。 各コンテンツごとに, ここで設定した数だけ,<br>
             履歴が保存されます。 この値は, グローバルな設定値で, DB を変更した場合でも同じ値が適用されます。</p>
         <img src="../image/management4.png" alt=" 履歴管理" width="585">
-        *履歴管理*
+        
         <h3 id="閲覧編集権限の設定">閲覧・編集権限の設定 </h3>
-        <p>閲覧・編集権限の設定では, コントローラごとの権限の設定が行えます。</p>
+        <p>閲覧・編集権限の設定では, コントローラ種別ごとの権限の設定が行えます。</p>
         <img src="../image/management5.png" alt=" 閲覧・編集権限の設定" width="585">
-        *閲覧・編集権限の設定*
+        
         <ol>
             <li>設定対象コントローラを選択します。</li>
             <li>選択中のコントローラが, 編集可能なコンテンツグループ, 及び, 閲覧可能なコンテンツグループを選択します。「全て」を選択した場合は, 新規に作成されたグループも閲覧・編集対象となります。
             </li>
-            <li>選択中のコントローラが, 編集可能なサイトを選択します。「全て」を選択した場合は, 新規に作成されたサイトも閲覧・編集対象となります。</li>
-            <li>選択中のコントローラに対して, グループの編集やDisplayを許可するかどうか設定します。</li>
+            <li>選択中のコントローラが, 編集可能なディスプレイグループを選択します。「全て」を選択した場合は, 新規に作成されたディスプレイグループも閲覧・編集対象となります。</li>
+            <li>選択中のコントローラに対して, グループの編集・及びディスプレイグループの編集を許可するかどうか設定します。</li>
         </ol>
+
+        <a name="c2"></a>
         <h3 id="パスワードの設定">パスワードの設定 </h3>
-        <p>パスワードの設定では, コントローラのパスワード変更を行えます。<br>
+        <p>パスワードの設定では, 権限ごとのパスワード変更を行えます。<br>
             管理者のパスワードを変更する場合のみ, 変更前のパスワードが必要となります。</p>
         <img src="../image/management6.png" alt="パスワードの設定" width="585">
-        *パスワードの設定*
-        <img src="../image/management6_2.png" alt="パスワードの設定" width="585">
-        *パスワードの設定(管理者以外）*
+        <br><br>
+        <strong style="color: chocolate;">
         `Moderator`及び `Attendee`については、この設定でパスワードを設定するまでログインが出来ません。`Moderator`及び
         `Attendee`権限を使用する場合は、必ず前もってAdmin権限ユーザーでパスワード設定を行ってください。
+        </strong>
+
         <h3 id="ディスプレイ設定">ディスプレイ設定 </h3>
         <p>ディスプレイ設定では, コンテンツ配信許可設定を変更できます。<br>
             許可されたディスプレイのみに配信されます。</p>

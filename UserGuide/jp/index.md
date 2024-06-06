@@ -12,7 +12,7 @@ ChOWDER 利用説明書
     -   ChOWDERの開発方法について解説します
 
 -   [Architesture](#はじめに)
-    -   協調ワークスペースドライバと協調動作フレームワークの設計について解説します
+    -   ChOWDERとChOWDERフレームワークの設計について解説します
 
 -   [DeveloperGuide For ITownsSupport](#はじめに)
     -   ChOWDERに対応したiTownsコンテンツの概要及び開発方法について解説します

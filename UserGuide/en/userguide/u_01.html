@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -972,11 +972,11 @@
 
 
         <h1>How to Start the Application</h1>
-        <h2>For Mac/Linux</h2>
+        <h3>For Mac/Linux</h3>
         <p>Run the following shell script under bin .</p>
         <pre class="language-text">   ./run.sh
 </pre>
-        <h2>For Windows</h2>
+        <h3>For Windows</h3>
         <p>Execute the following file under bin.</p>
         <pre class="language-text">   &gt;cd bin
    &gt;run.bat
@@ -989,7 +989,7 @@
    (Windows版は run.bat)
 </pre>
         <h2>Access to the controller</h2>
-        <p>To access ChOWDER, type 「 <a href="http://localhost/">http://localhost/</a> 」in the address field of your web
+        <p>To access ChOWDER, type 「http://{Server IP Address}:8080」in the address field of your web
             browser.<br>
             After accessing ChOWDER, the installation is complete when the following screen is displayed.</p>
         <img src="../image/home.png" alt="install終了後ホーム画面" width="585">
@@ -998,9 +998,13 @@
         <p>Terminate the application by performing the following two operations (both manual termination operations are
             required).</p>
         <h2>Termination of the server program</h2>
-        <p>Press CTRL+C to exit the terminal where " run.sh (bat) " was invoked, or kill the server program.</p>
-        <h2>Terminating redis</h2>
-        <p>Terminate the terminal where redis is running.</p>
+        <h3>For Mac/Linux</h3>
+        <p>KILL the terminal that invoked run.sh.</p>
+        <p>Next, terminate the terminal in which redis is running.</p>
+
+        <h3>For Windows</h3>
+        <p>Exit the window that launched run.bat. </p>
+        <p>Next, terminate the window in which redis is running. </p>
 
     </div>
 

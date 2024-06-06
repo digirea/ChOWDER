@@ -703,13 +703,13 @@
             min-height: 100vh
         }
 
-        @media screen and (min-width:914px) {
+        @media screen and (min-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
-                padding: 2em calc(50% - 457px + 2em)
+                padding: 2em calc(50% - 500px + 2em)
             }
         }
 
-        @media screen and (max-width:914px) {
+        @media screen and (max-width:1000px) {
             html body[for=html-export]:not([data-presentation-mode]) .markdown-preview {
                 padding: 2em
             }
@@ -917,27 +917,133 @@
 }
 </pre>
         <ul>
-            <li><code>wsMaxMessageSize</code>には、サーバーが1回で送受信できる最大メッセージサイズを設定します。</li>
-            <li><code>reductionResolution</code>には、大規模画像データの縮小画像のサイズを設定します。このサイズ以上の大規模画像データを登録した場合は、縮小画像が生成され、表示解像度によっては縮小画像が表示に使用されます。
-                デフォルトは"1920"です。</li>
-            <li><code>enableMeasureTime</code>には、時刻ログ出力を有効にするかどうかを設定します。時刻ログ出力を有効にした場合、tileimage/log、server/logに対してログファイルが出力されます。また、Display上でDisplayでのログがダウンロードできるようになります。
-                デフォルトは"false"です。</li>
-            <li><code>stunServerUrl</code>には、WebRTC接続において使用する、STUNサーバのURLを指定します。</li>
-            <li><code>turnServerUrl</code>には、WebRTC接続において使用する、TURNサーバのURLを指定します。</li>
-            <li><code>turnServerUsername</code>には、WebRTC接続において使用する、TURNサーバの認証用ユーザー名を指定します。</li>
-            <li><code>turnServerCredential</code>には、WebRTC接続において使用する、TURNサーバの認証用パスワードを指定します。</li>
-            <li><code>enableHTTP</code>には、HTTP通信を有効にするかどうかを指定します。デフォルトは"true"です。</li>
-            <li><code>enableSSL</code>には、HTTPS通信を有効にするかどうかを指定します。デフォルトは"true"です。</li>
-            <li><code>HTTPPort</code>には、HTTP通信で使用するポート番号を指定します。Websocket(ws)通信でも同様のポートが使用されます。デフォルトは"80"です</li>
-            <li><code>SSLPort</code>には、HTTPS通信で使用するポート番号を指定します。Websocket(wss)通信でも同様のポートが使用されます。デフォルトは"443"です</li>
-            <li><code>enableCORS</code>には、ChOWDER Serverで公開するウェブコンテンツに対し、CORSを許可するかどうかを指定します。デフォルトは"true"です。</li>
-            <li><code>VRMode</code>には、使用するVRモードを指定します。現在指定可能な値は"plane"(平面表示)または"cylinder"(曲面表示)または"360"(360度表示)です。
-            </li>
-            <li><code>reduceUpdate</code>には、Controllerからの各種更新通知などが発行される頻度を減らす場合trueを設定します。デフォルトではfalseです。</li>
-            <li><code>reduceInterval</code>には<code>reduceUpdate</code>がtrueの場合に、更新通知などの発行頻度を減ら際の、最大待ち時間をミリ秒単位で指定します。デフォルト値は500です。
-            </li>
-            <li><code>tileviewerCursorSize</code>には、TileViewerでRemoteCursor機能を使用した場合のカーソルサイズを相対値で指定します。デフォルト値は100です。
-            </li>
+            <table>
+                <thead>
+                    <tr>
+                        <th>設定名称</th>
+                        <th>概要</th>
+                        <th>デフォルト値</th>
+                        <th>最大値</th>
+                        <th>最小値</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>wsMaxMessageSize</td>
+                        <td>サーバーが1回で送受信できる最大メッセージサイズを設定します。</td>
+                        <td>67108864</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>reductionResolution</td>
+                        <td>大規模画像データの縮小画像のサイズを設定します。このサイズ以上の大規模画像データを登録した場合は、縮小画像が生成され、表示解像度によっては縮小画像が表示に使用されます。</td>
+                        <td>1920</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>enableMeasureTime</td>
+                        <td>時刻ログ出力を有効にするかどうかを設定します。時刻ログ出力を有効にした場合、tileimage/log、server/logに対してログファイルが出力されます。また、Display上でDisplayでのログがダウンロードできるようになります。</td>
+                        <td>false</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>stunServerUrl</td>
+                        <td>WebRTC接続において使用する、STUNサーバのURLを指定します。<br>
+                        WebRTCについては、「<a href="u_04.html#c1">動画ファイルの追加</a>」を参照してください。</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>turnServerUrl</td>
+                        <td>WebRTC接続において使用する、TURNサーバのURLを指定します。</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>turnServerUsername</td>
+                        <td>WebRTC接続において使用する、TURNサーバの認証用ユーザー名を指定します。</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>turnServerCredential</td>
+                        <td>WebRTC接続において使用する、TURNサーバの認証用パスワードを指定します。</td>
+                        <td></td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>enableHTTP</td>
+                        <td>HTTP通信を有効にするかどうかを指定します。</td>
+                        <td>true</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>enableSSL</td>
+                        <td>HTTPS(SSL)通信を有効にするかどうかを指定します。HTTP通信とHTTPS(SSL)通信は同時に使用することが可能です。</td>
+                        <td>true</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>HTTPPort</td>
+                        <td>HTTP通信で使用するポート番号を指定します。Websocket(ws)通信でも同様のポートが使用されます。</td>
+                        <td>80</td>
+                        <td>0</td>
+                        <td>65535</td>
+                    </tr>
+                    <tr>
+                        <td>SSLPort</td>
+                        <td>HTTPS通信で使用するポート番号を指定します。Websocket(wss)通信でも同様のポートが使用されます。</td>
+                        <td>443</td>
+                        <td>0</td>
+                        <td>65535</td>
+                    </tr>
+                    <tr>
+                        <td>enableCORS</td>
+                        <td>ChOWDER Serverで公開するウェブコンテンツに対し、CORSを許可するかどうかを指定します。</td>
+                        <td>true</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>VRMode</td>
+                        <td>使用するVRモードを指定します。現在指定可能な値は"plane"(平面表示)または"cylinder"(曲面表示)または"360"(360度表示)です。<br>
+                        詳細は「<a href="u_06.html#c1">VRディスプレイの設定</a>」の項をご参照ください。</td>
+                        <td>cylinder</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>reduceUpdate</td>
+                        <td>Controllerからの各種更新通知などが発行される頻度を減らす場合trueを設定します。</td>
+                        <td>false</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>reduceInterval</td>
+                        <td><code>reduceUpdate</code>がtrueの場合に、更新通知などの発行頻度を減ら際の、最大待ち時間をミリ秒単位で指定します。</td>
+                        <td>500</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>tileviewerCursorSize</td>
+                        <td><code>TileViewer</code>でRemoteCursor機能を使用した場合のカーソルサイズを相対値で指定します。</td>
+                        <td>100</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+            </table>
+
         </ul>
         <h2>管理者初期設定</h2>
         <p>管理者コントローラを起動時に設定することができます。<br>
@@ -963,7 +1069,14 @@
         <p>キーとして管理者名を入れ, 追加(上書き) する場合は, ”command” : ”add”<br>
             削除する場合は”command” : ”delete” と記載します。 追加時には”password”が必須です.<br>
             このjson ファイルはChOWDER 起動時に読み込まれ, DB に管理者が登録または削除されます。<br>
-            一度ChOWDER を起動して, DB に登録された後は, admin.json ファイルは不要となります。</p>
+            一度ChOWDER を起動して, DB に登録された後は, admin.json ファイルは不要となります。<br>
+            
+            また、`Moderator`及び `Attendee`については、別途ログイン後の設定画面にてパスワードを設定するまでログインが出来ません。
+            `Moderator`及び`Attendee`権限を使用する場合は、事前にAdmin権限ユーザーでパスワード設定を行ってください。<br>
+            詳細は後述の<a href="u_03.html#c2">「パスワードの設定」</a>を参照してください。
+        </p>
+
+            
     </div>
 
 
