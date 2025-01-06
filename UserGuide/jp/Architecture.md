@@ -172,7 +172,7 @@ APIに相当するコマンドが, `command.js`に定義されており, それ�
 　　}
 ```
 
-"jsonprc"は, 現在常に"2.0"となる 
+"jsonrpc"は, 現在常に"2.0"となる 
 
 "method"は, サーバー（コントローラー）に与える命令を入れます。 命令の詳細については, リクエスト/レスポンスメッセージを参照.
 
@@ -415,7 +415,7 @@ WebRTCを使用した動画配信に関するmethodです.
 | UpdateWindowMetaData | 1つ以上のIDのウィンドウが, 追加または更新されたことを通知します |
 | UpdateGroup | 1つ以上のIDのグループが, 追加または更新または削除されたことを通知します |
 | DeleteContent | 1つ以上のIDのコンテンツが, 削除されたことを通知します |
-| DeleteWindowMetaData | 1つ以上のIDのコンテンツが, 削除されたことを通知します |
+| DeleteWindowMetaData | 1つ以上のIDのウィンドウが, 削除されたことを通知します |
 | UpdateSetting | 設定が変更されたことを通知します |
 | ChangeDB | DBが変更されたことを通知します |
 | ChangeAuthority | 権限が変更されたことを通知します |
