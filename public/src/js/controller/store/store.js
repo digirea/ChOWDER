@@ -182,7 +182,7 @@ class Store extends EventEmitter {
                     return;
                 }
                 this.isDisconnect = false;
-                // 接続確率した
+                // 接続を確立した
                 this.emit(Store.EVENT_CONNECT_SUCCESS, null);
 
             }, () => {
