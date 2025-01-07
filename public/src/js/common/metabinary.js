@@ -29,14 +29,22 @@ function utf8StringToArray(str) {
 	for (i = 0; i < n; i = i + 1) {
 		c = str.charCodeAt(i);
 		if (c <= 0x7F) {
+			// 1バイト文字 (U+0000～U+007F)
+			// ・ASCII文字は1バイトでそのまま表現できます。
+			// ・バイト形式: 0xxxxxxx
 			bytes[idx] = c;
 			idx = idx + 1;
 		} else if (c <= 0x7FF) {
+			// 非ASCII文字の一部は2バイトで表現されます。
+			// ・バイト形式: 110xxxxx 10xxxxxx
 			bytes[idx] = 0xC0 | (c >>> 6);
 			idx = idx + 1;
 			bytes[idx] = 0x80 | (c & 0x3F);
 			idx = idx + 1;
 		} else if (c <= 0xFFFF) {
+			// 3バイト文字 (U+0800～U+FFFF)
+			// ・BMP（基本多言語面）の残りの文字。
+			// ・バイト形式: 1110xxxx 10xxxxxx 10xxxxxx
 			bytes[idx] = 0xE0 | (c >>> 12);
 			idx = idx + 1;
 			bytes[idx] = 0x80 | ((c >>> 6) & 0x3F);
@@ -44,6 +52,9 @@ function utf8StringToArray(str) {
 			bytes[idx] = 0x80 | (c & 0x3F);
 			idx = idx + 1;
 		} else {
+			// 4バイト文字 (U+10000～U+10FFFF)
+			// ・サロゲートペアとして表現される文字。
+			// ・バイト形式: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
 			bytes[idx] = 0xF0 | (c >>> 18);
 			idx = idx + 1;
 			bytes[idx] = 0x80 | ((c >>> 12) & 0x3F);
